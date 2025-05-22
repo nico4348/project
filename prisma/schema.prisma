@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                Int               @id @default(autoincrement())
+  nombre            String
+  email             String            @unique
+  contraseña       String
+  rol               String
+  medico            Medico?
+  citas             Cita[]            @relation("PacienteCitas")
+  historias         HistoriaClinica[] @relation("PacienteHistorias")
+  mensajesEnviados  Mensaje[]         @relation("RemitenteMensajes")
+  mensajesRecibidos Mensaje[]         @relation("DestinatarioMensajes")
+  auditorias        Auditoria[]
+}
+
+model Especialidad {
+  id      Int      @id @default(autoincrement())
+  nombre  String
+  medicos Medico[]
+}
+
+model Medico {
+  id             Int               @id @default(autoincrement())
+  usuario        Usuario           @relation(fields: [usuarioId], references: [id])
+  usuarioId      Int               @unique
+  especialidad   Especialidad      @relation(fields: [especialidadId], references: [id])
+  especialidadId Int
+  citas          Cita[]            @relation("MedicoCitas")
+  historias      HistoriaClinica[]
+}
+
+model Cita {
+  id         Int      @id @default(autoincrement())
+  fecha      DateTime
+  hora       DateTime
+  paciente   Usuario  @relation("PacienteCitas", fields: [pacienteId], references: [id])
+  pacienteId Int
+  medico     Medico   @relation("MedicoCitas", fields: [medicoId], references: [id])
+  medicoId   Int
+}
+
+model HistoriaClinica {
+  id          Int      @id @default(autoincrement())
+  paciente    Usuario  @relation("PacienteHistorias", fields: [pacienteId], references: [id])
+  pacienteId  Int
+  medico      Medico   @relation(fields: [medicoId], references: [id])
+  medicoId    Int
+  fecha       DateTime
+  descripcion String
+}
+
+model Mensaje {
+  id             Int      @id @default(autoincrement())
+  remitente      Usuario  @relation("RemitenteMensajes", fields: [remitenteId], references: [id])
+  remitenteId    Int
+  destinatario   Usuario  @relation("DestinatarioMensajes", fields: [destinatarioId], references: [id])
+  destinatarioId Int
+  fecha          DateTime
+  mensaje        String
+}
+
+model Auditoria {
+  id        Int      @id @default(autoincrement())
+  usuario   Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId Int
+  fecha     DateTime
+  accion    String
+}
