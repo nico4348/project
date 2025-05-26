@@ -1,8 +1,9 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, AlertCircle, Check } from "lucide-react";
 import { useUser } from "../context/UserContext";
 import { RegisterUserData } from "../types/user";
+import { getEspecialidades, Especialidad } from "../services/especialidadService";
 
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -13,14 +14,34 @@ const Register = () => {
 		role: "patient",
 		dateOfBirth: "",
 		phone: "",
+		especialidadId: "",
 	});
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [step, setStep] = useState(1);
+	const [especialidades, setEspecialidades] = useState<Especialidad[]>([]);
+	const [loadingEspecialidades, setLoadingEspecialidades] = useState(false);
 
 	const { register } = useUser();
 	const navigate = useNavigate();
+
+	// Load especialidades when component mounts
+	useEffect(() => {
+		const loadEspecialidades = async () => {
+			try {
+				setLoadingEspecialidades(true);
+				const data = await getEspecialidades();
+				setEspecialidades(data);
+			} catch (error) {
+				console.error("Error loading especialidades:", error);
+			} finally {
+				setLoadingEspecialidades(false);
+			}
+		};
+
+		loadEspecialidades();
+	}, []);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -56,9 +77,15 @@ const Register = () => {
 	const handlePrevStep = () => {
 		setStep(1);
 	};
-
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
+
+		// Validate doctor specialty selection
+		if (formData.role === "doctor" && !formData.especialidadId) {
+			setError("Los doctores deben seleccionar una especialidad");
+			return;
+		}
+
 		try {
 			setError("");
 			setIsSubmitting(true);
@@ -70,6 +97,8 @@ const Register = () => {
 				role: formData.role as "patient" | "doctor" | "admin",
 				dateOfBirth: formData.dateOfBirth,
 				phone: formData.phone,
+				especialidadId:
+					formData.role === "doctor" ? parseInt(formData.especialidadId) : undefined,
 			};
 
 			const success = await register(userData);
@@ -288,6 +317,34 @@ const Register = () => {
 					/>
 				</div>
 			</div>
+
+			{formData.role === "doctor" && (
+				<div>
+					<label
+						htmlFor="especialidadId"
+						className="block text-sm font-medium text-gray-700"
+					>
+						Especialidad médica
+					</label>
+					<div className="mt-1">
+						<select
+							id="especialidadId"
+							name="especialidadId"
+							value={formData.especialidadId}
+							onChange={handleChange}
+							required
+							className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
+						>
+							<option value="">Selecciona una especialidad</option>
+							{especialidades.map((esp) => (
+								<option key={esp.id} value={esp.id}>
+									{esp.nombre}
+								</option>
+							))}
+						</select>
+					</div>
+				</div>
+			)}
 
 			{formData.role === "doctor" && (
 				<div className="rounded-md bg-yellow-50 p-4">

@@ -10,6 +10,29 @@ const port = 5000;
 
 const prisma = new PrismaClient();
 
+// Seed specialities on startup if none exist
+(async function initializeEspecialidades() {
+	try {
+		const count = await prisma.especialidad.count();
+		if (count === 0) {
+			const nombres = [
+				"Cardiología",
+				"Dermatología",
+				"Medicina Familiar",
+				"Neurología",
+				"Pediatría",
+				"Psiquiatría",
+			];
+			await Promise.all(
+				nombres.map((nombre) => prisma.especialidad.create({ data: { nombre } }))
+			);
+			console.log("Default especialidades seeded");
+		}
+	} catch (error) {
+		console.error("Error seeding especialidades:", error);
+	}
+})();
+
 // Middleware
 app.use(
 	cors({
@@ -33,6 +56,17 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
 	console.error("Error occurred:", err);
 	res.status(500).json({ error: "Internal server error", message: err.message });
+});
+
+// ----------- ESPECIALIDADES -----------
+app.get("/api/especialidades", async (req, res) => {
+	try {
+		const especialidades = await prisma.especialidad.findMany();
+		res.json(especialidades);
+	} catch (error) {
+		console.error("Error fetching especialidades:", error);
+		res.status(500).json({ error: "Error del servidor", message: error.message });
+	}
 });
 
 // ----------- AUTENTICACIÓN -----------
@@ -87,12 +121,17 @@ app.post("/api/auth/register", async (req, res) => {
 		rol: req.body.rol,
 		hasPassword: !!req.body.contraseña,
 	});
-
-	const { nombre, email, contraseña, rol, fechaNacimiento, telefono } = req.body;
+	const { nombre, email, contraseña, rol, fechaNacimiento, telefono, especialidadId } = req.body;
 
 	if (!nombre || !email || !contraseña || !rol) {
 		console.log("Registration failed: Missing required fields");
 		return res.status(400).json({ error: "Todos los campos requeridos deben ser completados" });
+	}
+
+	// Validate specialty for doctors
+	if (rol === "doctor" && !especialidadId) {
+		console.log("Registration failed: Doctor role requires specialty");
+		return res.status(400).json({ error: "Los doctores deben seleccionar una especialidad" });
 	}
 
 	try {
@@ -113,12 +152,33 @@ app.post("/api/auth/register", async (req, res) => {
 				rol: rol || "patient",
 			},
 		});
-
 		console.log("User created successfully:", {
 			id: usuario.id,
 			email: usuario.email,
 			rol: usuario.rol,
 		});
+
+		// If the user is a doctor, create the Medico record
+		if (rol === "doctor" && especialidadId) {
+			console.log("Creating doctor record with specialty...");
+			try {
+				const medico = await prisma.medico.create({
+					data: {
+						usuarioId: usuario.id,
+						especialidadId: parseInt(especialidadId),
+					},
+					include: {
+						especialidad: true,
+					},
+				});
+				console.log("Doctor record created:", medico);
+			} catch (medicoError) {
+				console.error("Error creating doctor record:", medicoError);
+				// Delete the user if doctor creation fails
+				await prisma.usuario.delete({ where: { id: usuario.id } });
+				return res.status(500).json({ error: "Error al crear el registro de doctor" });
+			}
+		}
 
 		// Remove password from response
 		const { contraseña: _, ...usuarioSinPassword } = usuario;

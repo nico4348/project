@@ -50,6 +50,7 @@ export const registerUser = async (userData: RegisterUserData): Promise<UserData
 				rol: userData.role,
 				fechaNacimiento: userData.dateOfBirth,
 				telefono: userData.phone,
+				especialidadId: userData.especialidadId, // include specialty for doctors
 			}),
 		});
 

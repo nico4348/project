@@ -11,6 +11,7 @@ export interface UserData {
 
 export interface RegisterUserData extends Omit<UserData, "id"> {
 	password: string;
+	especialidadId?: number; // For doctors
 }
 
 export interface Doctor extends UserData {
