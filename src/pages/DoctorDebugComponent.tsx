@@ -17,10 +17,11 @@ const DoctorDebugComponent = () => {
 				setUsers(usersData);
 
 				const doctorsData = usersData.filter((user) => user.role === "doctor");
-				console.log("Filtered doctors:", doctorsData);				setDoctors(doctorsData);
+				console.log("Filtered doctors:", doctorsData);
+				setDoctors(doctorsData);
 			} catch (err) {
 				console.error("Error fetching data:", err);
-				const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+				const errorMessage = err instanceof Error ? err.message : "Unknown error occurred";
 				setError(errorMessage);
 			} finally {
 				setLoading(false);

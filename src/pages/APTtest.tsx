@@ -19,7 +19,7 @@ const APTtest = () => {
 			const doctors = data.filter((user: User) => user.rol === "doctor");
 			setResult(`Found ${doctors.length} doctors: ${JSON.stringify(doctors, null, 2)}`);
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+			const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
 			setResult(`Error: ${errorMessage}`);
 		}
 	};

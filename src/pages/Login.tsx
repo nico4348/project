@@ -12,14 +12,15 @@ interface LocationState {
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);	const [error, setError] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const { login } = useUser();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const locationState = location.state as LocationState;
-	
+
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 

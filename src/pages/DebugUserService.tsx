@@ -39,14 +39,15 @@ const DebugUserService = () => {
 				users: users,
 				count: users.length,
 				doctors: users.filter((u) => u.role === "doctor"),
-			});		} catch (error) {
+			});
+		} catch (error) {
 			console.error("Error in getAllUsers:", error);
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+			const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
 			setResult({
 				success: false,
 				error: errorMessage,
 			});
-		}finally {
+		} finally {
 			setLoading(false);
 		}
 	};
@@ -74,13 +75,13 @@ const DebugUserService = () => {
 				<div style={{ marginTop: "20px" }}>
 					{result.success ? (
 						<div>
-							<h2 style={{ color: "green" }}>✅ Success!</h2>							<p>
+							<h2 style={{ color: "green" }}>✅ Success!</h2>{" "}
+							<p>
 								<strong>Total users:</strong> {result.count}
 							</p>
 							<p>
 								<strong>Doctors found:</strong> {result.doctors?.length || 0}
 							</p>
-
 							<h3>All Users:</h3>
 							<div style={{ maxHeight: "200px", overflow: "auto" }}>
 								{result.users?.map((user: User) => (
@@ -98,7 +99,8 @@ const DebugUserService = () => {
 										<em>{user.role}</em>
 									</div>
 								))}
-							</div>							<h3>Doctors Only:</h3>
+							</div>{" "}
+							<h3>Doctors Only:</h3>
 							<div>
 								{(result.doctors?.length || 0) === 0 ? (
 									<div style={{ color: "red" }}>❌ No doctors found!</div>

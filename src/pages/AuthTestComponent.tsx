@@ -28,7 +28,7 @@ const AuthTestComponent = () => {
 			});
 		} catch (error) {
 			console.error("Error in login:", error);
-			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+			const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
 			setResult({
 				success: false,
 				error: errorMessage,
@@ -61,7 +61,8 @@ const AuthTestComponent = () => {
 				<div style={{ marginTop: "20px" }}>
 					{result.success ? (
 						<div>
-							<h2 style={{ color: "green" }}>✅ Login Success!</h2>							<p>
+							<h2 style={{ color: "green" }}>✅ Login Success!</h2>{" "}
+							<p>
 								<strong>User ID:</strong> {result.user?.id}
 							</p>
 							<p>
