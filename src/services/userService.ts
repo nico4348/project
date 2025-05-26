@@ -216,13 +216,15 @@ export const searchDoctors = async (
 		if (especialidadId) {
 			url += `&especialidadId=${especialidadId}`;
 		}
-
 		const response = await fetch(url);
 		if (!response.ok) {
 			throw new Error("Failed to search doctors");
 		}
 
-		const doctors: any[] = await response.json();
+		const doctors: {
+			usuario: ApiUser;
+			especialidad?: { nombre: string };
+		}[] = await response.json();
 		return doctors.map((doctor) => ({
 			id: doctor.usuario.id,
 			name: doctor.usuario.nombre,

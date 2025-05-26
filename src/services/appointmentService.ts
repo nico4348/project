@@ -1,4 +1,9 @@
-import { Appointment } from "../types/appointment";
+import {
+	Appointment,
+	AppointmentStatus,
+	AppointmentType,
+	AppointmentPriority,
+} from "../types/appointment";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
@@ -39,11 +44,11 @@ const transformAppointmentData = (backendAppointment: BackendAppointment): Appoi
 		doctorName: backendAppointment.medico?.usuario?.nombre || "Unknown Doctor",
 		specialty: backendAppointment.medico?.especialidad?.nombre || "General",
 		date: new Date(backendAppointment.fecha).toISOString(),
-		status: backendAppointment.estado || "PROGRAMADA",
-		type: backendAppointment.tipo || "CONSULTA",
+		status: (backendAppointment.estado as AppointmentStatus) || "PROGRAMADA",
+		type: (backendAppointment.tipo as AppointmentType) || "CONSULTA",
 		notes: backendAppointment.notas || "",
 		symptoms: backendAppointment.sintomas || "",
-		priority: backendAppointment.prioridad || "NORMAL",
+		priority: (backendAppointment.prioridad as AppointmentPriority) || "NORMAL",
 	};
 };
 

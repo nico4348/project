@@ -148,16 +148,12 @@ const DoctorDashboard = () => {
 									<div className="flex-1">
 										<h3 className="text-base font-medium text-gray-900">
 											{appointment.patientName}
-										</h3>
+										</h3>{" "}
 										<div className="flex items-center text-sm text-gray-500 mt-1">
 											<Clock className="h-4 w-4 mr-1" />
 											<span>{formatTime(appointment.date)}</span>
 											<span className="mx-1">•</span>
-											<span>
-												{appointment.type === "virtual"
-													? "Consulta virtual"
-													: "Presencial"}
-											</span>
+											<span>{appointment.type}</span>
 										</div>
 									</div>
 									<div className="ml-4 flex">
