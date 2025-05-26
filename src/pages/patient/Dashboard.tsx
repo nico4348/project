@@ -3,18 +3,22 @@ import { Calendar, Clock, User, FileText, MessageSquare } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { Appointment } from "../../types/appointment";
-import { getMockAppointments } from "../../services/appointmentService";
+import { getAppointmentsByPatient } from "../../services/appointmentService";
 
 const PatientDashboard = () => {
 	const { user } = useUser();
 	const [upcomingAppointments, setUpcomingAppointments] = useState<Appointment[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const appointments = await getMockAppointments();
-				setUpcomingAppointments(appointments.slice(0, 3));
+				if (user?.id) {
+					const appointments = await getAppointmentsByPatient(user.id);
+					// Filter upcoming appointments (today and future)
+					const now = new Date();
+					const upcoming = appointments.filter(apt => new Date(apt.date) >= now);
+					setUpcomingAppointments(upcoming.slice(0, 3));
+				}
 			} catch (error) {
 				console.error("Error al obtener las citas:", error);
 			} finally {
@@ -22,7 +26,7 @@ const PatientDashboard = () => {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [user?.id]);
 
 	const formatDate = (dateString: string) => {
 		const options: Intl.DateTimeFormatOptions = {

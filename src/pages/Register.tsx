@@ -2,7 +2,7 @@ import { useState, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, ArrowRight, AlertCircle, Check } from "lucide-react";
 import { useUser } from "../context/UserContext";
-import { UserData } from "../types/user";
+import { RegisterUserData } from "../types/user";
 
 const Register = () => {
 	const [formData, setFormData] = useState({
@@ -59,14 +59,14 @@ const Register = () => {
 
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
-
 		try {
 			setError("");
 			setIsSubmitting(true);
 
-			const userData: Omit<UserData, "id"> = {
+			const userData: RegisterUserData = {
 				name: formData.name,
 				email: formData.email,
+				password: formData.password,
 				role: formData.role as "patient" | "doctor" | "admin",
 				dateOfBirth: formData.dateOfBirth,
 				phone: formData.phone,

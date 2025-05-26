@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .result { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        .error { background-color: #ffebee; color: red; }
+        .success { background-color: #e8f5e8; color: green; }
+    </style>
+</head>
+<body>
+    <h1>Quick API Test</h1>
+    <button onclick="testAPI()">Test API</button>
+    <div id="result"></div>
+
+    <script>
+        async function testAPI() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/users');
+                const users = await response.json();
+                
+                const doctors = users.filter(u => u.rol === 'doctor');
+                
+                resultDiv.innerHTML = `
+                    <div class="result success">
+                        <h3>Success!</h3>
+                        <p>Total users: ${users.length}</p>
+                        <p>Doctors: ${doctors.length}</p>
+                        <h4>All users:</h4>
+                        ${users.map(u => `<div>${u.nombre} - ${u.email} - ${u.rol}</div>`).join('')}
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result error">
+                        <h3>Error!</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Debug Test - SaludPlus</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .loading { color: #666; }
+        .error { color: red; background-color: #ffebee; padding: 10px; border-radius: 4px; }
+        .success { color: green; background-color: #e8f5e8; padding: 10px; border-radius: 4px; }
+        .user-list { margin: 10px 0; }
+        .user-item { padding: 10px; margin: 5px 0; border: 1px solid #eee; border-radius: 4px; }
+        .doctor { background-color: #e8f5e8; border-left: 4px solid #4caf50; }
+        .patient { background-color: #e8f0ff; border-left: 4px solid #2196f3; }
+        .admin { background-color: #fff8e8; border-left: 4px solid #ff9800; }
+        button { 
+            background-color: #007bff; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+        button:hover { background-color: #0056b3; }
+        .step { margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; }
+        .step h3 { margin-top: 0; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏥 SaludPlus - Appointment Debug Test</h1>
+        <p>This page will test the exact flow that's failing in the appointment booking system.</p>
+
+        <div class="section">
+            <div class="step">
+                <h3>Step 1: Test Backend Connection</h3>
+                <button onclick="testBackend()">Test Backend</button>
+                <div id="backendResult"></div>
+            </div>
+
+            <div class="step">
+                <h3>Step 2: Fetch All Users</h3>
+                <button onclick="testUsers()">Fetch Users</button>
+                <div id="usersResult"></div>
+            </div>
+
+            <div class="step">
+                <h3>Step 3: Filter Doctors (Same Logic as Frontend)</h3>
+                <button onclick="testDoctorFilter()">Filter Doctors</button>
+                <div id="doctorFilterResult"></div>
+            </div>
+
+            <div class="step">
+                <h3>Step 4: Test Patient Login</h3>
+                <button onclick="testPatientLogin()">Login as Patient</button>
+                <div id="loginResult"></div>
+            </div>
+
+            <div class="step">
+                <h3>Step 5: Full Appointment Flow Simulation</h3>
+                <button onclick="simulateAppointmentFlow()">Simulate Full Flow</button>
+                <div id="flowResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:5000/api';
+        let allUsers = [];
+        let currentUser = null;
+
+        async function testBackend() {
+            const resultDiv = document.getElementById('backendResult');
+            resultDiv.innerHTML = '<div class="loading">🔄 Testing backend connection...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users`);
+                if (response.ok) {
+                    resultDiv.innerHTML = '<div class="success">✅ Backend connection successful!</div>';
+                } else {
+                    resultDiv.innerHTML = `<div class="error">❌ Backend responded with status: ${response.status}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Backend connection failed: ${error.message}</div>`;
+            }
+        }
+
+        async function testUsers() {
+            const resultDiv = document.getElementById('usersResult');
+            resultDiv.innerHTML = '<div class="loading">🔄 Fetching users from API...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/users`);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const users = await response.json();
+                allUsers = users; // Store for later use
+                console.log('Raw API response:', users);
+                
+                let html = `<div class="success">✅ Found ${users.length} users:</div><div class="user-list">`;
+                users.forEach(user => {
+                    html += `<div class="user-item ${user.rol}">
+                        <strong>${user.nombre}</strong><br>
+                        📧 ${user.email}<br>
+                        👤 Role: <strong>${user.rol}</strong><br>
+                        🆔 ID: ${user.id}
+                    </div>`;
+                });
+                html += '</div>';
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Users API failed: ${error.message}</div>`;
+            }
+        }
+
+        async function testDoctorFilter() {
+            const resultDiv = document.getElementById('doctorFilterResult');
+            
+            if (allUsers.length === 0) {
+                resultDiv.innerHTML = '<div class="error">❌ No users data. Please run "Fetch Users" first.</div>';
+                return;
+            }
+            
+            resultDiv.innerHTML = '<div class="loading">🔄 Filtering doctors using frontend logic...</div>';
+            
+            try {
+                console.log('Starting doctor filter...');
+                console.log('All users:', allUsers);
+                
+                // This is the EXACT same logic as in the frontend
+                const doctors = allUsers
+                    .filter(user => {
+                        console.log(`User ${user.nombre} has role: ${user.rol}`);
+                        return user.rol === 'doctor';
+                    })
+                    .map(user => ({
+                        id: user.id.toString(),
+                        name: user.nombre,
+                        email: user.email,
+                        role: user.rol,
+                        specialty: "Medicina General" // Default specialty
+                    }));
+                
+                console.log('Filtered doctors:', doctors);
+                
+                let html = `<div class="success">✅ Found ${doctors.length} doctors using frontend filter logic:</div>`;
+                
+                if (doctors.length === 0) {
+                    html += '<div class="error">❌ No doctors found! This is the problem!</div>';
+                    html += '<div>Debug info:<br>';
+                    html += `Total users: ${allUsers.length}<br>`;
+                    html += 'User roles: ' + allUsers.map(u => u.rol).join(', ') + '</div>';
+                } else {
+                    html += '<div class="user-list">';
+                    doctors.forEach(doctor => {
+                        html += `<div class="user-item doctor">
+                            <strong>Dr. ${doctor.name}</strong><br>
+                            📧 ${doctor.email}<br>
+                            🏥 Specialty: ${doctor.specialty}<br>
+                            🆔 ID: ${doctor.id}
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+                
+                resultDiv.innerHTML = html;
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Doctor filter failed: ${error.message}</div>`;
+            }
+        }
+
+        async function testPatientLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = '<div class="loading">🔄 Testing patient login...</div>';
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        email: 'nico4348@gmail.com', 
+                        contraseña: '123456' 
+                    }),
+                });
+                
+                if (response.ok) {
+                    currentUser = await response.json();
+                    console.log('Login successful:', currentUser);
+                    resultDiv.innerHTML = `<div class="success">✅ Login successful!<br>
+                        👤 Name: ${currentUser.nombre}<br>
+                        👤 Role: ${currentUser.rol}<br>
+                        🆔 ID: ${currentUser.id}</div>`;
+                } else {
+                    const error = await response.json();
+                    resultDiv.innerHTML = `<div class="error">❌ Login failed: ${error.error}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Login test failed: ${error.message}</div>`;
+            }
+        }
+
+        async function simulateAppointmentFlow() {
+            const resultDiv = document.getElementById('flowResult');
+            resultDiv.innerHTML = '<div class="loading">🔄 Simulating complete appointment flow...</div>';
+            
+            try {
+                let html = '<h4>Appointment Flow Simulation:</h4>';
+                
+                // Step 1: Check if user is logged in
+                if (!currentUser) {
+                    html += '<div class="error">❌ No user logged in. Please run patient login first.</div>';
+                    resultDiv.innerHTML = html;
+                    return;
+                }
+                
+                html += `<div class="success">✅ User logged in: ${currentUser.nombre} (${currentUser.rol})</div>`;
+                
+                // Step 2: Fetch appointments (this might fail if user has no appointments)
+                try {
+                    const appointmentsResponse = await fetch(`${API_BASE_URL}/patients/${currentUser.id}/appointments`);
+                    if (appointmentsResponse.ok) {
+                        const appointments = await appointmentsResponse.json();
+                        html += `<div class="success">✅ Appointments fetched: ${appointments.length} found</div>`;
+                    } else {
+                        html += `<div class="error">⚠️ Appointments fetch failed (${appointmentsResponse.status}) - but this might be okay if no appointments exist</div>`;
+                    }
+                } catch (err) {
+                    html += `<div class="error">⚠️ Appointments fetch error: ${err.message}</div>`;
+                }
+                
+                // Step 3: Fetch users (this should work)
+                const usersResponse = await fetch(`${API_BASE_URL}/users`);
+                if (!usersResponse.ok) {
+                    throw new Error(`Users API failed: ${usersResponse.status}`);
+                }
+                
+                const users = await usersResponse.json();
+                html += `<div class="success">✅ Users fetched: ${users.length} total</div>`;
+                
+                // Step 4: Filter doctors (this is where the issue likely is)
+                const doctors = users.filter(user => user.rol === 'doctor');
+                html += `<div class="success">✅ Doctors filtered: ${doctors.length} found</div>`;
+                
+                if (doctors.length === 0) {
+                    html += '<div class="error">❌ PROBLEM FOUND: No doctors after filtering!</div>';
+                    html += '<div>All user roles: ' + users.map(u => u.rol).join(', ') + '</div>';
+                } else {
+                    html += '<div class="success">✅ Doctors are available for booking!</div>';
+                    html += '<div>Available doctors: ' + doctors.map(d => d.nombre).join(', ') + '</div>';
+                }
+                
+                resultDiv.innerHTML = html;
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="error">❌ Flow simulation failed: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

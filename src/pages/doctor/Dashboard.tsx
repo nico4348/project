@@ -3,26 +3,27 @@ import { User, Calendar, Clock, FileText, MessageSquare, BarChart2 } from "lucid
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import { Appointment } from "../../types/appointment";
-import { getMockAppointments } from "../../services/appointmentService";
+import { getAppointmentsByDoctor } from "../../services/appointmentService";
 
 const DoctorDashboard = () => {
 	const { user } = useUser();
 	const [todayAppointments, setTodayAppointments] = useState<Appointment[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const appointments = await getMockAppointments();
-				const today = new Date();
-				today.setHours(0, 0, 0, 0);
-				const tomorrow = new Date(today);
-				tomorrow.setDate(tomorrow.getDate() + 1);
-				const filtered = appointments.filter((appointment) => {
-					const appointmentDate = new Date(appointment.date);
-					return appointmentDate >= today && appointmentDate < tomorrow;
-				});
-				setTodayAppointments(filtered.slice(0, 5));
+				if (user?.id) {
+					const appointments = await getAppointmentsByDoctor(user.id);
+					const today = new Date();
+					today.setHours(0, 0, 0, 0);
+					const tomorrow = new Date(today);
+					tomorrow.setDate(tomorrow.getDate() + 1);
+					const filtered = appointments.filter((appointment: Appointment) => {
+						const appointmentDate = new Date(appointment.date);
+						return appointmentDate >= today && appointmentDate < tomorrow;
+					});
+					setTodayAppointments(filtered.slice(0, 5));
+				}
 			} catch (error) {
 				console.error("Error al obtener citas:", error);
 			} finally {
@@ -30,7 +31,7 @@ const DoctorDashboard = () => {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [user?.id]);
 
 	const formatTime = (dateString: string) => {
 		const options: Intl.DateTimeFormatOptions = {

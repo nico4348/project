@@ -4,6 +4,15 @@ import { UserProvider } from './context/UserContext';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import TestDoctors from './pages/TestDoctors';
+import APTtest from './pages/APTtest';
+import DoctorDebugComponent from './pages/DoctorDebugComponent';
+import SimpleAppointmentTest from './pages/SimpleAppointmentTest';
+import MinimalDoctorList from './pages/MinimalDoctorList';
+import DebugUserService from './pages/DebugUserService';
+import AuthTestComponent from './pages/AuthTestComponent';
+import DirectDoctorFetchTest from './pages/DirectDoctorFetchTest';
+import LoginBypassTest from './pages/LoginBypassTest';
 import PatientDashboard from './pages/patient/Dashboard';
 import DoctorDashboard from './pages/doctor/Dashboard';
 import AdminDashboard from './pages/admin/Dashboard';
@@ -43,10 +52,15 @@ function App() {
   return (
     <UserProvider>
       <div className="min-h-screen bg-gray-50">
-        <ToastContainer position="top-right" autoClose={3000} />
-        <Routes>
+        <ToastContainer position="top-right" autoClose={3000} />        <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/test-doctors" element={<TestDoctors />} />
+          <Route path="/apt-test" element={<APTtest />} />
+          <Route path="/doctor-debug" element={<DoctorDebugComponent />} />
+          <Route path="/simple-appointment-test" element={<SimpleAppointmentTest />} />          <Route path="/minimal-doctor-list" element={<MinimalDoctorList />} />          <Route path="/debug-user-service" element={<DebugUserService />} />          <Route path="/auth-test" element={<AuthTestComponent />} />          <Route path="/direct-doctor-test" element={<DirectDoctorFetchTest />} />
+          <Route path="/login-bypass" element={<LoginBypassTest />} />
+          <Route path="/test-appointments" element={<AppointmentsPatient />} />
           
           {/* Patient Routes */}
           <Route element={<ProtectedRoute allowedRoles={['patient']} />}>

@@ -1,63 +1,81 @@
-import { UserData, UserRole } from '../types/user';
+import { UserData, UserRole, RegisterUserData } from '../types/user';
 
-// Mock user data for demo purposes
-const mockUsers: UserData[] = [
-  {
-    id: 'admin1',
-    name: 'Admin User',
-    email: 'admin@example.com',
-    role: 'admin',
-  },
-  {
-    id: 'doctor1',
-    name: 'John Smith',
-    email: 'doctor@example.com',
-    role: 'doctor',
-  },
-  {
-    id: 'patient1',
-    name: 'Jane Doe',
-    email: 'patient@example.com',
-    role: 'patient',
-  },
-];
+const API_BASE_URL = 'http://localhost:5000/api';
 
 // Storage key for logged in user
 const USER_STORAGE_KEY = 'saludplus_user';
 
 export const loginUser = async (email: string, password: string): Promise<UserData | null> => {
-  // In a real app, this would make an API call to authenticate the user
-  return new Promise((resolve) => {
-    // Simulate API call delay
-    setTimeout(() => {
-      const user = mockUsers.find((u) => u.email.toLowerCase() === email.toLowerCase());
-      
-      if (user) {
-        // Store user in localStorage for persistence
-        localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user));
-        resolve(user);
-      } else {
-        resolve(null);
-      }
-    }, 800);
-  });
-};
-
-export const registerUser = async (userData: Omit<UserData, 'id'>): Promise<UserData | null> => {
-  // In a real app, this would make an API call to register the user
-  return new Promise((resolve) => {
-    // Simulate API call delay
-    setTimeout(() => {
-      const newUser: UserData = {
-        ...userData,
-        id: `user${Date.now()}`,
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, contraseña: password }),
+    });
+    
+    if (response.ok) {
+      const user = await response.json();
+      const userData: UserData = {
+        id: user.id.toString(),
+        name: user.nombre,
+        email: user.email,
+        role: user.rol as UserRole,
       };
       
       // Store user in localStorage for persistence
-      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(newUser));
-      resolve(newUser);
-    }, 800);
-  });
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
+      return userData;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    return null;
+  }
+};
+
+export const registerUser = async (userData: RegisterUserData): Promise<UserData | null> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nombre: userData.name,
+        email: userData.email,
+        contraseña: userData.password,
+        rol: userData.role,
+        fechaNacimiento: userData.dateOfBirth,
+        telefono: userData.phone,
+      }),
+    });
+    
+    if (response.ok) {
+      const user = await response.json();
+      const newUserData: UserData = {
+        id: user.id.toString(),
+        name: user.nombre,
+        email: user.email,
+        role: user.rol as UserRole,
+        dateOfBirth: userData.dateOfBirth,
+        phone: userData.phone,
+      };
+      
+      // Store user in localStorage for persistence
+      localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(newUserData));
+      return newUserData;
+    } else {
+      const error = await response.json();
+      console.error('Registration error:', error);
+      return null;
+    }
+  } catch (error) {
+    console.error('Registration error:', error);
+    return null;
+  }
 };
 
 export const logoutUser = (): void => {

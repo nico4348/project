@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { UserData, UserRole } from "../types/user";
+import { UserData, UserRole, RegisterUserData } from "../types/user";
 import { loginUser, registerUser, logoutUser, getCurrentUser } from "../services/authService";
 
 interface UserContextType {
 	user: UserData | null;
 	loading: boolean;
 	login: (email: string, password: string) => Promise<boolean>;
-	register: (userData: Omit<UserData, "id">) => Promise<boolean>;
+	register: (userData: RegisterUserData) => Promise<boolean>;
 	logout: () => void;
 	isAuthenticated: boolean;
 	hasRole: (roles: UserRole[]) => boolean;
@@ -16,9 +16,7 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<UserData | null>(null);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
+	const [loading, setLoading] = useState(true);	useEffect(() => {
 		const initAuth = async () => {
 			try {
 				const currentUser = getCurrentUser();
@@ -51,8 +49,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 			setLoading(false);
 		}
 	};
-
-	const register = async (userData: Omit<UserData, "id">): Promise<boolean> => {
+	const register = async (userData: RegisterUserData): Promise<boolean> => {
 		try {
 			setLoading(true);
 			const newUser = await registerUser(userData);

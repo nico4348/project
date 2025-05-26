@@ -16,20 +16,17 @@ const Login = () => {
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const { login } = useUser();
+	const { login, user } = useUser();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const locationState = location.state as LocationState;
-
-	const from = locationState?.from?.pathname || getDefaultRedirectPath();
-
-	function getDefaultRedirectPath() {
-		if (email === "patient@example.com") return "/patient/dashboard";
-		if (email === "doctor@example.com") return "/doctor/dashboard";
-		if (email === "admin@example.com") return "/admin/dashboard";
+	const getDefaultRedirectPath = () => {
+		// If we have a user, use their role for redirection
+		if (user?.role === "patient") return "/patient/dashboard";
+		if (user?.role === "doctor") return "/doctor/dashboard";
+		if (user?.role === "admin") return "/admin/dashboard";
 		return "/";
-	}
-
+	};
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
@@ -45,7 +42,17 @@ const Login = () => {
 			const success = await login(email, password);
 
 			if (success) {
-				navigate(from, { replace: true });
+				// Determine redirect path after successful login
+				const userData = JSON.parse(localStorage.getItem('saludplus_user') || '{}');
+				let redirectPath = "/";
+				
+				if (userData.role === "patient") redirectPath = "/patient/dashboard";
+				else if (userData.role === "doctor") redirectPath = "/doctor/dashboard";
+				else if (userData.role === "admin") redirectPath = "/admin/dashboard";
+				
+				// Use the intended destination or the role-based default
+				const finalPath = locationState?.from?.pathname || redirectPath;
+				navigate(finalPath, { replace: true });
 			} else {
 				setError("Correo o contraseña inválidos");
 			}

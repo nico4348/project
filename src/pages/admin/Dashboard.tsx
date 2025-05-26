@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { User, Calendar, FileText, BarChart2, Settings, Clock, AlertTriangle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import { getMockAppointments } from "../../services/appointmentService";
-import { getMockDoctors, getMockPatients } from "../../services/userService";
+import { getAllAppointments } from "../../services/appointmentService";
+import { getAllUsers } from "../../services/userService";
 
 const AdminDashboard = () => {
 	const { user } = useUser();
@@ -14,15 +14,15 @@ const AdminDashboard = () => {
 		todayAppointments: 0,
 	});
 	const [isLoading, setIsLoading] = useState(true);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const [appointments, doctors, patients] = await Promise.all([
-					getMockAppointments(),
-					getMockDoctors(),
-					getMockPatients(),
-				]);
+				const [appointments, users] = await Promise.all([
+					getAllAppointments(),
+					getAllUsers(),
+				]);				// Filter users by role
+				const doctors = users.filter(user => user.role === 'doctor');
+				const patients = users.filter(user => user.role === 'patient');
 
 				// Calcular citas de hoy
 				const today = new Date();

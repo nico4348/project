@@ -12,17 +12,42 @@ import {
 } from "lucide-react";
 import { useUser } from "../../context/UserContext";
 import { Appointment } from "../../types/appointment";
-import { Doctor } from "../../types/user";
-import { getMockAppointments } from "../../services/appointmentService";
-import { getMockDoctors } from "../../services/userService";
+import { getAppointmentsByPatient, createAppointment } from "../../services/appointmentService";
+
+// Type for doctor data from API
+interface DoctorApiResponse {
+	id: number;
+	usuarioId: number;
+	especialidadId: number;
+	usuario: {
+		id: number;
+		nombre: string;
+		email: string;
+		contraseña: string;
+		rol: string;
+	};
+	especialidad: {
+		id: number;
+		nombre: string;
+	};
+}
+
+// Simple doctor interface for appointment booking
+interface DoctorForBooking {
+	id: string;
+	name: string;
+	email: string;
+	role: "doctor";
+	specialty?: string;
+}
 
 const AppointmentsPatient = () => {
 	const { user } = useUser();
 	const [appointments, setAppointments] = useState<Appointment[]>([]);
-	const [doctors, setDoctors] = useState<Doctor[]>([]);
+	const [doctors, setDoctors] = useState<DoctorForBooking[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [view, setView] = useState<"upcoming" | "past" | "book">("upcoming");
-	const [selectedDoctor, setSelectedDoctor] = useState<Doctor | null>(null);
+	const [selectedDoctor, setSelectedDoctor] = useState<DoctorForBooking | null>(null);
 	const [selectedDate, setSelectedDate] = useState<string>("");
 	const [selectedTime, setSelectedTime] = useState<string>("");
 	const [searchQuery, setSearchQuery] = useState("");
@@ -35,26 +60,66 @@ const AppointmentsPatient = () => {
 		"Neurología",
 		"Pediatría",
 		"Psiquiatría",
-	];
-
-	useEffect(() => {
+	];	useEffect(() => {
 		const fetchData = async () => {
-			try {
-				const [appointmentsData, doctorsData] = await Promise.all([
-					getMockAppointments(),
-					getMockDoctors(),
-				]);
-				setAppointments(appointmentsData);
-				setDoctors(doctorsData);
-			} catch (error) {
+			console.log('=== APPOINTMENTS DEBUG ===');
+			console.log('Starting data fetch for user:', user);
+			console.log('User object details:', JSON.stringify(user, null, 2));			try {
+				if (user?.id) {
+					console.log('User ID found, fetching data...');
+					console.log('About to call getAllUsers()...');					// Handle appointments and users separately to avoid Promise.all failure
+					let appointmentsData: Appointment[] = [];
+					let doctorsData: DoctorForBooking[] = [];
+					
+					// Fetch doctors data (this should always work)
+					try {
+						console.log('Fetching doctors from /api/doctors...');
+						const doctorsResponse = await fetch('http://localhost:5000/api/doctors');
+						if (!doctorsResponse.ok) {
+							throw new Error(`HTTP error! status: ${doctorsResponse.status}`);
+						}
+						const doctorsApiData: DoctorApiResponse[] = await doctorsResponse.json();
+						console.log('Raw doctors data from API:', doctorsApiData);
+						console.log('Number of doctors fetched:', doctorsApiData.length);
+						
+						// Transform doctors data to match our interface
+						doctorsData = doctorsApiData.map(doctor => ({
+							id: doctor.id.toString(), // Use medico ID (1,2,3,4)
+							name: doctor.usuario.nombre,
+							email: doctor.usuario.email,
+							role: "doctor" as const,
+							specialty: doctor.especialidad.nombre
+						}));
+						console.log('Transformed doctors data:', doctorsData);
+						setDoctors(doctorsData);
+					} catch (usersError) {
+						console.error('Error fetching doctors:', usersError);
+					}					
+					// Fetch appointments data (this might fail, but shouldn't block doctors)
+					try {
+						console.log('Fetching appointments...');
+						appointmentsData = await getAppointmentsByPatient(user.id);
+						console.log('Raw appointments data:', appointmentsData);
+						setAppointments(appointmentsData);
+					} catch (appointmentsError) {
+						console.error('Error fetching appointments (continuing anyway):', appointmentsError);
+						setAppointments([]); // Set empty array if appointments fail
+					}
+				} else {
+					console.log('No user ID found, user object:', user);
+				}} catch (error) {
 				console.error("Error al obtener datos:", error);
+				if (error instanceof Error) {
+					console.error("Error stack:", error.stack);
+				}
 			} finally {
+				console.log('Setting loading to false');
 				setIsLoading(false);
-			}
-		};
-
+			}		};
+		
+		console.log('useEffect triggered, user state:', user);
 		fetchData();
-	}, []);
+	}, [user]);
 
 	const upcomingAppointments = appointments.filter(
 		(appointment) => new Date(appointment.date) > new Date()
@@ -63,33 +128,42 @@ const AppointmentsPatient = () => {
 	const pastAppointments = appointments.filter(
 		(appointment) => new Date(appointment.date) <= new Date()
 	);
-
 	const filteredDoctors = doctors.filter((doctor) => {
 		const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
 		const matchesSpecialty = !specialtyFilter || doctor.specialty === specialtyFilter;
+		console.log(`Doctor ${doctor.name}: search="${searchQuery}", specialty="${specialtyFilter}", matchesSearch=${matchesSearch}, matchesSpecialty=${matchesSpecialty}`);
 		return matchesSearch && matchesSpecialty;
 	});
+	
+	console.log('=== FILTER RESULTS ===');
+	console.log('Total doctors:', doctors.length);
+	console.log('Filtered doctors:', filteredDoctors.length);
+	console.log('Search query:', searchQuery);
+	console.log('Specialty filter:', specialtyFilter);const handleBookAppointment = async () => {
+		if (selectedDoctor && selectedDate && selectedTime && user?.id) {
+			try {
+				const newAppointmentData: Omit<Appointment, "id"> = {
+					patientId: user.id,
+					patientName: user.name,
+					doctorId: selectedDoctor.id,
+					doctorName: selectedDoctor.name,
+					specialty: selectedDoctor.specialty || "Medicina General",
+					date: `${selectedDate}T${selectedTime}:00`,
+					status: "scheduled",
+					type: "in-person",
+					notes: "",
+				};
 
-	const handleBookAppointment = () => {
-		if (selectedDoctor && selectedDate && selectedTime) {
-			const newAppointment: Appointment = {
-				id: `new-${Date.now()}`,
-				patientId: user?.id || "",
-				patientName: user?.name || "",
-				doctorId: selectedDoctor.id,
-				doctorName: selectedDoctor.name,
-				specialty: selectedDoctor.specialty,
-				date: `${selectedDate}T${selectedTime}:00`,
-				status: "scheduled",
-				type: "in-person",
-				notes: "",
-			};
-
-			setAppointments([...appointments, newAppointment]);
-			setView("upcoming");
-			setSelectedDoctor(null);
-			setSelectedDate("");
-			setSelectedTime("");
+				const createdAppointment = await createAppointment(newAppointmentData);
+				setAppointments([...appointments, createdAppointment]);
+				setView("upcoming");
+				setSelectedDoctor(null);
+				setSelectedDate("");
+				setSelectedTime("");
+			} catch (error) {
+				console.error("Error creating appointment:", error);
+				alert("Error al crear la cita. Por favor intenta de nuevo.");
+			}
 		}
 	};
 
@@ -403,13 +477,12 @@ const AppointmentsPatient = () => {
 											<div className="ml-4">
 												<h3 className="text-lg font-medium text-gray-900">
 													Dr. {doctor.name}
-												</h3>
-												<p className="text-sm text-gray-500">
+												</h3>												<p className="text-sm text-gray-500">
 													{doctor.specialty}
 												</p>
 												<div className="mt-2 text-sm text-gray-500">
-													<p>{doctor.education}</p>
-													<p>{doctor.experience} años de experiencia</p>
+													<p>Médico Especialista</p>
+													<p>Disponible para consultas</p>
 												</div>
 											</div>
 											<div className="ml-auto">

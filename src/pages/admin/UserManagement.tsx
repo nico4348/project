@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Trash2, Edit, Search, Filter, Plus, Download, ChevronDown, X } from "lucide-react";
-import { UserData, UserRole } from "../../types/user";
-import { getMockUsers } from "../../services/userService";
+import { UserData, UserRole, RegisterUserData } from "../../types/user";
+import { getAllUsers, createUser, updateUser, deleteUser } from "../../services/userService";
 
 const UserManagement = () => {
 	const [users, setUsers] = useState<UserData[]>([]);
@@ -13,27 +13,8 @@ const UserManagement = () => {
 	const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-	useEffect(() => {
-		const fetchUsers = async () => {
-			try {
-				const data = await getMockUsers();
-				setUsers(data);
-				setFilteredUsers(data);
-			} catch (error) {
-				console.error("Error al obtener usuarios:", error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchUsers();
-	}, []);
-
-	useEffect(() => {
-		filterUsers();
-	}, [searchQuery, roleFilter, users]);
-
-	const filterUsers = () => {
+	// Use useCallback to memoize the function
+	const filterUsers = useCallback(() => {
 		let result = [...users];
 
 		// Filtrar por búsqueda
@@ -52,7 +33,27 @@ const UserManagement = () => {
 		}
 
 		setFilteredUsers(result);
-	};
+	}, [users, searchQuery, roleFilter]);
+
+	useEffect(() => {
+		const fetchUsers = async () => {
+			try {
+				const data = await getAllUsers();
+				setUsers(data);
+				setFilteredUsers(data);
+			} catch (error) {
+				console.error("Error al obtener usuarios:", error);
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		fetchUsers();
+	}, []);
+
+	useEffect(() => {
+		filterUsers();
+	}, [filterUsers]);
 
 	const handleAddUser = () => {
 		setSelectedUser(null);
@@ -69,12 +70,58 @@ const UserManagement = () => {
 		setIsDeleteModalOpen(true);
 	};
 
-	const handleDeleteUser = () => {
+	const handleDeleteUser = async () => {
 		if (selectedUser) {
-			const updatedUsers = users.filter((user) => user.id !== selectedUser.id);
-			setUsers(updatedUsers);
-			setIsDeleteModalOpen(false);
+			try {
+				const success = await deleteUser(selectedUser.id);
+				if (success) {
+					const updatedUsers = users.filter((user) => user.id !== selectedUser.id);
+					setUsers(updatedUsers);
+					setIsDeleteModalOpen(false);
+					setSelectedUser(null);
+				} else {
+					console.error("Error al eliminar usuario");
+				}
+			} catch (error) {
+				console.error("Error al eliminar usuario:", error);
+			}
+		}
+	};
+
+	const handleSubmitUser = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const formData = new FormData(event.currentTarget);
+		
+		try {
+			if (selectedUser) {
+				// Update existing user
+				const userData = {
+					id: selectedUser.id,
+					name: formData.get('name') as string,
+					email: formData.get('email') as string,
+					role: formData.get('role') as UserRole,
+				};
+				const updatedUser = await updateUser(userData);
+				const updatedUsers = users.map(user => 
+					user.id === selectedUser.id ? updatedUser : user
+				);
+				setUsers(updatedUsers);
+			} else {
+				// Create new user
+				const newUserData: RegisterUserData = {
+					name: formData.get('name') as string,
+					email: formData.get('email') as string,
+					role: formData.get('role') as UserRole,
+					password: formData.get('password') as string,
+				};
+				const newUser = await createUser(newUserData);
+				setUsers([...users, newUser]);
+			}
+			
+			setIsAddUserModalOpen(false);
 			setSelectedUser(null);
+		} catch (error) {
+			console.error("Error al guardar usuario:", error);
 		}
 	};
 
@@ -361,7 +408,7 @@ const UserManagement = () => {
 							</div>
 
 							<div className="mt-5">
-								<form className="space-y-4">
+								<form className="space-y-4" onSubmit={handleSubmitUser}>
 									<div>
 										<label
 											htmlFor="name"
@@ -373,6 +420,7 @@ const UserManagement = () => {
 											type="text"
 											name="name"
 											id="name"
+											required
 											defaultValue={selectedUser?.name || ""}
 											className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
 										/>
@@ -389,6 +437,7 @@ const UserManagement = () => {
 											type="email"
 											name="email"
 											id="email"
+											required
 											defaultValue={selectedUser?.email || ""}
 											className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
 										/>
@@ -425,28 +474,28 @@ const UserManagement = () => {
 												type="password"
 												name="password"
 												id="password"
+												required
 												className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
 											/>
 										</div>
 									)}
-								</form>
-							</div>
 
-							<div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
-								<button
-									type="button"
-									className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:col-start-2 sm:text-sm"
-									onClick={() => setIsAddUserModalOpen(false)}
-								>
-									{selectedUser ? "Guardar cambios" : "Crear usuario"}
-								</button>
-								<button
-									type="button"
-									className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-									onClick={() => setIsAddUserModalOpen(false)}
-								>
-									Cancelar
-								</button>
+									<div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
+										<button
+											type="submit"
+											className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-cyan-600 text-base font-medium text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:col-start-2 sm:text-sm"
+										>
+											{selectedUser ? "Guardar cambios" : "Crear usuario"}
+										</button>
+										<button
+											type="button"
+											className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+											onClick={() => setIsAddUserModalOpen(false)}
+										>
+											Cancelar
+										</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>

@@ -9,6 +9,10 @@ export interface UserData {
 	phone?: string;
 }
 
+export interface RegisterUserData extends Omit<UserData, 'id'> {
+	password: string;
+}
+
 export interface Doctor extends UserData {
 	role: "doctor";
 	specialty: string;
