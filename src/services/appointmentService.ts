@@ -29,9 +29,15 @@ interface BackendAppointment {
 const transformAppointmentData = (backendAppointment: BackendAppointment): Appointment => {
 	return {
 		id: backendAppointment.id.toString(),
-		patientId: backendAppointment.paciente_id?.toString() || backendAppointment.paciente?.id?.toString() || "",
+		patientId:
+			backendAppointment.paciente_id?.toString() ||
+			backendAppointment.paciente?.id?.toString() ||
+			"",
 		patientName: backendAppointment.paciente?.nombre || "Unknown Patient",
-		doctorId: backendAppointment.medico_id?.toString() || backendAppointment.medico?.id?.toString() || "",
+		doctorId:
+			backendAppointment.medico_id?.toString() ||
+			backendAppointment.medico?.id?.toString() ||
+			"",
 		doctorName: backendAppointment.medico?.usuario?.nombre || "Unknown Doctor",
 		specialty: backendAppointment.medico?.especialidad?.nombre || "General",
 		date: new Date(backendAppointment.fecha).toISOString(),
@@ -45,11 +51,11 @@ const transformAppointmentData = (backendAppointment: BackendAppointment): Appoi
 const transformToBackendFormat = (appointment: Omit<Appointment, "id">) => {
 	const date = new Date(appointment.date);
 	return {
-		fecha: date.toISOString().split('T')[0], // Date only
+		fecha: date.toISOString().split("T")[0], // Date only
 		hora: date.toISOString(), // Full datetime
 		medico_id: parseInt(appointment.doctorId),
 		notes: appointment.notes,
-		type: appointment.type
+		type: appointment.type,
 	};
 };
 
@@ -76,18 +82,24 @@ export const createAppointment = async (
 ): Promise<Appointment> => {
 	try {
 		const backendData = transformToBackendFormat(appointment);
-		console.log('=== CREATING APPOINTMENT ===');
-		console.log('Original appointment data:', appointment);
-		console.log('Transformed backend data:', backendData);
-		console.log('Request URL:', `${API_BASE_URL}/patients/${appointment.patientId}/appointments`);
-		
-		const response = await fetch(`${API_BASE_URL}/patients/${appointment.patientId}/appointments`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(backendData),
-		});
+		console.log("=== CREATING APPOINTMENT ===");
+		console.log("Original appointment data:", appointment);
+		console.log("Transformed backend data:", backendData);
+		console.log(
+			"Request URL:",
+			`${API_BASE_URL}/patients/${appointment.patientId}/appointments`
+		);
+
+		const response = await fetch(
+			`${API_BASE_URL}/patients/${appointment.patientId}/appointments`,
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(backendData),
+			}
+		);
 
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
@@ -105,14 +117,14 @@ export const updateAppointment = async (appointment: Appointment): Promise<Appoi
 	try {
 		const date = new Date(appointment.date);
 		const updateData = {
-			fecha: date.toISOString().split('T')[0],
+			fecha: date.toISOString().split("T")[0],
 			hora: date.toISOString(),
 		};
 
 		const response = await fetch(`${API_BASE_URL}/appointments/${appointment.id}`, {
-			method: 'PUT',
+			method: "PUT",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(updateData),
 		});
@@ -132,7 +144,7 @@ export const updateAppointment = async (appointment: Appointment): Promise<Appoi
 export const cancelAppointment = async (appointmentId: string): Promise<boolean> => {
 	try {
 		const response = await fetch(`${API_BASE_URL}/appointments/${appointmentId}`, {
-			method: 'DELETE',
+			method: "DELETE",
 		});
 
 		if (!response.ok) {

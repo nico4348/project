@@ -16,7 +16,7 @@ const PatientDashboard = () => {
 					const appointments = await getAppointmentsByPatient(user.id);
 					// Filter upcoming appointments (today and future)
 					const now = new Date();
-					const upcoming = appointments.filter(apt => new Date(apt.date) >= now);
+					const upcoming = appointments.filter((apt) => new Date(apt.date) >= now);
 					setUpcomingAppointments(upcoming.slice(0, 3));
 				}
 			} catch (error) {

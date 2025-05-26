@@ -11,7 +11,7 @@ const DirectDoctorFetchTest = () => {
 	useEffect(() => {
 		const fetchAndProcessUsers = async () => {
 			console.log("=== DIRECT DOCTOR FETCH TEST ===");
-			
+
 			try {
 				console.log("Step 1: Calling getAllUsers()...");
 				const usersData = await getAllUsers();
@@ -19,24 +19,24 @@ const DirectDoctorFetchTest = () => {
 				console.log("Step 3: Users data type:", typeof usersData);
 				console.log("Step 4: Is array?", Array.isArray(usersData));
 				console.log("Step 5: Length:", usersData.length);
-				
+
 				setUsers(usersData);
-				
+
 				console.log("Step 6: Filtering doctors...");
-				const doctorsData = usersData.filter(user => {
+				const doctorsData = usersData.filter((user) => {
 					console.log(`   Checking user: ${user.name} with role: ${user.role}`);
-					const isDoctor = user.role === 'doctor';
+					const isDoctor = user.role === "doctor";
 					console.log(`   Is doctor? ${isDoctor}`);
 					return isDoctor;
 				});
-				
+
 				console.log("Step 7: Filtered doctors:", doctorsData);
 				console.log("Step 8: Number of doctors found:", doctorsData.length);
-				
+
 				setDoctors(doctorsData);
-						} catch (err) {
+			} catch (err) {
 				console.error("Error in fetchAndProcessUsers:", err);
-				setError(err instanceof Error ? err.message : 'Unknown error');
+				setError(err instanceof Error ? err.message : "Unknown error");
 			} finally {
 				setLoading(false);
 			}
@@ -61,14 +61,22 @@ const DirectDoctorFetchTest = () => {
 	return (
 		<div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
 			<h1>Direct Doctor Fetch Test</h1>
-			
+
 			<div style={{ marginBottom: "30px" }}>
 				<h2>📊 Summary</h2>
 				<div style={{ background: "#f5f5f5", padding: "10px", border: "1px solid #ccc" }}>
-					<p><strong>Total Users:</strong> {users.length}</p>
-					<p><strong>Total Doctors:</strong> {doctors.length}</p>
-					<p><strong>API Working:</strong> {users.length > 0 ? "✅ Yes" : "❌ No"}</p>
-					<p><strong>Doctors Found:</strong> {doctors.length > 0 ? "✅ Yes" : "❌ No"}</p>
+					<p>
+						<strong>Total Users:</strong> {users.length}
+					</p>
+					<p>
+						<strong>Total Doctors:</strong> {doctors.length}
+					</p>
+					<p>
+						<strong>API Working:</strong> {users.length > 0 ? "✅ Yes" : "❌ No"}
+					</p>
+					<p>
+						<strong>Doctors Found:</strong> {doctors.length > 0 ? "✅ Yes" : "❌ No"}
+					</p>
 				</div>
 			</div>
 
@@ -81,8 +89,12 @@ const DirectDoctorFetchTest = () => {
 							style={{
 								padding: "8px",
 								margin: "2px",
-								backgroundColor: user.role === "doctor" ? "#e8f5e8" : 
-								                 user.role === "patient" ? "#e8f0ff" : "#fff0e8",
+								backgroundColor:
+									user.role === "doctor"
+										? "#e8f5e8"
+										: user.role === "patient"
+										? "#e8f0ff"
+										: "#fff0e8",
 								border: "1px solid #ddd",
 							}}
 						>
@@ -95,15 +107,17 @@ const DirectDoctorFetchTest = () => {
 			<div>
 				<h2>👨‍⚕️ Filtered Doctors ({doctors.length})</h2>
 				{doctors.length === 0 ? (
-					<div style={{ 
-						color: "red", 
-						fontWeight: "bold", 
-						fontSize: "18px",
-						background: "#ffe6e6",
-						padding: "20px",
-						border: "2px solid red",
-						borderRadius: "5px"
-					}}>
+					<div
+						style={{
+							color: "red",
+							fontWeight: "bold",
+							fontSize: "18px",
+							background: "#ffe6e6",
+							padding: "20px",
+							border: "2px solid red",
+							borderRadius: "5px",
+						}}
+					>
 						❌ NO DOCTORS FOUND!
 						<br />
 						<small>This indicates the filtering logic is not working correctly.</small>

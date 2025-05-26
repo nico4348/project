@@ -12,21 +12,14 @@ interface LocationState {
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [showPassword, setShowPassword] = useState(false);
-	const [error, setError] = useState("");
+	const [showPassword, setShowPassword] = useState(false);	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const { login, user } = useUser();
+	const { login } = useUser();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const locationState = location.state as LocationState;
-	const getDefaultRedirectPath = () => {
-		// If we have a user, use their role for redirection
-		if (user?.role === "patient") return "/patient/dashboard";
-		if (user?.role === "doctor") return "/doctor/dashboard";
-		if (user?.role === "admin") return "/admin/dashboard";
-		return "/";
-	};
+	
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
@@ -43,13 +36,13 @@ const Login = () => {
 
 			if (success) {
 				// Determine redirect path after successful login
-				const userData = JSON.parse(localStorage.getItem('saludplus_user') || '{}');
+				const userData = JSON.parse(localStorage.getItem("saludplus_user") || "{}");
 				let redirectPath = "/";
-				
+
 				if (userData.role === "patient") redirectPath = "/patient/dashboard";
 				else if (userData.role === "doctor") redirectPath = "/doctor/dashboard";
 				else if (userData.role === "admin") redirectPath = "/admin/dashboard";
-				
+
 				// Use the intended destination or the role-based default
 				const finalPath = locationState?.from?.pathname || redirectPath;
 				navigate(finalPath, { replace: true });

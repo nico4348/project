@@ -20,9 +20,9 @@ const AdminDashboard = () => {
 				const [appointments, users] = await Promise.all([
 					getAllAppointments(),
 					getAllUsers(),
-				]);				// Filter users by role
-				const doctors = users.filter(user => user.role === 'doctor');
-				const patients = users.filter(user => user.role === 'patient');
+				]); // Filter users by role
+				const doctors = users.filter((user) => user.role === "doctor");
+				const patients = users.filter((user) => user.role === "patient");
 
 				// Calcular citas de hoy
 				const today = new Date();

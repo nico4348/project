@@ -91,33 +91,33 @@ const UserManagement = () => {
 	const handleSubmitUser = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const formData = new FormData(event.currentTarget);
-		
+
 		try {
 			if (selectedUser) {
 				// Update existing user
 				const userData = {
 					id: selectedUser.id,
-					name: formData.get('name') as string,
-					email: formData.get('email') as string,
-					role: formData.get('role') as UserRole,
+					name: formData.get("name") as string,
+					email: formData.get("email") as string,
+					role: formData.get("role") as UserRole,
 				};
 				const updatedUser = await updateUser(userData);
-				const updatedUsers = users.map(user => 
+				const updatedUsers = users.map((user) =>
 					user.id === selectedUser.id ? updatedUser : user
 				);
 				setUsers(updatedUsers);
 			} else {
 				// Create new user
 				const newUserData: RegisterUserData = {
-					name: formData.get('name') as string,
-					email: formData.get('email') as string,
-					role: formData.get('role') as UserRole,
-					password: formData.get('password') as string,
+					name: formData.get("name") as string,
+					email: formData.get("email") as string,
+					role: formData.get("role") as UserRole,
+					password: formData.get("password") as string,
 				};
 				const newUser = await createUser(newUserData);
 				setUsers([...users, newUser]);
 			}
-			
+
 			setIsAddUserModalOpen(false);
 			setSelectedUser(null);
 		} catch (error) {

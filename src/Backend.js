@@ -11,106 +11,120 @@ const port = 5000;
 const prisma = new PrismaClient();
 
 // Middleware
-app.use(cors({
-	origin: '*', // Allow all origins for testing
-	credentials: true
-}));
+app.use(
+	cors({
+		origin: "*", // Allow all origins for testing
+		credentials: true,
+	})
+);
 app.use(bodyParser.json());
 
 // Logging middleware
 app.use((req, res, next) => {
 	console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
-	console.log('Headers:', req.headers);
+	console.log("Headers:", req.headers);
 	if (req.body && Object.keys(req.body).length > 0) {
-		console.log('Body:', req.body);
+		console.log("Body:", req.body);
 	}
 	next();
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-	console.error('Error occurred:', err);
-	res.status(500).json({ error: 'Internal server error', message: err.message });
+	console.error("Error occurred:", err);
+	res.status(500).json({ error: "Internal server error", message: err.message });
 });
 
 // ----------- AUTENTICACIÓN -----------
 app.post("/api/auth/login", async (req, res) => {
-	console.log('Login attempt:', { email: req.body.email, passwordProvided: !!req.body.contraseña });
-	console.log('Request body:', req.body);
+	console.log("Login attempt:", {
+		email: req.body.email,
+		passwordProvided: !!req.body.contraseña,
+	});
+	console.log("Request body:", req.body);
 	const { email, contraseña } = req.body;
-	
+
 	if (!email || !contraseña) {
-		console.log('Login failed: Missing email or password');
+		console.log("Login failed: Missing email or password");
 		return res.status(400).json({ error: "Email y contraseña son requeridos" });
 	}
-	
+
 	try {
 		const usuario = await prisma.usuario.findUnique({
 			where: { email: email.toLowerCase() },
 		});
-		
-		console.log('User found:', !!usuario);
+
+		console.log("User found:", !!usuario);
 		if (usuario) {
-			console.log('User data:', { id: usuario.id, email: usuario.email, stored_password: usuario.contraseña, provided_password: contraseña });
-			console.log('Password match:', usuario.contraseña === contraseña);
+			console.log("User data:", {
+				id: usuario.id,
+				email: usuario.email,
+				stored_password: usuario.contraseña,
+				provided_password: contraseña,
+			});
+			console.log("Password match:", usuario.contraseña === contraseña);
 		}
-		
+
 		if (usuario && usuario.contraseña === contraseña) {
 			// Remove password from response
 			const { contraseña: _, ...usuarioSinPassword } = usuario;
-			console.log('Login successful for user:', usuario.email);
+			console.log("Login successful for user:", usuario.email);
 			res.json(usuarioSinPassword);
 		} else {
-			console.log('Login failed: Invalid credentials');
+			console.log("Login failed: Invalid credentials");
 			res.status(401).json({ error: "Credenciales inválidas" });
 		}
 	} catch (error) {
-		console.error('Login error:', error);
+		console.error("Login error:", error);
 		res.status(500).json({ error: "Error del servidor", message: error.message });
 	}
 });
 
 app.post("/api/auth/register", async (req, res) => {
-	console.log('Registration attempt:', { 
-		nombre: req.body.nombre, 
-		email: req.body.email, 
+	console.log("Registration attempt:", {
+		nombre: req.body.nombre,
+		email: req.body.email,
 		rol: req.body.rol,
-		hasPassword: !!req.body.contraseña 
+		hasPassword: !!req.body.contraseña,
 	});
-	
+
 	const { nombre, email, contraseña, rol, fechaNacimiento, telefono } = req.body;
-	
+
 	if (!nombre || !email || !contraseña || !rol) {
-		console.log('Registration failed: Missing required fields');
+		console.log("Registration failed: Missing required fields");
 		return res.status(400).json({ error: "Todos los campos requeridos deben ser completados" });
 	}
-	
+
 	try {
 		// Check if user already exists
 		const existingUser = await prisma.usuario.findUnique({
 			where: { email: email.toLowerCase() },
 		});
-		
+
 		if (existingUser) {
 			return res.status(400).json({ error: "El email ya está registrado" });
-		}		
-		console.log('Creating new user...');
+		}
+		console.log("Creating new user...");
 		const usuario = await prisma.usuario.create({
-			data: { 
-				nombre, 
-				email: email.toLowerCase(), 
-				contraseña, 
-				rol: rol || "patient"
+			data: {
+				nombre,
+				email: email.toLowerCase(),
+				contraseña,
+				rol: rol || "patient",
 			},
 		});
-		
-		console.log('User created successfully:', { id: usuario.id, email: usuario.email, rol: usuario.rol });
-		
+
+		console.log("User created successfully:", {
+			id: usuario.id,
+			email: usuario.email,
+			rol: usuario.rol,
+		});
+
 		// Remove password from response
 		const { contraseña: _, ...usuarioSinPassword } = usuario;
 		res.status(201).json(usuarioSinPassword);
 	} catch (error) {
-		console.error('Registration error:', error);
+		console.error("Registration error:", error);
 		res.status(500).json({ error: "Error del servidor", message: error.message });
 	}
 });
@@ -124,10 +138,10 @@ app.get("/api/patients/:id/appointments", async (req, res) => {
 				medico: {
 					include: {
 						usuario: true,
-						especialidad: true
-					}
-				}
-			}
+						especialidad: true,
+					},
+				},
+			},
 		});
 		res.json(citas);
 	} catch (error) {
@@ -136,47 +150,47 @@ app.get("/api/patients/:id/appointments", async (req, res) => {
 });
 
 app.post("/api/patients/:id/appointments", async (req, res) => {
-	console.log('=== CREATE APPOINTMENT REQUEST ===');
-	console.log('Patient ID:', req.params.id);
-	console.log('Request body:', req.body);
-	
+	console.log("=== CREATE APPOINTMENT REQUEST ===");
+	console.log("Patient ID:", req.params.id);
+	console.log("Request body:", req.body);
+
 	const { fecha, hora, medico_id, notes, type } = req.body;
 	const pacienteId = parseInt(req.params.id);
 	const medicoId = parseInt(medico_id);
-	
-	console.log('Parsed data:', {
+
+	console.log("Parsed data:", {
 		fecha,
 		hora,
 		medicoId,
 		pacienteId,
 		notes,
-		type
+		type,
 	});
-	
+
 	try {
 		const cita = await prisma.cita.create({
-			data: { 
-				fecha: new Date(fecha), 
-				hora: new Date(hora), 
-				pacienteId, 
-				medicoId 
+			data: {
+				fecha: new Date(fecha),
+				hora: new Date(hora),
+				pacienteId,
+				medicoId,
 			},
 			include: {
 				paciente: true,
 				medico: {
 					include: {
 						usuario: true,
-						especialidad: true
-					}
-				}
-			}
+						especialidad: true,
+					},
+				},
+			},
 		});
-		console.log('=== APPOINTMENT CREATED SUCCESSFULLY ===');
-		console.log('Created appointment:', cita);
+		console.log("=== APPOINTMENT CREATED SUCCESSFULLY ===");
+		console.log("Created appointment:", cita);
 		res.json(cita);
 	} catch (error) {
-		console.error('=== DATABASE ERROR ===');
-		console.error('Error details:', error);
+		console.error("=== DATABASE ERROR ===");
+		console.error("Error details:", error);
 		res.status(500).send(error);
 	}
 });
@@ -223,11 +237,11 @@ app.get("/api/doctors", async (req, res) => {
 // ----------- DOCTORES -----------
 app.get("/api/doctors/:id/appointments", async (req, res) => {
 	try {
-		const citas = await prisma.cita.findMany({ 
+		const citas = await prisma.cita.findMany({
 			where: { medicoId: parseInt(req.params.id) },
 			include: {
-				paciente: true
-			}
+				paciente: true,
+			},
 		});
 		res.json(citas);
 	} catch (error) {
@@ -255,10 +269,10 @@ app.get("/api/appointments", async (req, res) => {
 				medico: {
 					include: {
 						usuario: true,
-						especialidad: true
-					}
-				}
-			}
+						especialidad: true,
+					},
+				},
+			},
 		});
 		res.json(citas);
 	} catch (error) {

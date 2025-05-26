@@ -1,8 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { getAllUsers } from "../services/userService";
 
+interface User {
+	id: string;
+	name: string;
+	email: string;
+	role: string;
+}
+
+interface TestResult {
+	success: boolean;
+	users?: User[];
+	count?: number;
+	doctors?: User[];
+	error?: string;
+}
+
 const DebugUserService = () => {
-	const [result, setResult] = useState(null);
+	const [result, setResult] = useState<TestResult | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	const testGetAllUsers = async () => {
@@ -24,14 +39,14 @@ const DebugUserService = () => {
 				users: users,
 				count: users.length,
 				doctors: users.filter((u) => u.role === "doctor"),
-			});
-		} catch (error) {
+			});		} catch (error) {
 			console.error("Error in getAllUsers:", error);
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
 			setResult({
 				success: false,
-				error: error.message,
+				error: errorMessage,
 			});
-		} finally {
+		}finally {
 			setLoading(false);
 		}
 	};
@@ -59,17 +74,16 @@ const DebugUserService = () => {
 				<div style={{ marginTop: "20px" }}>
 					{result.success ? (
 						<div>
-							<h2 style={{ color: "green" }}>✅ Success!</h2>
-							<p>
+							<h2 style={{ color: "green" }}>✅ Success!</h2>							<p>
 								<strong>Total users:</strong> {result.count}
 							</p>
 							<p>
-								<strong>Doctors found:</strong> {result.doctors.length}
+								<strong>Doctors found:</strong> {result.doctors?.length || 0}
 							</p>
 
 							<h3>All Users:</h3>
 							<div style={{ maxHeight: "200px", overflow: "auto" }}>
-								{result.users.map((user) => (
+								{result.users?.map((user: User) => (
 									<div
 										key={user.id}
 										style={{
@@ -84,14 +98,12 @@ const DebugUserService = () => {
 										<em>{user.role}</em>
 									</div>
 								))}
-							</div>
-
-							<h3>Doctors Only:</h3>
+							</div>							<h3>Doctors Only:</h3>
 							<div>
-								{result.doctors.length === 0 ? (
+								{(result.doctors?.length || 0) === 0 ? (
 									<div style={{ color: "red" }}>❌ No doctors found!</div>
 								) : (
-									result.doctors.map((doctor) => (
+									result.doctors?.map((doctor: User) => (
 										<div
 											key={doctor.id}
 											style={{

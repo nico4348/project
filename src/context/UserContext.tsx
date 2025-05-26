@@ -16,7 +16,8 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
 	const [user, setUser] = useState<UserData | null>(null);
-	const [loading, setLoading] = useState(true);	useEffect(() => {
+	const [loading, setLoading] = useState(true);
+	useEffect(() => {
 		const initAuth = async () => {
 			try {
 				const currentUser = getCurrentUser();

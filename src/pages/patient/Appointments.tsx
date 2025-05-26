@@ -60,64 +60,71 @@ const AppointmentsPatient = () => {
 		"Neurología",
 		"Pediatría",
 		"Psiquiatría",
-	];	useEffect(() => {
+	];
+	useEffect(() => {
 		const fetchData = async () => {
-			console.log('=== APPOINTMENTS DEBUG ===');
-			console.log('Starting data fetch for user:', user);
-			console.log('User object details:', JSON.stringify(user, null, 2));			try {
+			console.log("=== APPOINTMENTS DEBUG ===");
+			console.log("Starting data fetch for user:", user);
+			console.log("User object details:", JSON.stringify(user, null, 2));
+			try {
 				if (user?.id) {
-					console.log('User ID found, fetching data...');
-					console.log('About to call getAllUsers()...');					// Handle appointments and users separately to avoid Promise.all failure
+					console.log("User ID found, fetching data...");
+					console.log("About to call getAllUsers()..."); // Handle appointments and users separately to avoid Promise.all failure
 					let appointmentsData: Appointment[] = [];
 					let doctorsData: DoctorForBooking[] = [];
-					
+
 					// Fetch doctors data (this should always work)
 					try {
-						console.log('Fetching doctors from /api/doctors...');
-						const doctorsResponse = await fetch('http://localhost:5000/api/doctors');
+						console.log("Fetching doctors from /api/doctors...");
+						const doctorsResponse = await fetch("http://localhost:5000/api/doctors");
 						if (!doctorsResponse.ok) {
 							throw new Error(`HTTP error! status: ${doctorsResponse.status}`);
 						}
 						const doctorsApiData: DoctorApiResponse[] = await doctorsResponse.json();
-						console.log('Raw doctors data from API:', doctorsApiData);
-						console.log('Number of doctors fetched:', doctorsApiData.length);
-						
+						console.log("Raw doctors data from API:", doctorsApiData);
+						console.log("Number of doctors fetched:", doctorsApiData.length);
+
 						// Transform doctors data to match our interface
-						doctorsData = doctorsApiData.map(doctor => ({
+						doctorsData = doctorsApiData.map((doctor) => ({
 							id: doctor.id.toString(), // Use medico ID (1,2,3,4)
 							name: doctor.usuario.nombre,
 							email: doctor.usuario.email,
 							role: "doctor" as const,
-							specialty: doctor.especialidad.nombre
+							specialty: doctor.especialidad.nombre,
 						}));
-						console.log('Transformed doctors data:', doctorsData);
+						console.log("Transformed doctors data:", doctorsData);
 						setDoctors(doctorsData);
 					} catch (usersError) {
-						console.error('Error fetching doctors:', usersError);
-					}					
+						console.error("Error fetching doctors:", usersError);
+					}
 					// Fetch appointments data (this might fail, but shouldn't block doctors)
 					try {
-						console.log('Fetching appointments...');
+						console.log("Fetching appointments...");
 						appointmentsData = await getAppointmentsByPatient(user.id);
-						console.log('Raw appointments data:', appointmentsData);
+						console.log("Raw appointments data:", appointmentsData);
 						setAppointments(appointmentsData);
 					} catch (appointmentsError) {
-						console.error('Error fetching appointments (continuing anyway):', appointmentsError);
+						console.error(
+							"Error fetching appointments (continuing anyway):",
+							appointmentsError
+						);
 						setAppointments([]); // Set empty array if appointments fail
 					}
 				} else {
-					console.log('No user ID found, user object:', user);
-				}} catch (error) {
+					console.log("No user ID found, user object:", user);
+				}
+			} catch (error) {
 				console.error("Error al obtener datos:", error);
 				if (error instanceof Error) {
 					console.error("Error stack:", error.stack);
 				}
 			} finally {
-				console.log('Setting loading to false');
+				console.log("Setting loading to false");
 				setIsLoading(false);
-			}		};
-		
-		console.log('useEffect triggered, user state:', user);
+			}
+		};
+
+		console.log("useEffect triggered, user state:", user);
 		fetchData();
 	}, [user]);
 
@@ -131,15 +138,18 @@ const AppointmentsPatient = () => {
 	const filteredDoctors = doctors.filter((doctor) => {
 		const matchesSearch = doctor.name.toLowerCase().includes(searchQuery.toLowerCase());
 		const matchesSpecialty = !specialtyFilter || doctor.specialty === specialtyFilter;
-		console.log(`Doctor ${doctor.name}: search="${searchQuery}", specialty="${specialtyFilter}", matchesSearch=${matchesSearch}, matchesSpecialty=${matchesSpecialty}`);
+		console.log(
+			`Doctor ${doctor.name}: search="${searchQuery}", specialty="${specialtyFilter}", matchesSearch=${matchesSearch}, matchesSpecialty=${matchesSpecialty}`
+		);
 		return matchesSearch && matchesSpecialty;
 	});
-	
-	console.log('=== FILTER RESULTS ===');
-	console.log('Total doctors:', doctors.length);
-	console.log('Filtered doctors:', filteredDoctors.length);
-	console.log('Search query:', searchQuery);
-	console.log('Specialty filter:', specialtyFilter);const handleBookAppointment = async () => {
+
+	console.log("=== FILTER RESULTS ===");
+	console.log("Total doctors:", doctors.length);
+	console.log("Filtered doctors:", filteredDoctors.length);
+	console.log("Search query:", searchQuery);
+	console.log("Specialty filter:", specialtyFilter);
+	const handleBookAppointment = async () => {
 		if (selectedDoctor && selectedDate && selectedTime && user?.id) {
 			try {
 				const newAppointmentData: Omit<Appointment, "id"> = {
@@ -477,7 +487,8 @@ const AppointmentsPatient = () => {
 											<div className="ml-4">
 												<h3 className="text-lg font-medium text-gray-900">
 													Dr. {doctor.name}
-												</h3>												<p className="text-sm text-gray-500">
+												</h3>{" "}
+												<p className="text-sm text-gray-500">
 													{doctor.specialty}
 												</p>
 												<div className="mt-2 text-sm text-gray-500">

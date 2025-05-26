@@ -9,7 +9,7 @@ export interface UserData {
 	phone?: string;
 }
 
-export interface RegisterUserData extends Omit<UserData, 'id'> {
+export interface RegisterUserData extends Omit<UserData, "id"> {
 	password: string;
 }
 

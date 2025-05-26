@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { loginUser } from "../services/authService";
+import { UserData } from "../types/user";
+
+interface TestResult {
+	success: boolean;
+	user?: UserData;
+	error?: string;
+}
 
 const AuthTestComponent = () => {
-	const [result, setResult] = useState(null);
+	const [result, setResult] = useState<TestResult | null>(null);
 	const [loading, setLoading] = useState(false);
 
 	const testLogin = async () => {
@@ -10,7 +17,6 @@ const AuthTestComponent = () => {
 		setResult(null);
 
 		console.log("=== AUTH TEST ===");
-
 		try {
 			console.log("Attempting login with nico4348@gmail.com...");
 			const user = await loginUser("nico4348@gmail.com", "123456");
@@ -18,13 +24,14 @@ const AuthTestComponent = () => {
 
 			setResult({
 				success: !!user,
-				user: user,
+				user: user || undefined,
 			});
 		} catch (error) {
 			console.error("Error in login:", error);
+			const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
 			setResult({
 				success: false,
-				error: error.message,
+				error: errorMessage,
 			});
 		} finally {
 			setLoading(false);
@@ -54,18 +61,17 @@ const AuthTestComponent = () => {
 				<div style={{ marginTop: "20px" }}>
 					{result.success ? (
 						<div>
-							<h2 style={{ color: "green" }}>✅ Login Success!</h2>
-							<p>
-								<strong>User ID:</strong> {result.user.id}
+							<h2 style={{ color: "green" }}>✅ Login Success!</h2>							<p>
+								<strong>User ID:</strong> {result.user?.id}
 							</p>
 							<p>
-								<strong>Name:</strong> {result.user.name}
+								<strong>Name:</strong> {result.user?.name}
 							</p>
 							<p>
-								<strong>Email:</strong> {result.user.email}
+								<strong>Email:</strong> {result.user?.email}
 							</p>
 							<p>
-								<strong>Role:</strong> {result.user.role}
+								<strong>Role:</strong> {result.user?.role}
 							</p>
 						</div>
 					) : (
