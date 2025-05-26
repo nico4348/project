@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -15,69 +9,139 @@ datasource db {
 }
 
 model Usuario {
-  id                Int               @id @default(autoincrement())
+  id                String            @id @default(cuid())
   nombre            String
   email             String            @unique
   contraseña       String
   rol               String
+  telefono          String?
+  fechaNacimiento   DateTime?
+  fechaCreacion     DateTime          @default(now())
+  ultimaActividad   DateTime?
+  activo            Boolean           @default(true)
   medico            Medico?
   citas             Cita[]            @relation("PacienteCitas")
   historias         HistoriaClinica[] @relation("PacienteHistorias")
   mensajesEnviados  Mensaje[]         @relation("RemitenteMensajes")
   mensajesRecibidos Mensaje[]         @relation("DestinatarioMensajes")
   auditorias        Auditoria[]
+  conversaciones    Conversacion[]    @relation("PacienteConversaciones")
 }
 
 model Especialidad {
-  id      Int      @id @default(autoincrement())
-  nombre  String
+  id      String   @id @default(cuid())
+  nombre  String   @unique
+  activa  Boolean  @default(true)
   medicos Medico[]
 }
 
 model Medico {
-  id             Int               @id @default(autoincrement())
-  usuario        Usuario           @relation(fields: [usuarioId], references: [id])
-  usuarioId      Int               @unique
+  id             String            @id @default(cuid())
+  usuario        Usuario           @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  usuarioId      String            @unique
   especialidad   Especialidad      @relation(fields: [especialidadId], references: [id])
-  especialidadId Int
+  especialidadId String
+  licencia       String?
+  horarioInicio  String? // "08:00"
+  horarioFin     String? // "18:00"
   citas          Cita[]            @relation("MedicoCitas")
   historias      HistoriaClinica[]
+  conversaciones Conversacion[]    @relation("MedicoConversaciones")
 }
 
 model Cita {
-  id         Int      @id @default(autoincrement())
-  fecha      DateTime
-  hora       DateTime
-  paciente   Usuario  @relation("PacienteCitas", fields: [pacienteId], references: [id])
-  pacienteId Int
-  medico     Medico   @relation("MedicoCitas", fields: [medicoId], references: [id])
-  medicoId   Int
+  id                 String        @id @default(cuid())
+  fecha              DateTime
+  hora               DateTime
+  paciente           Usuario       @relation("PacienteCitas", fields: [pacienteId], references: [id])
+  pacienteId         String
+  medico             Medico        @relation("MedicoCitas", fields: [medicoId], references: [id])
+  medicoId           String
+  sintomas           String? // Síntomas reportados por el paciente
+  notas              String? // Notas adicionales
+  tipo               TipoCita      @default(CONSULTA)
+  estado             EstadoCita    @default(PROGRAMADA)
+  prioridad          PrioridadCita @default(NORMAL)
+  fechaCreacion      DateTime      @default(now())
+  fechaActualizacion DateTime      @updatedAt
 }
 
 model HistoriaClinica {
-  id          Int      @id @default(autoincrement())
-  paciente    Usuario  @relation("PacienteHistorias", fields: [pacienteId], references: [id])
-  pacienteId  Int
-  medico      Medico   @relation(fields: [medicoId], references: [id])
-  medicoId    Int
-  fecha       DateTime
-  descripcion String
+  id                 String    @id @default(cuid())
+  paciente           Usuario   @relation("PacienteHistorias", fields: [pacienteId], references: [id])
+  pacienteId         String
+  medico             Medico    @relation(fields: [medicoId], references: [id])
+  medicoId           String
+  fecha              DateTime  @default(now())
+  diagnostico        String
+  sintomas           String?
+  tratamiento        String?
+  medicamentos       String? // JSON string con array de medicamentos
+  alergias           String? // JSON string con array de alergias
+  signosVitales      String? // JSON string con signos vitales
+  observaciones      String?
+  proximaRevision    DateTime?
+  estado             String    @default("activo")
+  fechaActualizacion DateTime  @updatedAt
+}
+
+model Conversacion {
+  id              String    @id @default(cuid())
+  paciente        Usuario   @relation("PacienteConversaciones", fields: [pacienteId], references: [id])
+  pacienteId      String
+  medico          Medico    @relation("MedicoConversaciones", fields: [medicoId], references: [id])
+  medicoId        String
+  asunto          String?
+  estado          String    @default("activa") // activa, archivada, cerrada
+  fechaCreacion   DateTime  @default(now())
+  ultimaActividad DateTime  @updatedAt
+  mensajes        Mensaje[]
 }
 
 model Mensaje {
-  id             Int      @id @default(autoincrement())
-  remitente      Usuario  @relation("RemitenteMensajes", fields: [remitenteId], references: [id])
-  remitenteId    Int
-  destinatario   Usuario  @relation("DestinatarioMensajes", fields: [destinatarioId], references: [id])
-  destinatarioId Int
-  fecha          DateTime
-  mensaje        String
+  id             String       @id @default(cuid())
+  conversacion   Conversacion @relation(fields: [conversacionId], references: [id], onDelete: Cascade)
+  conversacionId String
+  remitente      Usuario      @relation("RemitenteMensajes", fields: [remitenteId], references: [id])
+  remitenteId    String
+  destinatario   Usuario      @relation("DestinatarioMensajes", fields: [destinatarioId], references: [id])
+  destinatarioId String
+  contenido      String       @db.Text
+  fecha          DateTime     @default(now())
+  leido          Boolean      @default(false)
+  tipoRemitente  String // "doctor" | "patient"
 }
 
 model Auditoria {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   usuario   Usuario  @relation(fields: [usuarioId], references: [id])
-  usuarioId Int
-  fecha     DateTime
+  usuarioId String
+  fecha     DateTime @default(now())
   accion    String
+  detalles  String?  @db.Text
+  ip        String?
+}
+
+enum TipoCita {
+  CONSULTA
+  SEGUIMIENTO
+  EMERGENCIA
+  ESPECIALISTA
+  CHEQUEO
+}
+
+enum EstadoCita {
+  PROGRAMADA
+  CONFIRMADA
+  EN_PROGRESO
+  COMPLETADA
+  CANCELADA
+  NO_ASISTIO
+}
+
+enum PrioridadCita {
+  BAJA
+  NORMAL
+  ALTA
+  URGENTE
 }

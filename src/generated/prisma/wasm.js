@@ -125,18 +125,27 @@ exports.Prisma.UsuarioScalarFieldEnum = {
   nombre: 'nombre',
   email: 'email',
   contraseña: 'contraseña',
-  rol: 'rol'
+  rol: 'rol',
+  telefono: 'telefono',
+  fechaNacimiento: 'fechaNacimiento',
+  fechaCreacion: 'fechaCreacion',
+  ultimaActividad: 'ultimaActividad',
+  activo: 'activo'
 };
 
 exports.Prisma.EspecialidadScalarFieldEnum = {
   id: 'id',
-  nombre: 'nombre'
+  nombre: 'nombre',
+  activa: 'activa'
 };
 
 exports.Prisma.MedicoScalarFieldEnum = {
   id: 'id',
   usuarioId: 'usuarioId',
-  especialidadId: 'especialidadId'
+  especialidadId: 'especialidadId',
+  licencia: 'licencia',
+  horarioInicio: 'horarioInicio',
+  horarioFin: 'horarioFin'
 };
 
 exports.Prisma.CitaScalarFieldEnum = {
@@ -144,7 +153,14 @@ exports.Prisma.CitaScalarFieldEnum = {
   fecha: 'fecha',
   hora: 'hora',
   pacienteId: 'pacienteId',
-  medicoId: 'medicoId'
+  medicoId: 'medicoId',
+  sintomas: 'sintomas',
+  notas: 'notas',
+  tipo: 'tipo',
+  estado: 'estado',
+  prioridad: 'prioridad',
+  fechaCreacion: 'fechaCreacion',
+  fechaActualizacion: 'fechaActualizacion'
 };
 
 exports.Prisma.HistoriaClinicaScalarFieldEnum = {
@@ -152,22 +168,46 @@ exports.Prisma.HistoriaClinicaScalarFieldEnum = {
   pacienteId: 'pacienteId',
   medicoId: 'medicoId',
   fecha: 'fecha',
-  descripcion: 'descripcion'
+  diagnostico: 'diagnostico',
+  sintomas: 'sintomas',
+  tratamiento: 'tratamiento',
+  medicamentos: 'medicamentos',
+  alergias: 'alergias',
+  signosVitales: 'signosVitales',
+  observaciones: 'observaciones',
+  proximaRevision: 'proximaRevision',
+  estado: 'estado',
+  fechaActualizacion: 'fechaActualizacion'
+};
+
+exports.Prisma.ConversacionScalarFieldEnum = {
+  id: 'id',
+  pacienteId: 'pacienteId',
+  medicoId: 'medicoId',
+  asunto: 'asunto',
+  estado: 'estado',
+  fechaCreacion: 'fechaCreacion',
+  ultimaActividad: 'ultimaActividad'
 };
 
 exports.Prisma.MensajeScalarFieldEnum = {
   id: 'id',
+  conversacionId: 'conversacionId',
   remitenteId: 'remitenteId',
   destinatarioId: 'destinatarioId',
+  contenido: 'contenido',
   fecha: 'fecha',
-  mensaje: 'mensaje'
+  leido: 'leido',
+  tipoRemitente: 'tipoRemitente'
 };
 
 exports.Prisma.AuditoriaScalarFieldEnum = {
   id: 'id',
   usuarioId: 'usuarioId',
   fecha: 'fecha',
-  accion: 'accion'
+  accion: 'accion',
+  detalles: 'detalles',
+  ip: 'ip'
 };
 
 exports.Prisma.SortOrder = {
@@ -175,29 +215,103 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.UsuarioOrderByRelevanceFieldEnum = {
+  id: 'id',
   nombre: 'nombre',
   email: 'email',
   contraseña: 'contraseña',
-  rol: 'rol'
+  rol: 'rol',
+  telefono: 'telefono'
 };
 
 exports.Prisma.EspecialidadOrderByRelevanceFieldEnum = {
+  id: 'id',
   nombre: 'nombre'
 };
 
+exports.Prisma.MedicoOrderByRelevanceFieldEnum = {
+  id: 'id',
+  usuarioId: 'usuarioId',
+  especialidadId: 'especialidadId',
+  licencia: 'licencia',
+  horarioInicio: 'horarioInicio',
+  horarioFin: 'horarioFin'
+};
+
+exports.Prisma.CitaOrderByRelevanceFieldEnum = {
+  id: 'id',
+  pacienteId: 'pacienteId',
+  medicoId: 'medicoId',
+  sintomas: 'sintomas',
+  notas: 'notas'
+};
+
 exports.Prisma.HistoriaClinicaOrderByRelevanceFieldEnum = {
-  descripcion: 'descripcion'
+  id: 'id',
+  pacienteId: 'pacienteId',
+  medicoId: 'medicoId',
+  diagnostico: 'diagnostico',
+  sintomas: 'sintomas',
+  tratamiento: 'tratamiento',
+  medicamentos: 'medicamentos',
+  alergias: 'alergias',
+  signosVitales: 'signosVitales',
+  observaciones: 'observaciones',
+  estado: 'estado'
+};
+
+exports.Prisma.ConversacionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  pacienteId: 'pacienteId',
+  medicoId: 'medicoId',
+  asunto: 'asunto',
+  estado: 'estado'
 };
 
 exports.Prisma.MensajeOrderByRelevanceFieldEnum = {
-  mensaje: 'mensaje'
+  id: 'id',
+  conversacionId: 'conversacionId',
+  remitenteId: 'remitenteId',
+  destinatarioId: 'destinatarioId',
+  contenido: 'contenido',
+  tipoRemitente: 'tipoRemitente'
 };
 
 exports.Prisma.AuditoriaOrderByRelevanceFieldEnum = {
-  accion: 'accion'
+  id: 'id',
+  usuarioId: 'usuarioId',
+  accion: 'accion',
+  detalles: 'detalles',
+  ip: 'ip'
+};
+exports.TipoCita = exports.$Enums.TipoCita = {
+  CONSULTA: 'CONSULTA',
+  SEGUIMIENTO: 'SEGUIMIENTO',
+  EMERGENCIA: 'EMERGENCIA',
+  ESPECIALISTA: 'ESPECIALISTA',
+  CHEQUEO: 'CHEQUEO'
 };
 
+exports.EstadoCita = exports.$Enums.EstadoCita = {
+  PROGRAMADA: 'PROGRAMADA',
+  CONFIRMADA: 'CONFIRMADA',
+  EN_PROGRESO: 'EN_PROGRESO',
+  COMPLETADA: 'COMPLETADA',
+  CANCELADA: 'CANCELADA',
+  NO_ASISTIO: 'NO_ASISTIO'
+};
+
+exports.PrioridadCita = exports.$Enums.PrioridadCita = {
+  BAJA: 'BAJA',
+  NORMAL: 'NORMAL',
+  ALTA: 'ALTA',
+  URGENTE: 'URGENTE'
+};
 
 exports.Prisma.ModelName = {
   Usuario: 'Usuario',
@@ -205,6 +319,7 @@ exports.Prisma.ModelName = {
   Medico: 'Medico',
   Cita: 'Cita',
   HistoriaClinica: 'HistoriaClinica',
+  Conversacion: 'Conversacion',
   Mensaje: 'Mensaje',
   Auditoria: 'Auditoria'
 };

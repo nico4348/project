@@ -159,8 +159,8 @@ const AppointmentsPatient = () => {
 					doctorName: selectedDoctor.name,
 					specialty: selectedDoctor.specialty || "Medicina General",
 					date: `${selectedDate}T${selectedTime}:00`,
-					status: "scheduled",
-					type: "in-person",
+					status: "PROGRAMADA",
+					type: "CONSULTA",
 					notes: "",
 				};
 
@@ -252,12 +252,14 @@ const AppointmentsPatient = () => {
 										<Clock className="h-4 w-4 mr-1" />
 										<span>{formatTime(appointment.date)}</span>
 									</div>
-								</div>
+								</div>{" "}
 								<div className="mt-1 flex items-center text-sm text-gray-500">
 									<MapPin className="h-4 w-4 mr-1" />
 									<span>
-										{appointment.type === "virtual"
-											? "Consulta virtual"
+										{appointment.type === "EMERGENCIA"
+											? "Consulta de Emergencia"
+											: appointment.type === "ESPECIALISTA"
+											? "Consulta de Especialista"
 											: "Centro Médico SaludPlus"}
 									</span>
 								</div>
@@ -268,10 +270,10 @@ const AppointmentsPatient = () => {
 								<>
 									<button className="px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2 sm:mb-0">
 										Reprogramar
-									</button>
+									</button>{" "}
 									<button className="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500">
-										{appointment.type === "virtual"
-											? "Unirse a consulta virtual"
+										{appointment.type === "EMERGENCIA"
+											? "Acceder a consulta de emergencia"
 											: "Registrar llegada"}
 									</button>
 								</>

@@ -39,6 +39,11 @@ export type Cita = $Result.DefaultSelection<Prisma.$CitaPayload>
  */
 export type HistoriaClinica = $Result.DefaultSelection<Prisma.$HistoriaClinicaPayload>
 /**
+ * Model Conversacion
+ * 
+ */
+export type Conversacion = $Result.DefaultSelection<Prisma.$ConversacionPayload>
+/**
  * Model Mensaje
  * 
  */
@@ -48,6 +53,56 @@ export type Mensaje = $Result.DefaultSelection<Prisma.$MensajePayload>
  * 
  */
 export type Auditoria = $Result.DefaultSelection<Prisma.$AuditoriaPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const TipoCita: {
+  CONSULTA: 'CONSULTA',
+  SEGUIMIENTO: 'SEGUIMIENTO',
+  EMERGENCIA: 'EMERGENCIA',
+  ESPECIALISTA: 'ESPECIALISTA',
+  CHEQUEO: 'CHEQUEO'
+};
+
+export type TipoCita = (typeof TipoCita)[keyof typeof TipoCita]
+
+
+export const EstadoCita: {
+  PROGRAMADA: 'PROGRAMADA',
+  CONFIRMADA: 'CONFIRMADA',
+  EN_PROGRESO: 'EN_PROGRESO',
+  COMPLETADA: 'COMPLETADA',
+  CANCELADA: 'CANCELADA',
+  NO_ASISTIO: 'NO_ASISTIO'
+};
+
+export type EstadoCita = (typeof EstadoCita)[keyof typeof EstadoCita]
+
+
+export const PrioridadCita: {
+  BAJA: 'BAJA',
+  NORMAL: 'NORMAL',
+  ALTA: 'ALTA',
+  URGENTE: 'URGENTE'
+};
+
+export type PrioridadCita = (typeof PrioridadCita)[keyof typeof PrioridadCita]
+
+}
+
+export type TipoCita = $Enums.TipoCita
+
+export const TipoCita: typeof $Enums.TipoCita
+
+export type EstadoCita = $Enums.EstadoCita
+
+export const EstadoCita: typeof $Enums.EstadoCita
+
+export type PrioridadCita = $Enums.PrioridadCita
+
+export const PrioridadCita: typeof $Enums.PrioridadCita
 
 /**
  * ##  Prisma Client ʲˢ
@@ -223,6 +278,16 @@ export class PrismaClient<
     * ```
     */
   get historiaClinica(): Prisma.HistoriaClinicaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.conversacion`: Exposes CRUD operations for the **Conversacion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Conversacions
+    * const conversacions = await prisma.conversacion.findMany()
+    * ```
+    */
+  get conversacion(): Prisma.ConversacionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.mensaje`: Exposes CRUD operations for the **Mensaje** model.
@@ -688,6 +753,7 @@ export namespace Prisma {
     Medico: 'Medico',
     Cita: 'Cita',
     HistoriaClinica: 'HistoriaClinica',
+    Conversacion: 'Conversacion',
     Mensaje: 'Mensaje',
     Auditoria: 'Auditoria'
   };
@@ -708,7 +774,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "usuario" | "especialidad" | "medico" | "cita" | "historiaClinica" | "mensaje" | "auditoria"
+      modelProps: "usuario" | "especialidad" | "medico" | "cita" | "historiaClinica" | "conversacion" | "mensaje" | "auditoria"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1042,6 +1108,72 @@ export namespace Prisma {
           }
         }
       }
+      Conversacion: {
+        payload: Prisma.$ConversacionPayload<ExtArgs>
+        fields: Prisma.ConversacionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ConversacionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ConversacionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          findFirst: {
+            args: Prisma.ConversacionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ConversacionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          findMany: {
+            args: Prisma.ConversacionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>[]
+          }
+          create: {
+            args: Prisma.ConversacionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          createMany: {
+            args: Prisma.ConversacionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ConversacionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          update: {
+            args: Prisma.ConversacionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ConversacionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ConversacionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ConversacionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ConversacionPayload>
+          }
+          aggregate: {
+            args: Prisma.ConversacionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateConversacion>
+          }
+          groupBy: {
+            args: Prisma.ConversacionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ConversacionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ConversacionCountArgs<ExtArgs>
+            result: $Utils.Optional<ConversacionCountAggregateOutputType> | number
+          }
+        }
+      }
       Mensaje: {
         payload: Prisma.$MensajePayload<ExtArgs>
         fields: Prisma.MensajeFieldRefs
@@ -1263,6 +1395,7 @@ export namespace Prisma {
     medico?: MedicoOmit
     cita?: CitaOmit
     historiaClinica?: HistoriaClinicaOmit
+    conversacion?: ConversacionOmit
     mensaje?: MensajeOmit
     auditoria?: AuditoriaOmit
   }
@@ -1364,6 +1497,7 @@ export namespace Prisma {
     mensajesEnviados: number
     mensajesRecibidos: number
     auditorias: number
+    conversaciones: number
   }
 
   export type UsuarioCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1372,6 +1506,7 @@ export namespace Prisma {
     mensajesEnviados?: boolean | UsuarioCountOutputTypeCountMensajesEnviadosArgs
     mensajesRecibidos?: boolean | UsuarioCountOutputTypeCountMensajesRecibidosArgs
     auditorias?: boolean | UsuarioCountOutputTypeCountAuditoriasArgs
+    conversaciones?: boolean | UsuarioCountOutputTypeCountConversacionesArgs
   }
 
   // Custom InputTypes
@@ -1420,6 +1555,13 @@ export namespace Prisma {
     where?: AuditoriaWhereInput
   }
 
+  /**
+   * UsuarioCountOutputType without action
+   */
+  export type UsuarioCountOutputTypeCountConversacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversacionWhereInput
+  }
+
 
   /**
    * Count Type EspecialidadCountOutputType
@@ -1459,11 +1601,13 @@ export namespace Prisma {
   export type MedicoCountOutputType = {
     citas: number
     historias: number
+    conversaciones: number
   }
 
   export type MedicoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     citas?: boolean | MedicoCountOutputTypeCountCitasArgs
     historias?: boolean | MedicoCountOutputTypeCountHistoriasArgs
+    conversaciones?: boolean | MedicoCountOutputTypeCountConversacionesArgs
   }
 
   // Custom InputTypes
@@ -1491,6 +1635,44 @@ export namespace Prisma {
     where?: HistoriaClinicaWhereInput
   }
 
+  /**
+   * MedicoCountOutputType without action
+   */
+  export type MedicoCountOutputTypeCountConversacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversacionWhereInput
+  }
+
+
+  /**
+   * Count Type ConversacionCountOutputType
+   */
+
+  export type ConversacionCountOutputType = {
+    mensajes: number
+  }
+
+  export type ConversacionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    mensajes?: boolean | ConversacionCountOutputTypeCountMensajesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ConversacionCountOutputType without action
+   */
+  export type ConversacionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ConversacionCountOutputType
+     */
+    select?: ConversacionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ConversacionCountOutputType without action
+   */
+  export type ConversacionCountOutputTypeCountMensajesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MensajeWhereInput
+  }
+
 
   /**
    * Models
@@ -1502,34 +1684,34 @@ export namespace Prisma {
 
   export type AggregateUsuario = {
     _count: UsuarioCountAggregateOutputType | null
-    _avg: UsuarioAvgAggregateOutputType | null
-    _sum: UsuarioSumAggregateOutputType | null
     _min: UsuarioMinAggregateOutputType | null
     _max: UsuarioMaxAggregateOutputType | null
   }
 
-  export type UsuarioAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type UsuarioSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type UsuarioMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     nombre: string | null
     email: string | null
     contraseña: string | null
     rol: string | null
+    telefono: string | null
+    fechaNacimiento: Date | null
+    fechaCreacion: Date | null
+    ultimaActividad: Date | null
+    activo: boolean | null
   }
 
   export type UsuarioMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     nombre: string | null
     email: string | null
     contraseña: string | null
     rol: string | null
+    telefono: string | null
+    fechaNacimiento: Date | null
+    fechaCreacion: Date | null
+    ultimaActividad: Date | null
+    activo: boolean | null
   }
 
   export type UsuarioCountAggregateOutputType = {
@@ -1538,17 +1720,14 @@ export namespace Prisma {
     email: number
     contraseña: number
     rol: number
+    telefono: number
+    fechaNacimiento: number
+    fechaCreacion: number
+    ultimaActividad: number
+    activo: number
     _all: number
   }
 
-
-  export type UsuarioAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type UsuarioSumAggregateInputType = {
-    id?: true
-  }
 
   export type UsuarioMinAggregateInputType = {
     id?: true
@@ -1556,6 +1735,11 @@ export namespace Prisma {
     email?: true
     contraseña?: true
     rol?: true
+    telefono?: true
+    fechaNacimiento?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+    activo?: true
   }
 
   export type UsuarioMaxAggregateInputType = {
@@ -1564,6 +1748,11 @@ export namespace Prisma {
     email?: true
     contraseña?: true
     rol?: true
+    telefono?: true
+    fechaNacimiento?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+    activo?: true
   }
 
   export type UsuarioCountAggregateInputType = {
@@ -1572,6 +1761,11 @@ export namespace Prisma {
     email?: true
     contraseña?: true
     rol?: true
+    telefono?: true
+    fechaNacimiento?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+    activo?: true
     _all?: true
   }
 
@@ -1613,18 +1807,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: UsuarioAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: UsuarioSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: UsuarioMinAggregateInputType
@@ -1655,21 +1837,22 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UsuarioCountAggregateInputType | true
-    _avg?: UsuarioAvgAggregateInputType
-    _sum?: UsuarioSumAggregateInputType
     _min?: UsuarioMinAggregateInputType
     _max?: UsuarioMaxAggregateInputType
   }
 
   export type UsuarioGroupByOutputType = {
-    id: number
+    id: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono: string | null
+    fechaNacimiento: Date | null
+    fechaCreacion: Date
+    ultimaActividad: Date | null
+    activo: boolean
     _count: UsuarioCountAggregateOutputType | null
-    _avg: UsuarioAvgAggregateOutputType | null
-    _sum: UsuarioSumAggregateOutputType | null
     _min: UsuarioMinAggregateOutputType | null
     _max: UsuarioMaxAggregateOutputType | null
   }
@@ -1694,12 +1877,18 @@ export namespace Prisma {
     email?: boolean
     contraseña?: boolean
     rol?: boolean
+    telefono?: boolean
+    fechaNacimiento?: boolean
+    fechaCreacion?: boolean
+    ultimaActividad?: boolean
+    activo?: boolean
     medico?: boolean | Usuario$medicoArgs<ExtArgs>
     citas?: boolean | Usuario$citasArgs<ExtArgs>
     historias?: boolean | Usuario$historiasArgs<ExtArgs>
     mensajesEnviados?: boolean | Usuario$mensajesEnviadosArgs<ExtArgs>
     mensajesRecibidos?: boolean | Usuario$mensajesRecibidosArgs<ExtArgs>
     auditorias?: boolean | Usuario$auditoriasArgs<ExtArgs>
+    conversaciones?: boolean | Usuario$conversacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["usuario"]>
 
@@ -1711,9 +1900,14 @@ export namespace Prisma {
     email?: boolean
     contraseña?: boolean
     rol?: boolean
+    telefono?: boolean
+    fechaNacimiento?: boolean
+    fechaCreacion?: boolean
+    ultimaActividad?: boolean
+    activo?: boolean
   }
 
-  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "email" | "contraseña" | "rol", ExtArgs["result"]["usuario"]>
+  export type UsuarioOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "email" | "contraseña" | "rol" | "telefono" | "fechaNacimiento" | "fechaCreacion" | "ultimaActividad" | "activo", ExtArgs["result"]["usuario"]>
   export type UsuarioInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     medico?: boolean | Usuario$medicoArgs<ExtArgs>
     citas?: boolean | Usuario$citasArgs<ExtArgs>
@@ -1721,6 +1915,7 @@ export namespace Prisma {
     mensajesEnviados?: boolean | Usuario$mensajesEnviadosArgs<ExtArgs>
     mensajesRecibidos?: boolean | Usuario$mensajesRecibidosArgs<ExtArgs>
     auditorias?: boolean | Usuario$auditoriasArgs<ExtArgs>
+    conversaciones?: boolean | Usuario$conversacionesArgs<ExtArgs>
     _count?: boolean | UsuarioCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1733,13 +1928,19 @@ export namespace Prisma {
       mensajesEnviados: Prisma.$MensajePayload<ExtArgs>[]
       mensajesRecibidos: Prisma.$MensajePayload<ExtArgs>[]
       auditorias: Prisma.$AuditoriaPayload<ExtArgs>[]
+      conversaciones: Prisma.$ConversacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       nombre: string
       email: string
       contraseña: string
       rol: string
+      telefono: string | null
+      fechaNacimiento: Date | null
+      fechaCreacion: Date
+      ultimaActividad: Date | null
+      activo: boolean
     }, ExtArgs["result"]["usuario"]>
     composites: {}
   }
@@ -2086,6 +2287,7 @@ export namespace Prisma {
     mensajesEnviados<T extends Usuario$mensajesEnviadosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$mensajesEnviadosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MensajePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mensajesRecibidos<T extends Usuario$mensajesRecibidosArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$mensajesRecibidosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MensajePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditorias<T extends Usuario$auditoriasArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$auditoriasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditoriaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    conversaciones<T extends Usuario$conversacionesArgs<ExtArgs> = {}>(args?: Subset<T, Usuario$conversacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2115,11 +2317,16 @@ export namespace Prisma {
    * Fields of the Usuario model
    */
   interface UsuarioFieldRefs {
-    readonly id: FieldRef<"Usuario", 'Int'>
+    readonly id: FieldRef<"Usuario", 'String'>
     readonly nombre: FieldRef<"Usuario", 'String'>
     readonly email: FieldRef<"Usuario", 'String'>
     readonly contraseña: FieldRef<"Usuario", 'String'>
     readonly rol: FieldRef<"Usuario", 'String'>
+    readonly telefono: FieldRef<"Usuario", 'String'>
+    readonly fechaNacimiento: FieldRef<"Usuario", 'DateTime'>
+    readonly fechaCreacion: FieldRef<"Usuario", 'DateTime'>
+    readonly ultimaActividad: FieldRef<"Usuario", 'DateTime'>
+    readonly activo: FieldRef<"Usuario", 'Boolean'>
   }
     
 
@@ -2602,6 +2809,30 @@ export namespace Prisma {
   }
 
   /**
+   * Usuario.conversaciones
+   */
+  export type Usuario$conversacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    where?: ConversacionWhereInput
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    cursor?: ConversacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversacionScalarFieldEnum | ConversacionScalarFieldEnum[]
+  }
+
+  /**
    * Usuario without action
    */
   export type UsuarioDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2626,58 +2857,46 @@ export namespace Prisma {
 
   export type AggregateEspecialidad = {
     _count: EspecialidadCountAggregateOutputType | null
-    _avg: EspecialidadAvgAggregateOutputType | null
-    _sum: EspecialidadSumAggregateOutputType | null
     _min: EspecialidadMinAggregateOutputType | null
     _max: EspecialidadMaxAggregateOutputType | null
   }
 
-  export type EspecialidadAvgAggregateOutputType = {
-    id: number | null
-  }
-
-  export type EspecialidadSumAggregateOutputType = {
-    id: number | null
-  }
-
   export type EspecialidadMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     nombre: string | null
+    activa: boolean | null
   }
 
   export type EspecialidadMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     nombre: string | null
+    activa: boolean | null
   }
 
   export type EspecialidadCountAggregateOutputType = {
     id: number
     nombre: number
+    activa: number
     _all: number
   }
 
 
-  export type EspecialidadAvgAggregateInputType = {
-    id?: true
-  }
-
-  export type EspecialidadSumAggregateInputType = {
-    id?: true
-  }
-
   export type EspecialidadMinAggregateInputType = {
     id?: true
     nombre?: true
+    activa?: true
   }
 
   export type EspecialidadMaxAggregateInputType = {
     id?: true
     nombre?: true
+    activa?: true
   }
 
   export type EspecialidadCountAggregateInputType = {
     id?: true
     nombre?: true
+    activa?: true
     _all?: true
   }
 
@@ -2719,18 +2938,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: EspecialidadAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: EspecialidadSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: EspecialidadMinAggregateInputType
@@ -2761,18 +2968,15 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: EspecialidadCountAggregateInputType | true
-    _avg?: EspecialidadAvgAggregateInputType
-    _sum?: EspecialidadSumAggregateInputType
     _min?: EspecialidadMinAggregateInputType
     _max?: EspecialidadMaxAggregateInputType
   }
 
   export type EspecialidadGroupByOutputType = {
-    id: number
+    id: string
     nombre: string
+    activa: boolean
     _count: EspecialidadCountAggregateOutputType | null
-    _avg: EspecialidadAvgAggregateOutputType | null
-    _sum: EspecialidadSumAggregateOutputType | null
     _min: EspecialidadMinAggregateOutputType | null
     _max: EspecialidadMaxAggregateOutputType | null
   }
@@ -2794,6 +2998,7 @@ export namespace Prisma {
   export type EspecialidadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     nombre?: boolean
+    activa?: boolean
     medicos?: boolean | Especialidad$medicosArgs<ExtArgs>
     _count?: boolean | EspecialidadCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["especialidad"]>
@@ -2803,9 +3008,10 @@ export namespace Prisma {
   export type EspecialidadSelectScalar = {
     id?: boolean
     nombre?: boolean
+    activa?: boolean
   }
 
-  export type EspecialidadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre", ExtArgs["result"]["especialidad"]>
+  export type EspecialidadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nombre" | "activa", ExtArgs["result"]["especialidad"]>
   export type EspecialidadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     medicos?: boolean | Especialidad$medicosArgs<ExtArgs>
     _count?: boolean | EspecialidadCountOutputTypeDefaultArgs<ExtArgs>
@@ -2817,8 +3023,9 @@ export namespace Prisma {
       medicos: Prisma.$MedicoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       nombre: string
+      activa: boolean
     }, ExtArgs["result"]["especialidad"]>
     composites: {}
   }
@@ -3189,8 +3396,9 @@ export namespace Prisma {
    * Fields of the Especialidad model
    */
   interface EspecialidadFieldRefs {
-    readonly id: FieldRef<"Especialidad", 'Int'>
+    readonly id: FieldRef<"Especialidad", 'String'>
     readonly nombre: FieldRef<"Especialidad", 'String'>
+    readonly activa: FieldRef<"Especialidad", 'Boolean'>
   }
     
 
@@ -3582,72 +3790,64 @@ export namespace Prisma {
 
   export type AggregateMedico = {
     _count: MedicoCountAggregateOutputType | null
-    _avg: MedicoAvgAggregateOutputType | null
-    _sum: MedicoSumAggregateOutputType | null
     _min: MedicoMinAggregateOutputType | null
     _max: MedicoMaxAggregateOutputType | null
   }
 
-  export type MedicoAvgAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-    especialidadId: number | null
-  }
-
-  export type MedicoSumAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-    especialidadId: number | null
-  }
-
   export type MedicoMinAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-    especialidadId: number | null
+    id: string | null
+    usuarioId: string | null
+    especialidadId: string | null
+    licencia: string | null
+    horarioInicio: string | null
+    horarioFin: string | null
   }
 
   export type MedicoMaxAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-    especialidadId: number | null
+    id: string | null
+    usuarioId: string | null
+    especialidadId: string | null
+    licencia: string | null
+    horarioInicio: string | null
+    horarioFin: string | null
   }
 
   export type MedicoCountAggregateOutputType = {
     id: number
     usuarioId: number
     especialidadId: number
+    licencia: number
+    horarioInicio: number
+    horarioFin: number
     _all: number
   }
 
-
-  export type MedicoAvgAggregateInputType = {
-    id?: true
-    usuarioId?: true
-    especialidadId?: true
-  }
-
-  export type MedicoSumAggregateInputType = {
-    id?: true
-    usuarioId?: true
-    especialidadId?: true
-  }
 
   export type MedicoMinAggregateInputType = {
     id?: true
     usuarioId?: true
     especialidadId?: true
+    licencia?: true
+    horarioInicio?: true
+    horarioFin?: true
   }
 
   export type MedicoMaxAggregateInputType = {
     id?: true
     usuarioId?: true
     especialidadId?: true
+    licencia?: true
+    horarioInicio?: true
+    horarioFin?: true
   }
 
   export type MedicoCountAggregateInputType = {
     id?: true
     usuarioId?: true
     especialidadId?: true
+    licencia?: true
+    horarioInicio?: true
+    horarioFin?: true
     _all?: true
   }
 
@@ -3689,18 +3889,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: MedicoAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MedicoSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: MedicoMinAggregateInputType
@@ -3731,19 +3919,18 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: MedicoCountAggregateInputType | true
-    _avg?: MedicoAvgAggregateInputType
-    _sum?: MedicoSumAggregateInputType
     _min?: MedicoMinAggregateInputType
     _max?: MedicoMaxAggregateInputType
   }
 
   export type MedicoGroupByOutputType = {
-    id: number
-    usuarioId: number
-    especialidadId: number
+    id: string
+    usuarioId: string
+    especialidadId: string
+    licencia: string | null
+    horarioInicio: string | null
+    horarioFin: string | null
     _count: MedicoCountAggregateOutputType | null
-    _avg: MedicoAvgAggregateOutputType | null
-    _sum: MedicoSumAggregateOutputType | null
     _min: MedicoMinAggregateOutputType | null
     _max: MedicoMaxAggregateOutputType | null
   }
@@ -3766,10 +3953,14 @@ export namespace Prisma {
     id?: boolean
     usuarioId?: boolean
     especialidadId?: boolean
+    licencia?: boolean
+    horarioInicio?: boolean
+    horarioFin?: boolean
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     especialidad?: boolean | EspecialidadDefaultArgs<ExtArgs>
     citas?: boolean | Medico$citasArgs<ExtArgs>
     historias?: boolean | Medico$historiasArgs<ExtArgs>
+    conversaciones?: boolean | Medico$conversacionesArgs<ExtArgs>
     _count?: boolean | MedicoCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["medico"]>
 
@@ -3779,14 +3970,18 @@ export namespace Prisma {
     id?: boolean
     usuarioId?: boolean
     especialidadId?: boolean
+    licencia?: boolean
+    horarioInicio?: boolean
+    horarioFin?: boolean
   }
 
-  export type MedicoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "especialidadId", ExtArgs["result"]["medico"]>
+  export type MedicoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "especialidadId" | "licencia" | "horarioInicio" | "horarioFin", ExtArgs["result"]["medico"]>
   export type MedicoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
     especialidad?: boolean | EspecialidadDefaultArgs<ExtArgs>
     citas?: boolean | Medico$citasArgs<ExtArgs>
     historias?: boolean | Medico$historiasArgs<ExtArgs>
+    conversaciones?: boolean | Medico$conversacionesArgs<ExtArgs>
     _count?: boolean | MedicoCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3797,11 +3992,15 @@ export namespace Prisma {
       especialidad: Prisma.$EspecialidadPayload<ExtArgs>
       citas: Prisma.$CitaPayload<ExtArgs>[]
       historias: Prisma.$HistoriaClinicaPayload<ExtArgs>[]
+      conversaciones: Prisma.$ConversacionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      usuarioId: number
-      especialidadId: number
+      id: string
+      usuarioId: string
+      especialidadId: string
+      licencia: string | null
+      horarioInicio: string | null
+      horarioFin: string | null
     }, ExtArgs["result"]["medico"]>
     composites: {}
   }
@@ -4146,6 +4345,7 @@ export namespace Prisma {
     especialidad<T extends EspecialidadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EspecialidadDefaultArgs<ExtArgs>>): Prisma__EspecialidadClient<$Result.GetResult<Prisma.$EspecialidadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     citas<T extends Medico$citasArgs<ExtArgs> = {}>(args?: Subset<T, Medico$citasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CitaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     historias<T extends Medico$historiasArgs<ExtArgs> = {}>(args?: Subset<T, Medico$historiasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HistoriaClinicaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    conversaciones<T extends Medico$conversacionesArgs<ExtArgs> = {}>(args?: Subset<T, Medico$conversacionesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4175,9 +4375,12 @@ export namespace Prisma {
    * Fields of the Medico model
    */
   interface MedicoFieldRefs {
-    readonly id: FieldRef<"Medico", 'Int'>
-    readonly usuarioId: FieldRef<"Medico", 'Int'>
-    readonly especialidadId: FieldRef<"Medico", 'Int'>
+    readonly id: FieldRef<"Medico", 'String'>
+    readonly usuarioId: FieldRef<"Medico", 'String'>
+    readonly especialidadId: FieldRef<"Medico", 'String'>
+    readonly licencia: FieldRef<"Medico", 'String'>
+    readonly horarioInicio: FieldRef<"Medico", 'String'>
+    readonly horarioFin: FieldRef<"Medico", 'String'>
   }
     
 
@@ -4569,6 +4772,30 @@ export namespace Prisma {
   }
 
   /**
+   * Medico.conversaciones
+   */
+  export type Medico$conversacionesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    where?: ConversacionWhereInput
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    cursor?: ConversacionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversacionScalarFieldEnum | ConversacionScalarFieldEnum[]
+  }
+
+  /**
    * Medico without action
    */
   export type MedicoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4593,38 +4820,38 @@ export namespace Prisma {
 
   export type AggregateCita = {
     _count: CitaCountAggregateOutputType | null
-    _avg: CitaAvgAggregateOutputType | null
-    _sum: CitaSumAggregateOutputType | null
     _min: CitaMinAggregateOutputType | null
     _max: CitaMaxAggregateOutputType | null
   }
 
-  export type CitaAvgAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
-  }
-
-  export type CitaSumAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
-  }
-
   export type CitaMinAggregateOutputType = {
-    id: number | null
+    id: string | null
     fecha: Date | null
     hora: Date | null
-    pacienteId: number | null
-    medicoId: number | null
+    pacienteId: string | null
+    medicoId: string | null
+    sintomas: string | null
+    notas: string | null
+    tipo: $Enums.TipoCita | null
+    estado: $Enums.EstadoCita | null
+    prioridad: $Enums.PrioridadCita | null
+    fechaCreacion: Date | null
+    fechaActualizacion: Date | null
   }
 
   export type CitaMaxAggregateOutputType = {
-    id: number | null
+    id: string | null
     fecha: Date | null
     hora: Date | null
-    pacienteId: number | null
-    medicoId: number | null
+    pacienteId: string | null
+    medicoId: string | null
+    sintomas: string | null
+    notas: string | null
+    tipo: $Enums.TipoCita | null
+    estado: $Enums.EstadoCita | null
+    prioridad: $Enums.PrioridadCita | null
+    fechaCreacion: Date | null
+    fechaActualizacion: Date | null
   }
 
   export type CitaCountAggregateOutputType = {
@@ -4633,21 +4860,16 @@ export namespace Prisma {
     hora: number
     pacienteId: number
     medicoId: number
+    sintomas: number
+    notas: number
+    tipo: number
+    estado: number
+    prioridad: number
+    fechaCreacion: number
+    fechaActualizacion: number
     _all: number
   }
 
-
-  export type CitaAvgAggregateInputType = {
-    id?: true
-    pacienteId?: true
-    medicoId?: true
-  }
-
-  export type CitaSumAggregateInputType = {
-    id?: true
-    pacienteId?: true
-    medicoId?: true
-  }
 
   export type CitaMinAggregateInputType = {
     id?: true
@@ -4655,6 +4877,13 @@ export namespace Prisma {
     hora?: true
     pacienteId?: true
     medicoId?: true
+    sintomas?: true
+    notas?: true
+    tipo?: true
+    estado?: true
+    prioridad?: true
+    fechaCreacion?: true
+    fechaActualizacion?: true
   }
 
   export type CitaMaxAggregateInputType = {
@@ -4663,6 +4892,13 @@ export namespace Prisma {
     hora?: true
     pacienteId?: true
     medicoId?: true
+    sintomas?: true
+    notas?: true
+    tipo?: true
+    estado?: true
+    prioridad?: true
+    fechaCreacion?: true
+    fechaActualizacion?: true
   }
 
   export type CitaCountAggregateInputType = {
@@ -4671,6 +4907,13 @@ export namespace Prisma {
     hora?: true
     pacienteId?: true
     medicoId?: true
+    sintomas?: true
+    notas?: true
+    tipo?: true
+    estado?: true
+    prioridad?: true
+    fechaCreacion?: true
+    fechaActualizacion?: true
     _all?: true
   }
 
@@ -4712,18 +4955,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: CitaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: CitaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: CitaMinAggregateInputType
@@ -4754,21 +4985,24 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: CitaCountAggregateInputType | true
-    _avg?: CitaAvgAggregateInputType
-    _sum?: CitaSumAggregateInputType
     _min?: CitaMinAggregateInputType
     _max?: CitaMaxAggregateInputType
   }
 
   export type CitaGroupByOutputType = {
-    id: number
+    id: string
     fecha: Date
     hora: Date
-    pacienteId: number
-    medicoId: number
+    pacienteId: string
+    medicoId: string
+    sintomas: string | null
+    notas: string | null
+    tipo: $Enums.TipoCita
+    estado: $Enums.EstadoCita
+    prioridad: $Enums.PrioridadCita
+    fechaCreacion: Date
+    fechaActualizacion: Date
     _count: CitaCountAggregateOutputType | null
-    _avg: CitaAvgAggregateOutputType | null
-    _sum: CitaSumAggregateOutputType | null
     _min: CitaMinAggregateOutputType | null
     _max: CitaMaxAggregateOutputType | null
   }
@@ -4793,6 +5027,13 @@ export namespace Prisma {
     hora?: boolean
     pacienteId?: boolean
     medicoId?: boolean
+    sintomas?: boolean
+    notas?: boolean
+    tipo?: boolean
+    estado?: boolean
+    prioridad?: boolean
+    fechaCreacion?: boolean
+    fechaActualizacion?: boolean
     paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
     medico?: boolean | MedicoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cita"]>
@@ -4805,9 +5046,16 @@ export namespace Prisma {
     hora?: boolean
     pacienteId?: boolean
     medicoId?: boolean
+    sintomas?: boolean
+    notas?: boolean
+    tipo?: boolean
+    estado?: boolean
+    prioridad?: boolean
+    fechaCreacion?: boolean
+    fechaActualizacion?: boolean
   }
 
-  export type CitaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fecha" | "hora" | "pacienteId" | "medicoId", ExtArgs["result"]["cita"]>
+  export type CitaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fecha" | "hora" | "pacienteId" | "medicoId" | "sintomas" | "notas" | "tipo" | "estado" | "prioridad" | "fechaCreacion" | "fechaActualizacion", ExtArgs["result"]["cita"]>
   export type CitaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
     medico?: boolean | MedicoDefaultArgs<ExtArgs>
@@ -4820,11 +5068,18 @@ export namespace Prisma {
       medico: Prisma.$MedicoPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
+      id: string
       fecha: Date
       hora: Date
-      pacienteId: number
-      medicoId: number
+      pacienteId: string
+      medicoId: string
+      sintomas: string | null
+      notas: string | null
+      tipo: $Enums.TipoCita
+      estado: $Enums.EstadoCita
+      prioridad: $Enums.PrioridadCita
+      fechaCreacion: Date
+      fechaActualizacion: Date
     }, ExtArgs["result"]["cita"]>
     composites: {}
   }
@@ -5196,11 +5451,18 @@ export namespace Prisma {
    * Fields of the Cita model
    */
   interface CitaFieldRefs {
-    readonly id: FieldRef<"Cita", 'Int'>
+    readonly id: FieldRef<"Cita", 'String'>
     readonly fecha: FieldRef<"Cita", 'DateTime'>
     readonly hora: FieldRef<"Cita", 'DateTime'>
-    readonly pacienteId: FieldRef<"Cita", 'Int'>
-    readonly medicoId: FieldRef<"Cita", 'Int'>
+    readonly pacienteId: FieldRef<"Cita", 'String'>
+    readonly medicoId: FieldRef<"Cita", 'String'>
+    readonly sintomas: FieldRef<"Cita", 'String'>
+    readonly notas: FieldRef<"Cita", 'String'>
+    readonly tipo: FieldRef<"Cita", 'TipoCita'>
+    readonly estado: FieldRef<"Cita", 'EstadoCita'>
+    readonly prioridad: FieldRef<"Cita", 'PrioridadCita'>
+    readonly fechaCreacion: FieldRef<"Cita", 'DateTime'>
+    readonly fechaActualizacion: FieldRef<"Cita", 'DateTime'>
   }
     
 
@@ -5568,38 +5830,42 @@ export namespace Prisma {
 
   export type AggregateHistoriaClinica = {
     _count: HistoriaClinicaCountAggregateOutputType | null
-    _avg: HistoriaClinicaAvgAggregateOutputType | null
-    _sum: HistoriaClinicaSumAggregateOutputType | null
     _min: HistoriaClinicaMinAggregateOutputType | null
     _max: HistoriaClinicaMaxAggregateOutputType | null
   }
 
-  export type HistoriaClinicaAvgAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
-  }
-
-  export type HistoriaClinicaSumAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
-  }
-
   export type HistoriaClinicaMinAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
+    id: string | null
+    pacienteId: string | null
+    medicoId: string | null
     fecha: Date | null
-    descripcion: string | null
+    diagnostico: string | null
+    sintomas: string | null
+    tratamiento: string | null
+    medicamentos: string | null
+    alergias: string | null
+    signosVitales: string | null
+    observaciones: string | null
+    proximaRevision: Date | null
+    estado: string | null
+    fechaActualizacion: Date | null
   }
 
   export type HistoriaClinicaMaxAggregateOutputType = {
-    id: number | null
-    pacienteId: number | null
-    medicoId: number | null
+    id: string | null
+    pacienteId: string | null
+    medicoId: string | null
     fecha: Date | null
-    descripcion: string | null
+    diagnostico: string | null
+    sintomas: string | null
+    tratamiento: string | null
+    medicamentos: string | null
+    alergias: string | null
+    signosVitales: string | null
+    observaciones: string | null
+    proximaRevision: Date | null
+    estado: string | null
+    fechaActualizacion: Date | null
   }
 
   export type HistoriaClinicaCountAggregateOutputType = {
@@ -5607,29 +5873,35 @@ export namespace Prisma {
     pacienteId: number
     medicoId: number
     fecha: number
-    descripcion: number
+    diagnostico: number
+    sintomas: number
+    tratamiento: number
+    medicamentos: number
+    alergias: number
+    signosVitales: number
+    observaciones: number
+    proximaRevision: number
+    estado: number
+    fechaActualizacion: number
     _all: number
   }
 
-
-  export type HistoriaClinicaAvgAggregateInputType = {
-    id?: true
-    pacienteId?: true
-    medicoId?: true
-  }
-
-  export type HistoriaClinicaSumAggregateInputType = {
-    id?: true
-    pacienteId?: true
-    medicoId?: true
-  }
 
   export type HistoriaClinicaMinAggregateInputType = {
     id?: true
     pacienteId?: true
     medicoId?: true
     fecha?: true
-    descripcion?: true
+    diagnostico?: true
+    sintomas?: true
+    tratamiento?: true
+    medicamentos?: true
+    alergias?: true
+    signosVitales?: true
+    observaciones?: true
+    proximaRevision?: true
+    estado?: true
+    fechaActualizacion?: true
   }
 
   export type HistoriaClinicaMaxAggregateInputType = {
@@ -5637,7 +5909,16 @@ export namespace Prisma {
     pacienteId?: true
     medicoId?: true
     fecha?: true
-    descripcion?: true
+    diagnostico?: true
+    sintomas?: true
+    tratamiento?: true
+    medicamentos?: true
+    alergias?: true
+    signosVitales?: true
+    observaciones?: true
+    proximaRevision?: true
+    estado?: true
+    fechaActualizacion?: true
   }
 
   export type HistoriaClinicaCountAggregateInputType = {
@@ -5645,7 +5926,16 @@ export namespace Prisma {
     pacienteId?: true
     medicoId?: true
     fecha?: true
-    descripcion?: true
+    diagnostico?: true
+    sintomas?: true
+    tratamiento?: true
+    medicamentos?: true
+    alergias?: true
+    signosVitales?: true
+    observaciones?: true
+    proximaRevision?: true
+    estado?: true
+    fechaActualizacion?: true
     _all?: true
   }
 
@@ -5687,18 +5977,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: HistoriaClinicaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: HistoriaClinicaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: HistoriaClinicaMinAggregateInputType
@@ -5729,21 +6007,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: HistoriaClinicaCountAggregateInputType | true
-    _avg?: HistoriaClinicaAvgAggregateInputType
-    _sum?: HistoriaClinicaSumAggregateInputType
     _min?: HistoriaClinicaMinAggregateInputType
     _max?: HistoriaClinicaMaxAggregateInputType
   }
 
   export type HistoriaClinicaGroupByOutputType = {
-    id: number
-    pacienteId: number
-    medicoId: number
+    id: string
+    pacienteId: string
+    medicoId: string
     fecha: Date
-    descripcion: string
+    diagnostico: string
+    sintomas: string | null
+    tratamiento: string | null
+    medicamentos: string | null
+    alergias: string | null
+    signosVitales: string | null
+    observaciones: string | null
+    proximaRevision: Date | null
+    estado: string
+    fechaActualizacion: Date
     _count: HistoriaClinicaCountAggregateOutputType | null
-    _avg: HistoriaClinicaAvgAggregateOutputType | null
-    _sum: HistoriaClinicaSumAggregateOutputType | null
     _min: HistoriaClinicaMinAggregateOutputType | null
     _max: HistoriaClinicaMaxAggregateOutputType | null
   }
@@ -5767,7 +6050,16 @@ export namespace Prisma {
     pacienteId?: boolean
     medicoId?: boolean
     fecha?: boolean
-    descripcion?: boolean
+    diagnostico?: boolean
+    sintomas?: boolean
+    tratamiento?: boolean
+    medicamentos?: boolean
+    alergias?: boolean
+    signosVitales?: boolean
+    observaciones?: boolean
+    proximaRevision?: boolean
+    estado?: boolean
+    fechaActualizacion?: boolean
     paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
     medico?: boolean | MedicoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["historiaClinica"]>
@@ -5779,10 +6071,19 @@ export namespace Prisma {
     pacienteId?: boolean
     medicoId?: boolean
     fecha?: boolean
-    descripcion?: boolean
+    diagnostico?: boolean
+    sintomas?: boolean
+    tratamiento?: boolean
+    medicamentos?: boolean
+    alergias?: boolean
+    signosVitales?: boolean
+    observaciones?: boolean
+    proximaRevision?: boolean
+    estado?: boolean
+    fechaActualizacion?: boolean
   }
 
-  export type HistoriaClinicaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pacienteId" | "medicoId" | "fecha" | "descripcion", ExtArgs["result"]["historiaClinica"]>
+  export type HistoriaClinicaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pacienteId" | "medicoId" | "fecha" | "diagnostico" | "sintomas" | "tratamiento" | "medicamentos" | "alergias" | "signosVitales" | "observaciones" | "proximaRevision" | "estado" | "fechaActualizacion", ExtArgs["result"]["historiaClinica"]>
   export type HistoriaClinicaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
     medico?: boolean | MedicoDefaultArgs<ExtArgs>
@@ -5795,11 +6096,20 @@ export namespace Prisma {
       medico: Prisma.$MedicoPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      pacienteId: number
-      medicoId: number
+      id: string
+      pacienteId: string
+      medicoId: string
       fecha: Date
-      descripcion: string
+      diagnostico: string
+      sintomas: string | null
+      tratamiento: string | null
+      medicamentos: string | null
+      alergias: string | null
+      signosVitales: string | null
+      observaciones: string | null
+      proximaRevision: Date | null
+      estado: string
+      fechaActualizacion: Date
     }, ExtArgs["result"]["historiaClinica"]>
     composites: {}
   }
@@ -6171,11 +6481,20 @@ export namespace Prisma {
    * Fields of the HistoriaClinica model
    */
   interface HistoriaClinicaFieldRefs {
-    readonly id: FieldRef<"HistoriaClinica", 'Int'>
-    readonly pacienteId: FieldRef<"HistoriaClinica", 'Int'>
-    readonly medicoId: FieldRef<"HistoriaClinica", 'Int'>
+    readonly id: FieldRef<"HistoriaClinica", 'String'>
+    readonly pacienteId: FieldRef<"HistoriaClinica", 'String'>
+    readonly medicoId: FieldRef<"HistoriaClinica", 'String'>
     readonly fecha: FieldRef<"HistoriaClinica", 'DateTime'>
-    readonly descripcion: FieldRef<"HistoriaClinica", 'String'>
+    readonly diagnostico: FieldRef<"HistoriaClinica", 'String'>
+    readonly sintomas: FieldRef<"HistoriaClinica", 'String'>
+    readonly tratamiento: FieldRef<"HistoriaClinica", 'String'>
+    readonly medicamentos: FieldRef<"HistoriaClinica", 'String'>
+    readonly alergias: FieldRef<"HistoriaClinica", 'String'>
+    readonly signosVitales: FieldRef<"HistoriaClinica", 'String'>
+    readonly observaciones: FieldRef<"HistoriaClinica", 'String'>
+    readonly proximaRevision: FieldRef<"HistoriaClinica", 'DateTime'>
+    readonly estado: FieldRef<"HistoriaClinica", 'String'>
+    readonly fechaActualizacion: FieldRef<"HistoriaClinica", 'DateTime'>
   }
     
 
@@ -6538,89 +6857,1066 @@ export namespace Prisma {
 
 
   /**
+   * Model Conversacion
+   */
+
+  export type AggregateConversacion = {
+    _count: ConversacionCountAggregateOutputType | null
+    _min: ConversacionMinAggregateOutputType | null
+    _max: ConversacionMaxAggregateOutputType | null
+  }
+
+  export type ConversacionMinAggregateOutputType = {
+    id: string | null
+    pacienteId: string | null
+    medicoId: string | null
+    asunto: string | null
+    estado: string | null
+    fechaCreacion: Date | null
+    ultimaActividad: Date | null
+  }
+
+  export type ConversacionMaxAggregateOutputType = {
+    id: string | null
+    pacienteId: string | null
+    medicoId: string | null
+    asunto: string | null
+    estado: string | null
+    fechaCreacion: Date | null
+    ultimaActividad: Date | null
+  }
+
+  export type ConversacionCountAggregateOutputType = {
+    id: number
+    pacienteId: number
+    medicoId: number
+    asunto: number
+    estado: number
+    fechaCreacion: number
+    ultimaActividad: number
+    _all: number
+  }
+
+
+  export type ConversacionMinAggregateInputType = {
+    id?: true
+    pacienteId?: true
+    medicoId?: true
+    asunto?: true
+    estado?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+  }
+
+  export type ConversacionMaxAggregateInputType = {
+    id?: true
+    pacienteId?: true
+    medicoId?: true
+    asunto?: true
+    estado?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+  }
+
+  export type ConversacionCountAggregateInputType = {
+    id?: true
+    pacienteId?: true
+    medicoId?: true
+    asunto?: true
+    estado?: true
+    fechaCreacion?: true
+    ultimaActividad?: true
+    _all?: true
+  }
+
+  export type ConversacionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Conversacion to aggregate.
+     */
+    where?: ConversacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Conversacions to fetch.
+     */
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ConversacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Conversacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Conversacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Conversacions
+    **/
+    _count?: true | ConversacionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ConversacionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ConversacionMaxAggregateInputType
+  }
+
+  export type GetConversacionAggregateType<T extends ConversacionAggregateArgs> = {
+        [P in keyof T & keyof AggregateConversacion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateConversacion[P]>
+      : GetScalarType<T[P], AggregateConversacion[P]>
+  }
+
+
+
+
+  export type ConversacionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversacionWhereInput
+    orderBy?: ConversacionOrderByWithAggregationInput | ConversacionOrderByWithAggregationInput[]
+    by: ConversacionScalarFieldEnum[] | ConversacionScalarFieldEnum
+    having?: ConversacionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ConversacionCountAggregateInputType | true
+    _min?: ConversacionMinAggregateInputType
+    _max?: ConversacionMaxAggregateInputType
+  }
+
+  export type ConversacionGroupByOutputType = {
+    id: string
+    pacienteId: string
+    medicoId: string
+    asunto: string | null
+    estado: string
+    fechaCreacion: Date
+    ultimaActividad: Date
+    _count: ConversacionCountAggregateOutputType | null
+    _min: ConversacionMinAggregateOutputType | null
+    _max: ConversacionMaxAggregateOutputType | null
+  }
+
+  type GetConversacionGroupByPayload<T extends ConversacionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ConversacionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ConversacionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ConversacionGroupByOutputType[P]>
+            : GetScalarType<T[P], ConversacionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ConversacionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    pacienteId?: boolean
+    medicoId?: boolean
+    asunto?: boolean
+    estado?: boolean
+    fechaCreacion?: boolean
+    ultimaActividad?: boolean
+    paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
+    medico?: boolean | MedicoDefaultArgs<ExtArgs>
+    mensajes?: boolean | Conversacion$mensajesArgs<ExtArgs>
+    _count?: boolean | ConversacionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["conversacion"]>
+
+
+
+  export type ConversacionSelectScalar = {
+    id?: boolean
+    pacienteId?: boolean
+    medicoId?: boolean
+    asunto?: boolean
+    estado?: boolean
+    fechaCreacion?: boolean
+    ultimaActividad?: boolean
+  }
+
+  export type ConversacionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "pacienteId" | "medicoId" | "asunto" | "estado" | "fechaCreacion" | "ultimaActividad", ExtArgs["result"]["conversacion"]>
+  export type ConversacionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paciente?: boolean | UsuarioDefaultArgs<ExtArgs>
+    medico?: boolean | MedicoDefaultArgs<ExtArgs>
+    mensajes?: boolean | Conversacion$mensajesArgs<ExtArgs>
+    _count?: boolean | ConversacionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ConversacionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Conversacion"
+    objects: {
+      paciente: Prisma.$UsuarioPayload<ExtArgs>
+      medico: Prisma.$MedicoPayload<ExtArgs>
+      mensajes: Prisma.$MensajePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      pacienteId: string
+      medicoId: string
+      asunto: string | null
+      estado: string
+      fechaCreacion: Date
+      ultimaActividad: Date
+    }, ExtArgs["result"]["conversacion"]>
+    composites: {}
+  }
+
+  type ConversacionGetPayload<S extends boolean | null | undefined | ConversacionDefaultArgs> = $Result.GetResult<Prisma.$ConversacionPayload, S>
+
+  type ConversacionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ConversacionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ConversacionCountAggregateInputType | true
+    }
+
+  export interface ConversacionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Conversacion'], meta: { name: 'Conversacion' } }
+    /**
+     * Find zero or one Conversacion that matches the filter.
+     * @param {ConversacionFindUniqueArgs} args - Arguments to find a Conversacion
+     * @example
+     * // Get one Conversacion
+     * const conversacion = await prisma.conversacion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ConversacionFindUniqueArgs>(args: SelectSubset<T, ConversacionFindUniqueArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Conversacion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ConversacionFindUniqueOrThrowArgs} args - Arguments to find a Conversacion
+     * @example
+     * // Get one Conversacion
+     * const conversacion = await prisma.conversacion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ConversacionFindUniqueOrThrowArgs>(args: SelectSubset<T, ConversacionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Conversacion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionFindFirstArgs} args - Arguments to find a Conversacion
+     * @example
+     * // Get one Conversacion
+     * const conversacion = await prisma.conversacion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ConversacionFindFirstArgs>(args?: SelectSubset<T, ConversacionFindFirstArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Conversacion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionFindFirstOrThrowArgs} args - Arguments to find a Conversacion
+     * @example
+     * // Get one Conversacion
+     * const conversacion = await prisma.conversacion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ConversacionFindFirstOrThrowArgs>(args?: SelectSubset<T, ConversacionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Conversacions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Conversacions
+     * const conversacions = await prisma.conversacion.findMany()
+     * 
+     * // Get first 10 Conversacions
+     * const conversacions = await prisma.conversacion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const conversacionWithIdOnly = await prisma.conversacion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ConversacionFindManyArgs>(args?: SelectSubset<T, ConversacionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Conversacion.
+     * @param {ConversacionCreateArgs} args - Arguments to create a Conversacion.
+     * @example
+     * // Create one Conversacion
+     * const Conversacion = await prisma.conversacion.create({
+     *   data: {
+     *     // ... data to create a Conversacion
+     *   }
+     * })
+     * 
+     */
+    create<T extends ConversacionCreateArgs>(args: SelectSubset<T, ConversacionCreateArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Conversacions.
+     * @param {ConversacionCreateManyArgs} args - Arguments to create many Conversacions.
+     * @example
+     * // Create many Conversacions
+     * const conversacion = await prisma.conversacion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ConversacionCreateManyArgs>(args?: SelectSubset<T, ConversacionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Conversacion.
+     * @param {ConversacionDeleteArgs} args - Arguments to delete one Conversacion.
+     * @example
+     * // Delete one Conversacion
+     * const Conversacion = await prisma.conversacion.delete({
+     *   where: {
+     *     // ... filter to delete one Conversacion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ConversacionDeleteArgs>(args: SelectSubset<T, ConversacionDeleteArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Conversacion.
+     * @param {ConversacionUpdateArgs} args - Arguments to update one Conversacion.
+     * @example
+     * // Update one Conversacion
+     * const conversacion = await prisma.conversacion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ConversacionUpdateArgs>(args: SelectSubset<T, ConversacionUpdateArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Conversacions.
+     * @param {ConversacionDeleteManyArgs} args - Arguments to filter Conversacions to delete.
+     * @example
+     * // Delete a few Conversacions
+     * const { count } = await prisma.conversacion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ConversacionDeleteManyArgs>(args?: SelectSubset<T, ConversacionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Conversacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Conversacions
+     * const conversacion = await prisma.conversacion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ConversacionUpdateManyArgs>(args: SelectSubset<T, ConversacionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Conversacion.
+     * @param {ConversacionUpsertArgs} args - Arguments to update or create a Conversacion.
+     * @example
+     * // Update or create a Conversacion
+     * const conversacion = await prisma.conversacion.upsert({
+     *   create: {
+     *     // ... data to create a Conversacion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Conversacion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ConversacionUpsertArgs>(args: SelectSubset<T, ConversacionUpsertArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Conversacions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionCountArgs} args - Arguments to filter Conversacions to count.
+     * @example
+     * // Count the number of Conversacions
+     * const count = await prisma.conversacion.count({
+     *   where: {
+     *     // ... the filter for the Conversacions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ConversacionCountArgs>(
+      args?: Subset<T, ConversacionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ConversacionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Conversacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ConversacionAggregateArgs>(args: Subset<T, ConversacionAggregateArgs>): Prisma.PrismaPromise<GetConversacionAggregateType<T>>
+
+    /**
+     * Group by Conversacion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ConversacionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ConversacionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ConversacionGroupByArgs['orderBy'] }
+        : { orderBy?: ConversacionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ConversacionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetConversacionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Conversacion model
+   */
+  readonly fields: ConversacionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Conversacion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ConversacionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    paciente<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    medico<T extends MedicoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MedicoDefaultArgs<ExtArgs>>): Prisma__MedicoClient<$Result.GetResult<Prisma.$MedicoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    mensajes<T extends Conversacion$mensajesArgs<ExtArgs> = {}>(args?: Subset<T, Conversacion$mensajesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MensajePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Conversacion model
+   */
+  interface ConversacionFieldRefs {
+    readonly id: FieldRef<"Conversacion", 'String'>
+    readonly pacienteId: FieldRef<"Conversacion", 'String'>
+    readonly medicoId: FieldRef<"Conversacion", 'String'>
+    readonly asunto: FieldRef<"Conversacion", 'String'>
+    readonly estado: FieldRef<"Conversacion", 'String'>
+    readonly fechaCreacion: FieldRef<"Conversacion", 'DateTime'>
+    readonly ultimaActividad: FieldRef<"Conversacion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Conversacion findUnique
+   */
+  export type ConversacionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Conversacion to fetch.
+     */
+    where: ConversacionWhereUniqueInput
+  }
+
+  /**
+   * Conversacion findUniqueOrThrow
+   */
+  export type ConversacionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Conversacion to fetch.
+     */
+    where: ConversacionWhereUniqueInput
+  }
+
+  /**
+   * Conversacion findFirst
+   */
+  export type ConversacionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Conversacion to fetch.
+     */
+    where?: ConversacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Conversacions to fetch.
+     */
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Conversacions.
+     */
+    cursor?: ConversacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Conversacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Conversacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Conversacions.
+     */
+    distinct?: ConversacionScalarFieldEnum | ConversacionScalarFieldEnum[]
+  }
+
+  /**
+   * Conversacion findFirstOrThrow
+   */
+  export type ConversacionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Conversacion to fetch.
+     */
+    where?: ConversacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Conversacions to fetch.
+     */
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Conversacions.
+     */
+    cursor?: ConversacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Conversacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Conversacions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Conversacions.
+     */
+    distinct?: ConversacionScalarFieldEnum | ConversacionScalarFieldEnum[]
+  }
+
+  /**
+   * Conversacion findMany
+   */
+  export type ConversacionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter, which Conversacions to fetch.
+     */
+    where?: ConversacionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Conversacions to fetch.
+     */
+    orderBy?: ConversacionOrderByWithRelationInput | ConversacionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Conversacions.
+     */
+    cursor?: ConversacionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Conversacions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Conversacions.
+     */
+    skip?: number
+    distinct?: ConversacionScalarFieldEnum | ConversacionScalarFieldEnum[]
+  }
+
+  /**
+   * Conversacion create
+   */
+  export type ConversacionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Conversacion.
+     */
+    data: XOR<ConversacionCreateInput, ConversacionUncheckedCreateInput>
+  }
+
+  /**
+   * Conversacion createMany
+   */
+  export type ConversacionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Conversacions.
+     */
+    data: ConversacionCreateManyInput | ConversacionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Conversacion update
+   */
+  export type ConversacionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Conversacion.
+     */
+    data: XOR<ConversacionUpdateInput, ConversacionUncheckedUpdateInput>
+    /**
+     * Choose, which Conversacion to update.
+     */
+    where: ConversacionWhereUniqueInput
+  }
+
+  /**
+   * Conversacion updateMany
+   */
+  export type ConversacionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Conversacions.
+     */
+    data: XOR<ConversacionUpdateManyMutationInput, ConversacionUncheckedUpdateManyInput>
+    /**
+     * Filter which Conversacions to update
+     */
+    where?: ConversacionWhereInput
+    /**
+     * Limit how many Conversacions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Conversacion upsert
+   */
+  export type ConversacionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Conversacion to update in case it exists.
+     */
+    where: ConversacionWhereUniqueInput
+    /**
+     * In case the Conversacion found by the `where` argument doesn't exist, create a new Conversacion with this data.
+     */
+    create: XOR<ConversacionCreateInput, ConversacionUncheckedCreateInput>
+    /**
+     * In case the Conversacion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ConversacionUpdateInput, ConversacionUncheckedUpdateInput>
+  }
+
+  /**
+   * Conversacion delete
+   */
+  export type ConversacionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+    /**
+     * Filter which Conversacion to delete.
+     */
+    where: ConversacionWhereUniqueInput
+  }
+
+  /**
+   * Conversacion deleteMany
+   */
+  export type ConversacionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Conversacions to delete
+     */
+    where?: ConversacionWhereInput
+    /**
+     * Limit how many Conversacions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Conversacion.mensajes
+   */
+  export type Conversacion$mensajesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Mensaje
+     */
+    select?: MensajeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Mensaje
+     */
+    omit?: MensajeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MensajeInclude<ExtArgs> | null
+    where?: MensajeWhereInput
+    orderBy?: MensajeOrderByWithRelationInput | MensajeOrderByWithRelationInput[]
+    cursor?: MensajeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MensajeScalarFieldEnum | MensajeScalarFieldEnum[]
+  }
+
+  /**
+   * Conversacion without action
+   */
+  export type ConversacionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversacion
+     */
+    select?: ConversacionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversacion
+     */
+    omit?: ConversacionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversacionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Mensaje
    */
 
   export type AggregateMensaje = {
     _count: MensajeCountAggregateOutputType | null
-    _avg: MensajeAvgAggregateOutputType | null
-    _sum: MensajeSumAggregateOutputType | null
     _min: MensajeMinAggregateOutputType | null
     _max: MensajeMaxAggregateOutputType | null
   }
 
-  export type MensajeAvgAggregateOutputType = {
-    id: number | null
-    remitenteId: number | null
-    destinatarioId: number | null
-  }
-
-  export type MensajeSumAggregateOutputType = {
-    id: number | null
-    remitenteId: number | null
-    destinatarioId: number | null
-  }
-
   export type MensajeMinAggregateOutputType = {
-    id: number | null
-    remitenteId: number | null
-    destinatarioId: number | null
+    id: string | null
+    conversacionId: string | null
+    remitenteId: string | null
+    destinatarioId: string | null
+    contenido: string | null
     fecha: Date | null
-    mensaje: string | null
+    leido: boolean | null
+    tipoRemitente: string | null
   }
 
   export type MensajeMaxAggregateOutputType = {
-    id: number | null
-    remitenteId: number | null
-    destinatarioId: number | null
+    id: string | null
+    conversacionId: string | null
+    remitenteId: string | null
+    destinatarioId: string | null
+    contenido: string | null
     fecha: Date | null
-    mensaje: string | null
+    leido: boolean | null
+    tipoRemitente: string | null
   }
 
   export type MensajeCountAggregateOutputType = {
     id: number
+    conversacionId: number
     remitenteId: number
     destinatarioId: number
+    contenido: number
     fecha: number
-    mensaje: number
+    leido: number
+    tipoRemitente: number
     _all: number
   }
 
 
-  export type MensajeAvgAggregateInputType = {
-    id?: true
-    remitenteId?: true
-    destinatarioId?: true
-  }
-
-  export type MensajeSumAggregateInputType = {
-    id?: true
-    remitenteId?: true
-    destinatarioId?: true
-  }
-
   export type MensajeMinAggregateInputType = {
     id?: true
+    conversacionId?: true
     remitenteId?: true
     destinatarioId?: true
+    contenido?: true
     fecha?: true
-    mensaje?: true
+    leido?: true
+    tipoRemitente?: true
   }
 
   export type MensajeMaxAggregateInputType = {
     id?: true
+    conversacionId?: true
     remitenteId?: true
     destinatarioId?: true
+    contenido?: true
     fecha?: true
-    mensaje?: true
+    leido?: true
+    tipoRemitente?: true
   }
 
   export type MensajeCountAggregateInputType = {
     id?: true
+    conversacionId?: true
     remitenteId?: true
     destinatarioId?: true
+    contenido?: true
     fecha?: true
-    mensaje?: true
+    leido?: true
+    tipoRemitente?: true
     _all?: true
   }
 
@@ -6662,18 +7958,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: MensajeAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: MensajeSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: MensajeMinAggregateInputType
@@ -6704,21 +7988,20 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: MensajeCountAggregateInputType | true
-    _avg?: MensajeAvgAggregateInputType
-    _sum?: MensajeSumAggregateInputType
     _min?: MensajeMinAggregateInputType
     _max?: MensajeMaxAggregateInputType
   }
 
   export type MensajeGroupByOutputType = {
-    id: number
-    remitenteId: number
-    destinatarioId: number
+    id: string
+    conversacionId: string
+    remitenteId: string
+    destinatarioId: string
+    contenido: string
     fecha: Date
-    mensaje: string
+    leido: boolean
+    tipoRemitente: string
     _count: MensajeCountAggregateOutputType | null
-    _avg: MensajeAvgAggregateOutputType | null
-    _sum: MensajeSumAggregateOutputType | null
     _min: MensajeMinAggregateOutputType | null
     _max: MensajeMaxAggregateOutputType | null
   }
@@ -6739,10 +8022,14 @@ export namespace Prisma {
 
   export type MensajeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    conversacionId?: boolean
     remitenteId?: boolean
     destinatarioId?: boolean
+    contenido?: boolean
     fecha?: boolean
-    mensaje?: boolean
+    leido?: boolean
+    tipoRemitente?: boolean
+    conversacion?: boolean | ConversacionDefaultArgs<ExtArgs>
     remitente?: boolean | UsuarioDefaultArgs<ExtArgs>
     destinatario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mensaje"]>
@@ -6751,14 +8038,18 @@ export namespace Prisma {
 
   export type MensajeSelectScalar = {
     id?: boolean
+    conversacionId?: boolean
     remitenteId?: boolean
     destinatarioId?: boolean
+    contenido?: boolean
     fecha?: boolean
-    mensaje?: boolean
+    leido?: boolean
+    tipoRemitente?: boolean
   }
 
-  export type MensajeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "remitenteId" | "destinatarioId" | "fecha" | "mensaje", ExtArgs["result"]["mensaje"]>
+  export type MensajeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversacionId" | "remitenteId" | "destinatarioId" | "contenido" | "fecha" | "leido" | "tipoRemitente", ExtArgs["result"]["mensaje"]>
   export type MensajeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversacion?: boolean | ConversacionDefaultArgs<ExtArgs>
     remitente?: boolean | UsuarioDefaultArgs<ExtArgs>
     destinatario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
@@ -6766,15 +8057,19 @@ export namespace Prisma {
   export type $MensajePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Mensaje"
     objects: {
+      conversacion: Prisma.$ConversacionPayload<ExtArgs>
       remitente: Prisma.$UsuarioPayload<ExtArgs>
       destinatario: Prisma.$UsuarioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      remitenteId: number
-      destinatarioId: number
+      id: string
+      conversacionId: string
+      remitenteId: string
+      destinatarioId: string
+      contenido: string
       fecha: Date
-      mensaje: string
+      leido: boolean
+      tipoRemitente: string
     }, ExtArgs["result"]["mensaje"]>
     composites: {}
   }
@@ -7115,6 +8410,7 @@ export namespace Prisma {
    */
   export interface Prisma__MensajeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    conversacion<T extends ConversacionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ConversacionDefaultArgs<ExtArgs>>): Prisma__ConversacionClient<$Result.GetResult<Prisma.$ConversacionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     remitente<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     destinatario<T extends UsuarioDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UsuarioDefaultArgs<ExtArgs>>): Prisma__UsuarioClient<$Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
@@ -7146,11 +8442,14 @@ export namespace Prisma {
    * Fields of the Mensaje model
    */
   interface MensajeFieldRefs {
-    readonly id: FieldRef<"Mensaje", 'Int'>
-    readonly remitenteId: FieldRef<"Mensaje", 'Int'>
-    readonly destinatarioId: FieldRef<"Mensaje", 'Int'>
+    readonly id: FieldRef<"Mensaje", 'String'>
+    readonly conversacionId: FieldRef<"Mensaje", 'String'>
+    readonly remitenteId: FieldRef<"Mensaje", 'String'>
+    readonly destinatarioId: FieldRef<"Mensaje", 'String'>
+    readonly contenido: FieldRef<"Mensaje", 'String'>
     readonly fecha: FieldRef<"Mensaje", 'DateTime'>
-    readonly mensaje: FieldRef<"Mensaje", 'String'>
+    readonly leido: FieldRef<"Mensaje", 'Boolean'>
+    readonly tipoRemitente: FieldRef<"Mensaje", 'String'>
   }
     
 
@@ -7518,34 +8817,26 @@ export namespace Prisma {
 
   export type AggregateAuditoria = {
     _count: AuditoriaCountAggregateOutputType | null
-    _avg: AuditoriaAvgAggregateOutputType | null
-    _sum: AuditoriaSumAggregateOutputType | null
     _min: AuditoriaMinAggregateOutputType | null
     _max: AuditoriaMaxAggregateOutputType | null
   }
 
-  export type AuditoriaAvgAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-  }
-
-  export type AuditoriaSumAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
-  }
-
   export type AuditoriaMinAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
+    id: string | null
+    usuarioId: string | null
     fecha: Date | null
     accion: string | null
+    detalles: string | null
+    ip: string | null
   }
 
   export type AuditoriaMaxAggregateOutputType = {
-    id: number | null
-    usuarioId: number | null
+    id: string | null
+    usuarioId: string | null
     fecha: Date | null
     accion: string | null
+    detalles: string | null
+    ip: string | null
   }
 
   export type AuditoriaCountAggregateOutputType = {
@@ -7553,25 +8844,19 @@ export namespace Prisma {
     usuarioId: number
     fecha: number
     accion: number
+    detalles: number
+    ip: number
     _all: number
   }
 
-
-  export type AuditoriaAvgAggregateInputType = {
-    id?: true
-    usuarioId?: true
-  }
-
-  export type AuditoriaSumAggregateInputType = {
-    id?: true
-    usuarioId?: true
-  }
 
   export type AuditoriaMinAggregateInputType = {
     id?: true
     usuarioId?: true
     fecha?: true
     accion?: true
+    detalles?: true
+    ip?: true
   }
 
   export type AuditoriaMaxAggregateInputType = {
@@ -7579,6 +8864,8 @@ export namespace Prisma {
     usuarioId?: true
     fecha?: true
     accion?: true
+    detalles?: true
+    ip?: true
   }
 
   export type AuditoriaCountAggregateInputType = {
@@ -7586,6 +8873,8 @@ export namespace Prisma {
     usuarioId?: true
     fecha?: true
     accion?: true
+    detalles?: true
+    ip?: true
     _all?: true
   }
 
@@ -7627,18 +8916,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: AuditoriaAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: AuditoriaSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: AuditoriaMinAggregateInputType
@@ -7669,20 +8946,18 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: AuditoriaCountAggregateInputType | true
-    _avg?: AuditoriaAvgAggregateInputType
-    _sum?: AuditoriaSumAggregateInputType
     _min?: AuditoriaMinAggregateInputType
     _max?: AuditoriaMaxAggregateInputType
   }
 
   export type AuditoriaGroupByOutputType = {
-    id: number
-    usuarioId: number
+    id: string
+    usuarioId: string
     fecha: Date
     accion: string
+    detalles: string | null
+    ip: string | null
     _count: AuditoriaCountAggregateOutputType | null
-    _avg: AuditoriaAvgAggregateOutputType | null
-    _sum: AuditoriaSumAggregateOutputType | null
     _min: AuditoriaMinAggregateOutputType | null
     _max: AuditoriaMaxAggregateOutputType | null
   }
@@ -7706,6 +8981,8 @@ export namespace Prisma {
     usuarioId?: boolean
     fecha?: boolean
     accion?: boolean
+    detalles?: boolean
+    ip?: boolean
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["auditoria"]>
 
@@ -7716,9 +8993,11 @@ export namespace Prisma {
     usuarioId?: boolean
     fecha?: boolean
     accion?: boolean
+    detalles?: boolean
+    ip?: boolean
   }
 
-  export type AuditoriaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "fecha" | "accion", ExtArgs["result"]["auditoria"]>
+  export type AuditoriaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "usuarioId" | "fecha" | "accion" | "detalles" | "ip", ExtArgs["result"]["auditoria"]>
   export type AuditoriaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     usuario?: boolean | UsuarioDefaultArgs<ExtArgs>
   }
@@ -7729,10 +9008,12 @@ export namespace Prisma {
       usuario: Prisma.$UsuarioPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
-      id: number
-      usuarioId: number
+      id: string
+      usuarioId: string
       fecha: Date
       accion: string
+      detalles: string | null
+      ip: string | null
     }, ExtArgs["result"]["auditoria"]>
     composites: {}
   }
@@ -8103,10 +9384,12 @@ export namespace Prisma {
    * Fields of the Auditoria model
    */
   interface AuditoriaFieldRefs {
-    readonly id: FieldRef<"Auditoria", 'Int'>
-    readonly usuarioId: FieldRef<"Auditoria", 'Int'>
+    readonly id: FieldRef<"Auditoria", 'String'>
+    readonly usuarioId: FieldRef<"Auditoria", 'String'>
     readonly fecha: FieldRef<"Auditoria", 'DateTime'>
     readonly accion: FieldRef<"Auditoria", 'String'>
+    readonly detalles: FieldRef<"Auditoria", 'String'>
+    readonly ip: FieldRef<"Auditoria", 'String'>
   }
     
 
@@ -8487,7 +9770,12 @@ export namespace Prisma {
     nombre: 'nombre',
     email: 'email',
     contraseña: 'contraseña',
-    rol: 'rol'
+    rol: 'rol',
+    telefono: 'telefono',
+    fechaNacimiento: 'fechaNacimiento',
+    fechaCreacion: 'fechaCreacion',
+    ultimaActividad: 'ultimaActividad',
+    activo: 'activo'
   };
 
   export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -8495,7 +9783,8 @@ export namespace Prisma {
 
   export const EspecialidadScalarFieldEnum: {
     id: 'id',
-    nombre: 'nombre'
+    nombre: 'nombre',
+    activa: 'activa'
   };
 
   export type EspecialidadScalarFieldEnum = (typeof EspecialidadScalarFieldEnum)[keyof typeof EspecialidadScalarFieldEnum]
@@ -8504,7 +9793,10 @@ export namespace Prisma {
   export const MedicoScalarFieldEnum: {
     id: 'id',
     usuarioId: 'usuarioId',
-    especialidadId: 'especialidadId'
+    especialidadId: 'especialidadId',
+    licencia: 'licencia',
+    horarioInicio: 'horarioInicio',
+    horarioFin: 'horarioFin'
   };
 
   export type MedicoScalarFieldEnum = (typeof MedicoScalarFieldEnum)[keyof typeof MedicoScalarFieldEnum]
@@ -8515,7 +9807,14 @@ export namespace Prisma {
     fecha: 'fecha',
     hora: 'hora',
     pacienteId: 'pacienteId',
-    medicoId: 'medicoId'
+    medicoId: 'medicoId',
+    sintomas: 'sintomas',
+    notas: 'notas',
+    tipo: 'tipo',
+    estado: 'estado',
+    prioridad: 'prioridad',
+    fechaCreacion: 'fechaCreacion',
+    fechaActualizacion: 'fechaActualizacion'
   };
 
   export type CitaScalarFieldEnum = (typeof CitaScalarFieldEnum)[keyof typeof CitaScalarFieldEnum]
@@ -8526,18 +9825,43 @@ export namespace Prisma {
     pacienteId: 'pacienteId',
     medicoId: 'medicoId',
     fecha: 'fecha',
-    descripcion: 'descripcion'
+    diagnostico: 'diagnostico',
+    sintomas: 'sintomas',
+    tratamiento: 'tratamiento',
+    medicamentos: 'medicamentos',
+    alergias: 'alergias',
+    signosVitales: 'signosVitales',
+    observaciones: 'observaciones',
+    proximaRevision: 'proximaRevision',
+    estado: 'estado',
+    fechaActualizacion: 'fechaActualizacion'
   };
 
   export type HistoriaClinicaScalarFieldEnum = (typeof HistoriaClinicaScalarFieldEnum)[keyof typeof HistoriaClinicaScalarFieldEnum]
 
 
+  export const ConversacionScalarFieldEnum: {
+    id: 'id',
+    pacienteId: 'pacienteId',
+    medicoId: 'medicoId',
+    asunto: 'asunto',
+    estado: 'estado',
+    fechaCreacion: 'fechaCreacion',
+    ultimaActividad: 'ultimaActividad'
+  };
+
+  export type ConversacionScalarFieldEnum = (typeof ConversacionScalarFieldEnum)[keyof typeof ConversacionScalarFieldEnum]
+
+
   export const MensajeScalarFieldEnum: {
     id: 'id',
+    conversacionId: 'conversacionId',
     remitenteId: 'remitenteId',
     destinatarioId: 'destinatarioId',
+    contenido: 'contenido',
     fecha: 'fecha',
-    mensaje: 'mensaje'
+    leido: 'leido',
+    tipoRemitente: 'tipoRemitente'
   };
 
   export type MensajeScalarFieldEnum = (typeof MensajeScalarFieldEnum)[keyof typeof MensajeScalarFieldEnum]
@@ -8547,7 +9871,9 @@ export namespace Prisma {
     id: 'id',
     usuarioId: 'usuarioId',
     fecha: 'fecha',
-    accion: 'accion'
+    accion: 'accion',
+    detalles: 'detalles',
+    ip: 'ip'
   };
 
   export type AuditoriaScalarFieldEnum = (typeof AuditoriaScalarFieldEnum)[keyof typeof AuditoriaScalarFieldEnum]
@@ -8561,39 +9887,103 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   export const UsuarioOrderByRelevanceFieldEnum: {
+    id: 'id',
     nombre: 'nombre',
     email: 'email',
     contraseña: 'contraseña',
-    rol: 'rol'
+    rol: 'rol',
+    telefono: 'telefono'
   };
 
   export type UsuarioOrderByRelevanceFieldEnum = (typeof UsuarioOrderByRelevanceFieldEnum)[keyof typeof UsuarioOrderByRelevanceFieldEnum]
 
 
   export const EspecialidadOrderByRelevanceFieldEnum: {
+    id: 'id',
     nombre: 'nombre'
   };
 
   export type EspecialidadOrderByRelevanceFieldEnum = (typeof EspecialidadOrderByRelevanceFieldEnum)[keyof typeof EspecialidadOrderByRelevanceFieldEnum]
 
 
+  export const MedicoOrderByRelevanceFieldEnum: {
+    id: 'id',
+    usuarioId: 'usuarioId',
+    especialidadId: 'especialidadId',
+    licencia: 'licencia',
+    horarioInicio: 'horarioInicio',
+    horarioFin: 'horarioFin'
+  };
+
+  export type MedicoOrderByRelevanceFieldEnum = (typeof MedicoOrderByRelevanceFieldEnum)[keyof typeof MedicoOrderByRelevanceFieldEnum]
+
+
+  export const CitaOrderByRelevanceFieldEnum: {
+    id: 'id',
+    pacienteId: 'pacienteId',
+    medicoId: 'medicoId',
+    sintomas: 'sintomas',
+    notas: 'notas'
+  };
+
+  export type CitaOrderByRelevanceFieldEnum = (typeof CitaOrderByRelevanceFieldEnum)[keyof typeof CitaOrderByRelevanceFieldEnum]
+
+
   export const HistoriaClinicaOrderByRelevanceFieldEnum: {
-    descripcion: 'descripcion'
+    id: 'id',
+    pacienteId: 'pacienteId',
+    medicoId: 'medicoId',
+    diagnostico: 'diagnostico',
+    sintomas: 'sintomas',
+    tratamiento: 'tratamiento',
+    medicamentos: 'medicamentos',
+    alergias: 'alergias',
+    signosVitales: 'signosVitales',
+    observaciones: 'observaciones',
+    estado: 'estado'
   };
 
   export type HistoriaClinicaOrderByRelevanceFieldEnum = (typeof HistoriaClinicaOrderByRelevanceFieldEnum)[keyof typeof HistoriaClinicaOrderByRelevanceFieldEnum]
 
 
+  export const ConversacionOrderByRelevanceFieldEnum: {
+    id: 'id',
+    pacienteId: 'pacienteId',
+    medicoId: 'medicoId',
+    asunto: 'asunto',
+    estado: 'estado'
+  };
+
+  export type ConversacionOrderByRelevanceFieldEnum = (typeof ConversacionOrderByRelevanceFieldEnum)[keyof typeof ConversacionOrderByRelevanceFieldEnum]
+
+
   export const MensajeOrderByRelevanceFieldEnum: {
-    mensaje: 'mensaje'
+    id: 'id',
+    conversacionId: 'conversacionId',
+    remitenteId: 'remitenteId',
+    destinatarioId: 'destinatarioId',
+    contenido: 'contenido',
+    tipoRemitente: 'tipoRemitente'
   };
 
   export type MensajeOrderByRelevanceFieldEnum = (typeof MensajeOrderByRelevanceFieldEnum)[keyof typeof MensajeOrderByRelevanceFieldEnum]
 
 
   export const AuditoriaOrderByRelevanceFieldEnum: {
-    accion: 'accion'
+    id: 'id',
+    usuarioId: 'usuarioId',
+    accion: 'accion',
+    detalles: 'detalles',
+    ip: 'ip'
   };
 
   export type AuditoriaOrderByRelevanceFieldEnum = (typeof AuditoriaOrderByRelevanceFieldEnum)[keyof typeof AuditoriaOrderByRelevanceFieldEnum]
@@ -8602,13 +9992,6 @@ export namespace Prisma {
   /**
    * Field references
    */
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
 
 
   /**
@@ -8626,9 +10009,37 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Float'
+   * Reference to a field of type 'Boolean'
    */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
+   * Reference to a field of type 'TipoCita'
+   */
+  export type EnumTipoCitaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoCita'>
+    
+
+
+  /**
+   * Reference to a field of type 'EstadoCita'
+   */
+  export type EnumEstadoCitaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoCita'>
+    
+
+
+  /**
+   * Reference to a field of type 'PrioridadCita'
+   */
+  export type EnumPrioridadCitaFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PrioridadCita'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
   /**
    * Deep Input Types
@@ -8639,17 +10050,23 @@ export namespace Prisma {
     AND?: UsuarioWhereInput | UsuarioWhereInput[]
     OR?: UsuarioWhereInput[]
     NOT?: UsuarioWhereInput | UsuarioWhereInput[]
-    id?: IntFilter<"Usuario"> | number
+    id?: StringFilter<"Usuario"> | string
     nombre?: StringFilter<"Usuario"> | string
     email?: StringFilter<"Usuario"> | string
     contraseña?: StringFilter<"Usuario"> | string
     rol?: StringFilter<"Usuario"> | string
+    telefono?: StringNullableFilter<"Usuario"> | string | null
+    fechaNacimiento?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    fechaCreacion?: DateTimeFilter<"Usuario"> | Date | string
+    ultimaActividad?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    activo?: BoolFilter<"Usuario"> | boolean
     medico?: XOR<MedicoNullableScalarRelationFilter, MedicoWhereInput> | null
     citas?: CitaListRelationFilter
     historias?: HistoriaClinicaListRelationFilter
     mensajesEnviados?: MensajeListRelationFilter
     mensajesRecibidos?: MensajeListRelationFilter
     auditorias?: AuditoriaListRelationFilter
+    conversaciones?: ConversacionListRelationFilter
   }
 
   export type UsuarioOrderByWithRelationInput = {
@@ -8658,17 +10075,23 @@ export namespace Prisma {
     email?: SortOrder
     contraseña?: SortOrder
     rol?: SortOrder
+    telefono?: SortOrderInput | SortOrder
+    fechaNacimiento?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrderInput | SortOrder
+    activo?: SortOrder
     medico?: MedicoOrderByWithRelationInput
     citas?: CitaOrderByRelationAggregateInput
     historias?: HistoriaClinicaOrderByRelationAggregateInput
     mensajesEnviados?: MensajeOrderByRelationAggregateInput
     mensajesRecibidos?: MensajeOrderByRelationAggregateInput
     auditorias?: AuditoriaOrderByRelationAggregateInput
+    conversaciones?: ConversacionOrderByRelationAggregateInput
     _relevance?: UsuarioOrderByRelevanceInput
   }
 
   export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     email?: string
     AND?: UsuarioWhereInput | UsuarioWhereInput[]
     OR?: UsuarioWhereInput[]
@@ -8676,12 +10099,18 @@ export namespace Prisma {
     nombre?: StringFilter<"Usuario"> | string
     contraseña?: StringFilter<"Usuario"> | string
     rol?: StringFilter<"Usuario"> | string
+    telefono?: StringNullableFilter<"Usuario"> | string | null
+    fechaNacimiento?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    fechaCreacion?: DateTimeFilter<"Usuario"> | Date | string
+    ultimaActividad?: DateTimeNullableFilter<"Usuario"> | Date | string | null
+    activo?: BoolFilter<"Usuario"> | boolean
     medico?: XOR<MedicoNullableScalarRelationFilter, MedicoWhereInput> | null
     citas?: CitaListRelationFilter
     historias?: HistoriaClinicaListRelationFilter
     mensajesEnviados?: MensajeListRelationFilter
     mensajesRecibidos?: MensajeListRelationFilter
     auditorias?: AuditoriaListRelationFilter
+    conversaciones?: ConversacionListRelationFilter
   }, "id" | "email">
 
   export type UsuarioOrderByWithAggregationInput = {
@@ -8690,132 +10119,167 @@ export namespace Prisma {
     email?: SortOrder
     contraseña?: SortOrder
     rol?: SortOrder
+    telefono?: SortOrderInput | SortOrder
+    fechaNacimiento?: SortOrderInput | SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrderInput | SortOrder
+    activo?: SortOrder
     _count?: UsuarioCountOrderByAggregateInput
-    _avg?: UsuarioAvgOrderByAggregateInput
     _max?: UsuarioMaxOrderByAggregateInput
     _min?: UsuarioMinOrderByAggregateInput
-    _sum?: UsuarioSumOrderByAggregateInput
   }
 
   export type UsuarioScalarWhereWithAggregatesInput = {
     AND?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
     OR?: UsuarioScalarWhereWithAggregatesInput[]
     NOT?: UsuarioScalarWhereWithAggregatesInput | UsuarioScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Usuario"> | number
+    id?: StringWithAggregatesFilter<"Usuario"> | string
     nombre?: StringWithAggregatesFilter<"Usuario"> | string
     email?: StringWithAggregatesFilter<"Usuario"> | string
     contraseña?: StringWithAggregatesFilter<"Usuario"> | string
     rol?: StringWithAggregatesFilter<"Usuario"> | string
+    telefono?: StringNullableWithAggregatesFilter<"Usuario"> | string | null
+    fechaNacimiento?: DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
+    fechaCreacion?: DateTimeWithAggregatesFilter<"Usuario"> | Date | string
+    ultimaActividad?: DateTimeNullableWithAggregatesFilter<"Usuario"> | Date | string | null
+    activo?: BoolWithAggregatesFilter<"Usuario"> | boolean
   }
 
   export type EspecialidadWhereInput = {
     AND?: EspecialidadWhereInput | EspecialidadWhereInput[]
     OR?: EspecialidadWhereInput[]
     NOT?: EspecialidadWhereInput | EspecialidadWhereInput[]
-    id?: IntFilter<"Especialidad"> | number
+    id?: StringFilter<"Especialidad"> | string
     nombre?: StringFilter<"Especialidad"> | string
+    activa?: BoolFilter<"Especialidad"> | boolean
     medicos?: MedicoListRelationFilter
   }
 
   export type EspecialidadOrderByWithRelationInput = {
     id?: SortOrder
     nombre?: SortOrder
+    activa?: SortOrder
     medicos?: MedicoOrderByRelationAggregateInput
     _relevance?: EspecialidadOrderByRelevanceInput
   }
 
   export type EspecialidadWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
+    nombre?: string
     AND?: EspecialidadWhereInput | EspecialidadWhereInput[]
     OR?: EspecialidadWhereInput[]
     NOT?: EspecialidadWhereInput | EspecialidadWhereInput[]
-    nombre?: StringFilter<"Especialidad"> | string
+    activa?: BoolFilter<"Especialidad"> | boolean
     medicos?: MedicoListRelationFilter
-  }, "id">
+  }, "id" | "nombre">
 
   export type EspecialidadOrderByWithAggregationInput = {
     id?: SortOrder
     nombre?: SortOrder
+    activa?: SortOrder
     _count?: EspecialidadCountOrderByAggregateInput
-    _avg?: EspecialidadAvgOrderByAggregateInput
     _max?: EspecialidadMaxOrderByAggregateInput
     _min?: EspecialidadMinOrderByAggregateInput
-    _sum?: EspecialidadSumOrderByAggregateInput
   }
 
   export type EspecialidadScalarWhereWithAggregatesInput = {
     AND?: EspecialidadScalarWhereWithAggregatesInput | EspecialidadScalarWhereWithAggregatesInput[]
     OR?: EspecialidadScalarWhereWithAggregatesInput[]
     NOT?: EspecialidadScalarWhereWithAggregatesInput | EspecialidadScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Especialidad"> | number
+    id?: StringWithAggregatesFilter<"Especialidad"> | string
     nombre?: StringWithAggregatesFilter<"Especialidad"> | string
+    activa?: BoolWithAggregatesFilter<"Especialidad"> | boolean
   }
 
   export type MedicoWhereInput = {
     AND?: MedicoWhereInput | MedicoWhereInput[]
     OR?: MedicoWhereInput[]
     NOT?: MedicoWhereInput | MedicoWhereInput[]
-    id?: IntFilter<"Medico"> | number
-    usuarioId?: IntFilter<"Medico"> | number
-    especialidadId?: IntFilter<"Medico"> | number
+    id?: StringFilter<"Medico"> | string
+    usuarioId?: StringFilter<"Medico"> | string
+    especialidadId?: StringFilter<"Medico"> | string
+    licencia?: StringNullableFilter<"Medico"> | string | null
+    horarioInicio?: StringNullableFilter<"Medico"> | string | null
+    horarioFin?: StringNullableFilter<"Medico"> | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     especialidad?: XOR<EspecialidadScalarRelationFilter, EspecialidadWhereInput>
     citas?: CitaListRelationFilter
     historias?: HistoriaClinicaListRelationFilter
+    conversaciones?: ConversacionListRelationFilter
   }
 
   export type MedicoOrderByWithRelationInput = {
     id?: SortOrder
     usuarioId?: SortOrder
     especialidadId?: SortOrder
+    licencia?: SortOrderInput | SortOrder
+    horarioInicio?: SortOrderInput | SortOrder
+    horarioFin?: SortOrderInput | SortOrder
     usuario?: UsuarioOrderByWithRelationInput
     especialidad?: EspecialidadOrderByWithRelationInput
     citas?: CitaOrderByRelationAggregateInput
     historias?: HistoriaClinicaOrderByRelationAggregateInput
+    conversaciones?: ConversacionOrderByRelationAggregateInput
+    _relevance?: MedicoOrderByRelevanceInput
   }
 
   export type MedicoWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    usuarioId?: number
+    id?: string
+    usuarioId?: string
     AND?: MedicoWhereInput | MedicoWhereInput[]
     OR?: MedicoWhereInput[]
     NOT?: MedicoWhereInput | MedicoWhereInput[]
-    especialidadId?: IntFilter<"Medico"> | number
+    especialidadId?: StringFilter<"Medico"> | string
+    licencia?: StringNullableFilter<"Medico"> | string | null
+    horarioInicio?: StringNullableFilter<"Medico"> | string | null
+    horarioFin?: StringNullableFilter<"Medico"> | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     especialidad?: XOR<EspecialidadScalarRelationFilter, EspecialidadWhereInput>
     citas?: CitaListRelationFilter
     historias?: HistoriaClinicaListRelationFilter
+    conversaciones?: ConversacionListRelationFilter
   }, "id" | "usuarioId">
 
   export type MedicoOrderByWithAggregationInput = {
     id?: SortOrder
     usuarioId?: SortOrder
     especialidadId?: SortOrder
+    licencia?: SortOrderInput | SortOrder
+    horarioInicio?: SortOrderInput | SortOrder
+    horarioFin?: SortOrderInput | SortOrder
     _count?: MedicoCountOrderByAggregateInput
-    _avg?: MedicoAvgOrderByAggregateInput
     _max?: MedicoMaxOrderByAggregateInput
     _min?: MedicoMinOrderByAggregateInput
-    _sum?: MedicoSumOrderByAggregateInput
   }
 
   export type MedicoScalarWhereWithAggregatesInput = {
     AND?: MedicoScalarWhereWithAggregatesInput | MedicoScalarWhereWithAggregatesInput[]
     OR?: MedicoScalarWhereWithAggregatesInput[]
     NOT?: MedicoScalarWhereWithAggregatesInput | MedicoScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Medico"> | number
-    usuarioId?: IntWithAggregatesFilter<"Medico"> | number
-    especialidadId?: IntWithAggregatesFilter<"Medico"> | number
+    id?: StringWithAggregatesFilter<"Medico"> | string
+    usuarioId?: StringWithAggregatesFilter<"Medico"> | string
+    especialidadId?: StringWithAggregatesFilter<"Medico"> | string
+    licencia?: StringNullableWithAggregatesFilter<"Medico"> | string | null
+    horarioInicio?: StringNullableWithAggregatesFilter<"Medico"> | string | null
+    horarioFin?: StringNullableWithAggregatesFilter<"Medico"> | string | null
   }
 
   export type CitaWhereInput = {
     AND?: CitaWhereInput | CitaWhereInput[]
     OR?: CitaWhereInput[]
     NOT?: CitaWhereInput | CitaWhereInput[]
-    id?: IntFilter<"Cita"> | number
+    id?: StringFilter<"Cita"> | string
     fecha?: DateTimeFilter<"Cita"> | Date | string
     hora?: DateTimeFilter<"Cita"> | Date | string
-    pacienteId?: IntFilter<"Cita"> | number
-    medicoId?: IntFilter<"Cita"> | number
+    pacienteId?: StringFilter<"Cita"> | string
+    medicoId?: StringFilter<"Cita"> | string
+    sintomas?: StringNullableFilter<"Cita"> | string | null
+    notas?: StringNullableFilter<"Cita"> | string | null
+    tipo?: EnumTipoCitaFilter<"Cita"> | $Enums.TipoCita
+    estado?: EnumEstadoCitaFilter<"Cita"> | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFilter<"Cita"> | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFilter<"Cita"> | Date | string
+    fechaActualizacion?: DateTimeFilter<"Cita"> | Date | string
     paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
   }
@@ -8826,19 +10290,34 @@ export namespace Prisma {
     hora?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
+    sintomas?: SortOrderInput | SortOrder
+    notas?: SortOrderInput | SortOrder
+    tipo?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaActualizacion?: SortOrder
     paciente?: UsuarioOrderByWithRelationInput
     medico?: MedicoOrderByWithRelationInput
+    _relevance?: CitaOrderByRelevanceInput
   }
 
   export type CitaWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: CitaWhereInput | CitaWhereInput[]
     OR?: CitaWhereInput[]
     NOT?: CitaWhereInput | CitaWhereInput[]
     fecha?: DateTimeFilter<"Cita"> | Date | string
     hora?: DateTimeFilter<"Cita"> | Date | string
-    pacienteId?: IntFilter<"Cita"> | number
-    medicoId?: IntFilter<"Cita"> | number
+    pacienteId?: StringFilter<"Cita"> | string
+    medicoId?: StringFilter<"Cita"> | string
+    sintomas?: StringNullableFilter<"Cita"> | string | null
+    notas?: StringNullableFilter<"Cita"> | string | null
+    tipo?: EnumTipoCitaFilter<"Cita"> | $Enums.TipoCita
+    estado?: EnumEstadoCitaFilter<"Cita"> | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFilter<"Cita"> | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFilter<"Cita"> | Date | string
+    fechaActualizacion?: DateTimeFilter<"Cita"> | Date | string
     paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
   }, "id">
@@ -8849,33 +10328,54 @@ export namespace Prisma {
     hora?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
+    sintomas?: SortOrderInput | SortOrder
+    notas?: SortOrderInput | SortOrder
+    tipo?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaActualizacion?: SortOrder
     _count?: CitaCountOrderByAggregateInput
-    _avg?: CitaAvgOrderByAggregateInput
     _max?: CitaMaxOrderByAggregateInput
     _min?: CitaMinOrderByAggregateInput
-    _sum?: CitaSumOrderByAggregateInput
   }
 
   export type CitaScalarWhereWithAggregatesInput = {
     AND?: CitaScalarWhereWithAggregatesInput | CitaScalarWhereWithAggregatesInput[]
     OR?: CitaScalarWhereWithAggregatesInput[]
     NOT?: CitaScalarWhereWithAggregatesInput | CitaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Cita"> | number
+    id?: StringWithAggregatesFilter<"Cita"> | string
     fecha?: DateTimeWithAggregatesFilter<"Cita"> | Date | string
     hora?: DateTimeWithAggregatesFilter<"Cita"> | Date | string
-    pacienteId?: IntWithAggregatesFilter<"Cita"> | number
-    medicoId?: IntWithAggregatesFilter<"Cita"> | number
+    pacienteId?: StringWithAggregatesFilter<"Cita"> | string
+    medicoId?: StringWithAggregatesFilter<"Cita"> | string
+    sintomas?: StringNullableWithAggregatesFilter<"Cita"> | string | null
+    notas?: StringNullableWithAggregatesFilter<"Cita"> | string | null
+    tipo?: EnumTipoCitaWithAggregatesFilter<"Cita"> | $Enums.TipoCita
+    estado?: EnumEstadoCitaWithAggregatesFilter<"Cita"> | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaWithAggregatesFilter<"Cita"> | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeWithAggregatesFilter<"Cita"> | Date | string
+    fechaActualizacion?: DateTimeWithAggregatesFilter<"Cita"> | Date | string
   }
 
   export type HistoriaClinicaWhereInput = {
     AND?: HistoriaClinicaWhereInput | HistoriaClinicaWhereInput[]
     OR?: HistoriaClinicaWhereInput[]
     NOT?: HistoriaClinicaWhereInput | HistoriaClinicaWhereInput[]
-    id?: IntFilter<"HistoriaClinica"> | number
-    pacienteId?: IntFilter<"HistoriaClinica"> | number
-    medicoId?: IntFilter<"HistoriaClinica"> | number
+    id?: StringFilter<"HistoriaClinica"> | string
+    pacienteId?: StringFilter<"HistoriaClinica"> | string
+    medicoId?: StringFilter<"HistoriaClinica"> | string
     fecha?: DateTimeFilter<"HistoriaClinica"> | Date | string
-    descripcion?: StringFilter<"HistoriaClinica"> | string
+    diagnostico?: StringFilter<"HistoriaClinica"> | string
+    sintomas?: StringNullableFilter<"HistoriaClinica"> | string | null
+    tratamiento?: StringNullableFilter<"HistoriaClinica"> | string | null
+    medicamentos?: StringNullableFilter<"HistoriaClinica"> | string | null
+    alergias?: StringNullableFilter<"HistoriaClinica"> | string | null
+    signosVitales?: StringNullableFilter<"HistoriaClinica"> | string | null
+    observaciones?: StringNullableFilter<"HistoriaClinica"> | string | null
+    proximaRevision?: DateTimeNullableFilter<"HistoriaClinica"> | Date | string | null
+    estado?: StringFilter<"HistoriaClinica"> | string
+    fechaActualizacion?: DateTimeFilter<"HistoriaClinica"> | Date | string
     paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
   }
@@ -8885,21 +10385,39 @@ export namespace Prisma {
     pacienteId?: SortOrder
     medicoId?: SortOrder
     fecha?: SortOrder
-    descripcion?: SortOrder
+    diagnostico?: SortOrder
+    sintomas?: SortOrderInput | SortOrder
+    tratamiento?: SortOrderInput | SortOrder
+    medicamentos?: SortOrderInput | SortOrder
+    alergias?: SortOrderInput | SortOrder
+    signosVitales?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    proximaRevision?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fechaActualizacion?: SortOrder
     paciente?: UsuarioOrderByWithRelationInput
     medico?: MedicoOrderByWithRelationInput
     _relevance?: HistoriaClinicaOrderByRelevanceInput
   }
 
   export type HistoriaClinicaWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: HistoriaClinicaWhereInput | HistoriaClinicaWhereInput[]
     OR?: HistoriaClinicaWhereInput[]
     NOT?: HistoriaClinicaWhereInput | HistoriaClinicaWhereInput[]
-    pacienteId?: IntFilter<"HistoriaClinica"> | number
-    medicoId?: IntFilter<"HistoriaClinica"> | number
+    pacienteId?: StringFilter<"HistoriaClinica"> | string
+    medicoId?: StringFilter<"HistoriaClinica"> | string
     fecha?: DateTimeFilter<"HistoriaClinica"> | Date | string
-    descripcion?: StringFilter<"HistoriaClinica"> | string
+    diagnostico?: StringFilter<"HistoriaClinica"> | string
+    sintomas?: StringNullableFilter<"HistoriaClinica"> | string | null
+    tratamiento?: StringNullableFilter<"HistoriaClinica"> | string | null
+    medicamentos?: StringNullableFilter<"HistoriaClinica"> | string | null
+    alergias?: StringNullableFilter<"HistoriaClinica"> | string | null
+    signosVitales?: StringNullableFilter<"HistoriaClinica"> | string | null
+    observaciones?: StringNullableFilter<"HistoriaClinica"> | string | null
+    proximaRevision?: DateTimeNullableFilter<"HistoriaClinica"> | Date | string | null
+    estado?: StringFilter<"HistoriaClinica"> | string
+    fechaActualizacion?: DateTimeFilter<"HistoriaClinica"> | Date | string
     paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
   }, "id">
@@ -8909,94 +10427,200 @@ export namespace Prisma {
     pacienteId?: SortOrder
     medicoId?: SortOrder
     fecha?: SortOrder
-    descripcion?: SortOrder
+    diagnostico?: SortOrder
+    sintomas?: SortOrderInput | SortOrder
+    tratamiento?: SortOrderInput | SortOrder
+    medicamentos?: SortOrderInput | SortOrder
+    alergias?: SortOrderInput | SortOrder
+    signosVitales?: SortOrderInput | SortOrder
+    observaciones?: SortOrderInput | SortOrder
+    proximaRevision?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fechaActualizacion?: SortOrder
     _count?: HistoriaClinicaCountOrderByAggregateInput
-    _avg?: HistoriaClinicaAvgOrderByAggregateInput
     _max?: HistoriaClinicaMaxOrderByAggregateInput
     _min?: HistoriaClinicaMinOrderByAggregateInput
-    _sum?: HistoriaClinicaSumOrderByAggregateInput
   }
 
   export type HistoriaClinicaScalarWhereWithAggregatesInput = {
     AND?: HistoriaClinicaScalarWhereWithAggregatesInput | HistoriaClinicaScalarWhereWithAggregatesInput[]
     OR?: HistoriaClinicaScalarWhereWithAggregatesInput[]
     NOT?: HistoriaClinicaScalarWhereWithAggregatesInput | HistoriaClinicaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"HistoriaClinica"> | number
-    pacienteId?: IntWithAggregatesFilter<"HistoriaClinica"> | number
-    medicoId?: IntWithAggregatesFilter<"HistoriaClinica"> | number
+    id?: StringWithAggregatesFilter<"HistoriaClinica"> | string
+    pacienteId?: StringWithAggregatesFilter<"HistoriaClinica"> | string
+    medicoId?: StringWithAggregatesFilter<"HistoriaClinica"> | string
     fecha?: DateTimeWithAggregatesFilter<"HistoriaClinica"> | Date | string
-    descripcion?: StringWithAggregatesFilter<"HistoriaClinica"> | string
+    diagnostico?: StringWithAggregatesFilter<"HistoriaClinica"> | string
+    sintomas?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    tratamiento?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    medicamentos?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    alergias?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    signosVitales?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    observaciones?: StringNullableWithAggregatesFilter<"HistoriaClinica"> | string | null
+    proximaRevision?: DateTimeNullableWithAggregatesFilter<"HistoriaClinica"> | Date | string | null
+    estado?: StringWithAggregatesFilter<"HistoriaClinica"> | string
+    fechaActualizacion?: DateTimeWithAggregatesFilter<"HistoriaClinica"> | Date | string
+  }
+
+  export type ConversacionWhereInput = {
+    AND?: ConversacionWhereInput | ConversacionWhereInput[]
+    OR?: ConversacionWhereInput[]
+    NOT?: ConversacionWhereInput | ConversacionWhereInput[]
+    id?: StringFilter<"Conversacion"> | string
+    pacienteId?: StringFilter<"Conversacion"> | string
+    medicoId?: StringFilter<"Conversacion"> | string
+    asunto?: StringNullableFilter<"Conversacion"> | string | null
+    estado?: StringFilter<"Conversacion"> | string
+    fechaCreacion?: DateTimeFilter<"Conversacion"> | Date | string
+    ultimaActividad?: DateTimeFilter<"Conversacion"> | Date | string
+    paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
+    mensajes?: MensajeListRelationFilter
+  }
+
+  export type ConversacionOrderByWithRelationInput = {
+    id?: SortOrder
+    pacienteId?: SortOrder
+    medicoId?: SortOrder
+    asunto?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+    paciente?: UsuarioOrderByWithRelationInput
+    medico?: MedicoOrderByWithRelationInput
+    mensajes?: MensajeOrderByRelationAggregateInput
+    _relevance?: ConversacionOrderByRelevanceInput
+  }
+
+  export type ConversacionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ConversacionWhereInput | ConversacionWhereInput[]
+    OR?: ConversacionWhereInput[]
+    NOT?: ConversacionWhereInput | ConversacionWhereInput[]
+    pacienteId?: StringFilter<"Conversacion"> | string
+    medicoId?: StringFilter<"Conversacion"> | string
+    asunto?: StringNullableFilter<"Conversacion"> | string | null
+    estado?: StringFilter<"Conversacion"> | string
+    fechaCreacion?: DateTimeFilter<"Conversacion"> | Date | string
+    ultimaActividad?: DateTimeFilter<"Conversacion"> | Date | string
+    paciente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
+    medico?: XOR<MedicoScalarRelationFilter, MedicoWhereInput>
+    mensajes?: MensajeListRelationFilter
+  }, "id">
+
+  export type ConversacionOrderByWithAggregationInput = {
+    id?: SortOrder
+    pacienteId?: SortOrder
+    medicoId?: SortOrder
+    asunto?: SortOrderInput | SortOrder
+    estado?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+    _count?: ConversacionCountOrderByAggregateInput
+    _max?: ConversacionMaxOrderByAggregateInput
+    _min?: ConversacionMinOrderByAggregateInput
+  }
+
+  export type ConversacionScalarWhereWithAggregatesInput = {
+    AND?: ConversacionScalarWhereWithAggregatesInput | ConversacionScalarWhereWithAggregatesInput[]
+    OR?: ConversacionScalarWhereWithAggregatesInput[]
+    NOT?: ConversacionScalarWhereWithAggregatesInput | ConversacionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Conversacion"> | string
+    pacienteId?: StringWithAggregatesFilter<"Conversacion"> | string
+    medicoId?: StringWithAggregatesFilter<"Conversacion"> | string
+    asunto?: StringNullableWithAggregatesFilter<"Conversacion"> | string | null
+    estado?: StringWithAggregatesFilter<"Conversacion"> | string
+    fechaCreacion?: DateTimeWithAggregatesFilter<"Conversacion"> | Date | string
+    ultimaActividad?: DateTimeWithAggregatesFilter<"Conversacion"> | Date | string
   }
 
   export type MensajeWhereInput = {
     AND?: MensajeWhereInput | MensajeWhereInput[]
     OR?: MensajeWhereInput[]
     NOT?: MensajeWhereInput | MensajeWhereInput[]
-    id?: IntFilter<"Mensaje"> | number
-    remitenteId?: IntFilter<"Mensaje"> | number
-    destinatarioId?: IntFilter<"Mensaje"> | number
+    id?: StringFilter<"Mensaje"> | string
+    conversacionId?: StringFilter<"Mensaje"> | string
+    remitenteId?: StringFilter<"Mensaje"> | string
+    destinatarioId?: StringFilter<"Mensaje"> | string
+    contenido?: StringFilter<"Mensaje"> | string
     fecha?: DateTimeFilter<"Mensaje"> | Date | string
-    mensaje?: StringFilter<"Mensaje"> | string
+    leido?: BoolFilter<"Mensaje"> | boolean
+    tipoRemitente?: StringFilter<"Mensaje"> | string
+    conversacion?: XOR<ConversacionScalarRelationFilter, ConversacionWhereInput>
     remitente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     destinatario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }
 
   export type MensajeOrderByWithRelationInput = {
     id?: SortOrder
+    conversacionId?: SortOrder
     remitenteId?: SortOrder
     destinatarioId?: SortOrder
+    contenido?: SortOrder
     fecha?: SortOrder
-    mensaje?: SortOrder
+    leido?: SortOrder
+    tipoRemitente?: SortOrder
+    conversacion?: ConversacionOrderByWithRelationInput
     remitente?: UsuarioOrderByWithRelationInput
     destinatario?: UsuarioOrderByWithRelationInput
     _relevance?: MensajeOrderByRelevanceInput
   }
 
   export type MensajeWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: MensajeWhereInput | MensajeWhereInput[]
     OR?: MensajeWhereInput[]
     NOT?: MensajeWhereInput | MensajeWhereInput[]
-    remitenteId?: IntFilter<"Mensaje"> | number
-    destinatarioId?: IntFilter<"Mensaje"> | number
+    conversacionId?: StringFilter<"Mensaje"> | string
+    remitenteId?: StringFilter<"Mensaje"> | string
+    destinatarioId?: StringFilter<"Mensaje"> | string
+    contenido?: StringFilter<"Mensaje"> | string
     fecha?: DateTimeFilter<"Mensaje"> | Date | string
-    mensaje?: StringFilter<"Mensaje"> | string
+    leido?: BoolFilter<"Mensaje"> | boolean
+    tipoRemitente?: StringFilter<"Mensaje"> | string
+    conversacion?: XOR<ConversacionScalarRelationFilter, ConversacionWhereInput>
     remitente?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
     destinatario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }, "id">
 
   export type MensajeOrderByWithAggregationInput = {
     id?: SortOrder
+    conversacionId?: SortOrder
     remitenteId?: SortOrder
     destinatarioId?: SortOrder
+    contenido?: SortOrder
     fecha?: SortOrder
-    mensaje?: SortOrder
+    leido?: SortOrder
+    tipoRemitente?: SortOrder
     _count?: MensajeCountOrderByAggregateInput
-    _avg?: MensajeAvgOrderByAggregateInput
     _max?: MensajeMaxOrderByAggregateInput
     _min?: MensajeMinOrderByAggregateInput
-    _sum?: MensajeSumOrderByAggregateInput
   }
 
   export type MensajeScalarWhereWithAggregatesInput = {
     AND?: MensajeScalarWhereWithAggregatesInput | MensajeScalarWhereWithAggregatesInput[]
     OR?: MensajeScalarWhereWithAggregatesInput[]
     NOT?: MensajeScalarWhereWithAggregatesInput | MensajeScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Mensaje"> | number
-    remitenteId?: IntWithAggregatesFilter<"Mensaje"> | number
-    destinatarioId?: IntWithAggregatesFilter<"Mensaje"> | number
+    id?: StringWithAggregatesFilter<"Mensaje"> | string
+    conversacionId?: StringWithAggregatesFilter<"Mensaje"> | string
+    remitenteId?: StringWithAggregatesFilter<"Mensaje"> | string
+    destinatarioId?: StringWithAggregatesFilter<"Mensaje"> | string
+    contenido?: StringWithAggregatesFilter<"Mensaje"> | string
     fecha?: DateTimeWithAggregatesFilter<"Mensaje"> | Date | string
-    mensaje?: StringWithAggregatesFilter<"Mensaje"> | string
+    leido?: BoolWithAggregatesFilter<"Mensaje"> | boolean
+    tipoRemitente?: StringWithAggregatesFilter<"Mensaje"> | string
   }
 
   export type AuditoriaWhereInput = {
     AND?: AuditoriaWhereInput | AuditoriaWhereInput[]
     OR?: AuditoriaWhereInput[]
     NOT?: AuditoriaWhereInput | AuditoriaWhereInput[]
-    id?: IntFilter<"Auditoria"> | number
-    usuarioId?: IntFilter<"Auditoria"> | number
+    id?: StringFilter<"Auditoria"> | string
+    usuarioId?: StringFilter<"Auditoria"> | string
     fecha?: DateTimeFilter<"Auditoria"> | Date | string
     accion?: StringFilter<"Auditoria"> | string
+    detalles?: StringNullableFilter<"Auditoria"> | string | null
+    ip?: StringNullableFilter<"Auditoria"> | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }
 
@@ -9005,18 +10629,22 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fecha?: SortOrder
     accion?: SortOrder
+    detalles?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
     usuario?: UsuarioOrderByWithRelationInput
     _relevance?: AuditoriaOrderByRelevanceInput
   }
 
   export type AuditoriaWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
+    id?: string
     AND?: AuditoriaWhereInput | AuditoriaWhereInput[]
     OR?: AuditoriaWhereInput[]
     NOT?: AuditoriaWhereInput | AuditoriaWhereInput[]
-    usuarioId?: IntFilter<"Auditoria"> | number
+    usuarioId?: StringFilter<"Auditoria"> | string
     fecha?: DateTimeFilter<"Auditoria"> | Date | string
     accion?: StringFilter<"Auditoria"> | string
+    detalles?: StringNullableFilter<"Auditoria"> | string | null
+    ip?: StringNullableFilter<"Auditoria"> | string | null
     usuario?: XOR<UsuarioScalarRelationFilter, UsuarioWhereInput>
   }, "id">
 
@@ -9025,389 +10653,689 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fecha?: SortOrder
     accion?: SortOrder
+    detalles?: SortOrderInput | SortOrder
+    ip?: SortOrderInput | SortOrder
     _count?: AuditoriaCountOrderByAggregateInput
-    _avg?: AuditoriaAvgOrderByAggregateInput
     _max?: AuditoriaMaxOrderByAggregateInput
     _min?: AuditoriaMinOrderByAggregateInput
-    _sum?: AuditoriaSumOrderByAggregateInput
   }
 
   export type AuditoriaScalarWhereWithAggregatesInput = {
     AND?: AuditoriaScalarWhereWithAggregatesInput | AuditoriaScalarWhereWithAggregatesInput[]
     OR?: AuditoriaScalarWhereWithAggregatesInput[]
     NOT?: AuditoriaScalarWhereWithAggregatesInput | AuditoriaScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"Auditoria"> | number
-    usuarioId?: IntWithAggregatesFilter<"Auditoria"> | number
+    id?: StringWithAggregatesFilter<"Auditoria"> | string
+    usuarioId?: StringWithAggregatesFilter<"Auditoria"> | string
     fecha?: DateTimeWithAggregatesFilter<"Auditoria"> | Date | string
     accion?: StringWithAggregatesFilter<"Auditoria"> | string
+    detalles?: StringNullableWithAggregatesFilter<"Auditoria"> | string | null
+    ip?: StringNullableWithAggregatesFilter<"Auditoria"> | string | null
   }
 
   export type UsuarioCreateInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     citas?: CitaCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioCreateManyInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
   }
 
   export type UsuarioUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UsuarioUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EspecialidadCreateInput = {
+    id?: string
     nombre: string
+    activa?: boolean
     medicos?: MedicoCreateNestedManyWithoutEspecialidadInput
   }
 
   export type EspecialidadUncheckedCreateInput = {
-    id?: number
+    id?: string
     nombre: string
+    activa?: boolean
     medicos?: MedicoUncheckedCreateNestedManyWithoutEspecialidadInput
   }
 
   export type EspecialidadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
     medicos?: MedicoUpdateManyWithoutEspecialidadNestedInput
   }
 
   export type EspecialidadUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
     medicos?: MedicoUncheckedUpdateManyWithoutEspecialidadNestedInput
   }
 
   export type EspecialidadCreateManyInput = {
-    id?: number
+    id?: string
     nombre: string
+    activa?: boolean
   }
 
   export type EspecialidadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EspecialidadUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type MedicoCreateInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     usuario: UsuarioCreateNestedOneWithoutMedicoInput
     especialidad: EspecialidadCreateNestedOneWithoutMedicosInput
     citas?: CitaCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUncheckedCreateInput = {
-    id?: number
-    usuarioId: number
-    especialidadId: number
+    id?: string
+    usuarioId: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     citas?: CitaUncheckedCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutMedicoNestedInput
     especialidad?: EspecialidadUpdateOneRequiredWithoutMedicosNestedInput
     citas?: CitaUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    especialidadId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     citas?: CitaUncheckedUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoCreateManyInput = {
-    id?: number
-    usuarioId: number
-    especialidadId: number
+    id?: string
+    usuarioId: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
   }
 
   export type MedicoUpdateManyMutationInput = {
-
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MedicoUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    especialidadId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CitaCreateInput = {
+    id?: string
     fecha: Date | string
     hora: Date | string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
     paciente: UsuarioCreateNestedOneWithoutCitasInput
     medico: MedicoCreateNestedOneWithoutCitasInput
   }
 
   export type CitaUncheckedCreateInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    pacienteId: number
-    medicoId: number
+    pacienteId: string
+    medicoId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type CitaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     paciente?: UsuarioUpdateOneRequiredWithoutCitasNestedInput
     medico?: MedicoUpdateOneRequiredWithoutCitasNestedInput
   }
 
   export type CitaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    pacienteId?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CitaCreateManyInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    pacienteId: number
-    medicoId: number
+    pacienteId: string
+    medicoId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type CitaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CitaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    pacienteId?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaCreateInput = {
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
     paciente: UsuarioCreateNestedOneWithoutHistoriasInput
     medico: MedicoCreateNestedOneWithoutHistoriasInput
   }
 
   export type HistoriaClinicaUncheckedCreateInput = {
-    id?: number
-    pacienteId: number
-    medicoId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    pacienteId: string
+    medicoId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     paciente?: UsuarioUpdateOneRequiredWithoutHistoriasNestedInput
     medico?: MedicoUpdateOneRequiredWithoutHistoriasNestedInput
   }
 
   export type HistoriaClinicaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    pacienteId?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaCreateManyInput = {
-    id?: number
-    pacienteId: number
-    medicoId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    pacienteId: string
+    medicoId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    pacienteId?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversacionCreateInput = {
+    id?: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    paciente: UsuarioCreateNestedOneWithoutConversacionesInput
+    medico: MedicoCreateNestedOneWithoutConversacionesInput
+    mensajes?: MensajeCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionUncheckedCreateInput = {
+    id?: string
+    pacienteId: string
+    medicoId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    mensajes?: MensajeUncheckedCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    paciente?: UsuarioUpdateOneRequiredWithoutConversacionesNestedInput
+    medico?: MedicoUpdateOneRequiredWithoutConversacionesNestedInput
+    mensajes?: MensajeUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    mensajes?: MensajeUncheckedUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionCreateManyInput = {
+    id?: string
+    pacienteId: string
+    medicoId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+  }
+
+  export type ConversacionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversacionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MensajeCreateInput = {
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+    conversacion: ConversacionCreateNestedOneWithoutMensajesInput
     remitente: UsuarioCreateNestedOneWithoutMensajesEnviadosInput
     destinatario: UsuarioCreateNestedOneWithoutMensajesRecibidosInput
   }
 
   export type MensajeUncheckedCreateInput = {
-    id?: number
-    remitenteId: number
-    destinatarioId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    remitenteId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type MensajeUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
+    conversacion?: ConversacionUpdateOneRequiredWithoutMensajesNestedInput
     remitente?: UsuarioUpdateOneRequiredWithoutMensajesEnviadosNestedInput
     destinatario?: UsuarioUpdateOneRequiredWithoutMensajesRecibidosNestedInput
   }
 
   export type MensajeUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    remitenteId?: IntFieldUpdateOperationsInput | number
-    destinatarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeCreateManyInput = {
-    id?: number
-    remitenteId: number
-    destinatarioId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    remitenteId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type MensajeUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    remitenteId?: IntFieldUpdateOperationsInput | number
-    destinatarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditoriaCreateInput = {
-    fecha: Date | string
+    id?: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
     usuario: UsuarioCreateNestedOneWithoutAuditoriasInput
   }
 
   export type AuditoriaUncheckedCreateInput = {
-    id?: number
-    usuarioId: number
-    fecha: Date | string
+    id?: string
+    usuarioId: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
   }
 
   export type AuditoriaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutAuditoriasNestedInput
   }
 
   export type AuditoriaUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuditoriaCreateManyInput = {
-    id?: number
-    usuarioId: number
-    fecha: Date | string
+    id?: string
+    usuarioId: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
   }
 
   export type AuditoriaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuditoriaUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -9423,6 +11351,48 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     search?: string
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type MedicoNullableScalarRelationFilter = {
@@ -9454,6 +11424,17 @@ export namespace Prisma {
     none?: AuditoriaWhereInput
   }
 
+  export type ConversacionListRelationFilter = {
+    every?: ConversacionWhereInput
+    some?: ConversacionWhereInput
+    none?: ConversacionWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type CitaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -9470,6 +11451,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type ConversacionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type UsuarioOrderByRelevanceInput = {
     fields: UsuarioOrderByRelevanceFieldEnum | UsuarioOrderByRelevanceFieldEnum[]
     sort: SortOrder
@@ -9482,10 +11467,11 @@ export namespace Prisma {
     email?: SortOrder
     contraseña?: SortOrder
     rol?: SortOrder
-  }
-
-  export type UsuarioAvgOrderByAggregateInput = {
-    id?: SortOrder
+    telefono?: SortOrder
+    fechaNacimiento?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+    activo?: SortOrder
   }
 
   export type UsuarioMaxOrderByAggregateInput = {
@@ -9494,6 +11480,11 @@ export namespace Prisma {
     email?: SortOrder
     contraseña?: SortOrder
     rol?: SortOrder
+    telefono?: SortOrder
+    fechaNacimiento?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+    activo?: SortOrder
   }
 
   export type UsuarioMinOrderByAggregateInput = {
@@ -9502,26 +11493,11 @@ export namespace Prisma {
     email?: SortOrder
     contraseña?: SortOrder
     rol?: SortOrder
-  }
-
-  export type UsuarioSumOrderByAggregateInput = {
-    id?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+    telefono?: SortOrder
+    fechaNacimiento?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+    activo?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -9540,6 +11516,60 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type MedicoListRelationFilter = {
@@ -9561,24 +11591,19 @@ export namespace Prisma {
   export type EspecialidadCountOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
-  }
-
-  export type EspecialidadAvgOrderByAggregateInput = {
-    id?: SortOrder
+    activa?: SortOrder
   }
 
   export type EspecialidadMaxOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
+    activa?: SortOrder
   }
 
   export type EspecialidadMinOrderByAggregateInput = {
     id?: SortOrder
     nombre?: SortOrder
-  }
-
-  export type EspecialidadSumOrderByAggregateInput = {
-    id?: SortOrder
+    activa?: SortOrder
   }
 
   export type UsuarioScalarRelationFilter = {
@@ -9591,50 +11616,69 @@ export namespace Prisma {
     isNot?: EspecialidadWhereInput
   }
 
+  export type MedicoOrderByRelevanceInput = {
+    fields: MedicoOrderByRelevanceFieldEnum | MedicoOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type MedicoCountOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
     especialidadId?: SortOrder
-  }
-
-  export type MedicoAvgOrderByAggregateInput = {
-    id?: SortOrder
-    usuarioId?: SortOrder
-    especialidadId?: SortOrder
+    licencia?: SortOrder
+    horarioInicio?: SortOrder
+    horarioFin?: SortOrder
   }
 
   export type MedicoMaxOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
     especialidadId?: SortOrder
+    licencia?: SortOrder
+    horarioInicio?: SortOrder
+    horarioFin?: SortOrder
   }
 
   export type MedicoMinOrderByAggregateInput = {
     id?: SortOrder
     usuarioId?: SortOrder
     especialidadId?: SortOrder
+    licencia?: SortOrder
+    horarioInicio?: SortOrder
+    horarioFin?: SortOrder
   }
 
-  export type MedicoSumOrderByAggregateInput = {
-    id?: SortOrder
-    usuarioId?: SortOrder
-    especialidadId?: SortOrder
+  export type EnumTipoCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCita | EnumTipoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoCita[]
+    notIn?: $Enums.TipoCita[]
+    not?: NestedEnumTipoCitaFilter<$PrismaModel> | $Enums.TipoCita
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  export type EnumEstadoCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCita | EnumEstadoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCita[]
+    notIn?: $Enums.EstadoCita[]
+    not?: NestedEnumEstadoCitaFilter<$PrismaModel> | $Enums.EstadoCita
+  }
+
+  export type EnumPrioridadCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.PrioridadCita | EnumPrioridadCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.PrioridadCita[]
+    notIn?: $Enums.PrioridadCita[]
+    not?: NestedEnumPrioridadCitaFilter<$PrismaModel> | $Enums.PrioridadCita
   }
 
   export type MedicoScalarRelationFilter = {
     is?: MedicoWhereInput
     isNot?: MedicoWhereInput
+  }
+
+  export type CitaOrderByRelevanceInput = {
+    fields: CitaOrderByRelevanceFieldEnum | CitaOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type CitaCountOrderByAggregateInput = {
@@ -9643,12 +11687,13 @@ export namespace Prisma {
     hora?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
-  }
-
-  export type CitaAvgOrderByAggregateInput = {
-    id?: SortOrder
-    pacienteId?: SortOrder
-    medicoId?: SortOrder
+    sintomas?: SortOrder
+    notas?: SortOrder
+    tipo?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
   export type CitaMaxOrderByAggregateInput = {
@@ -9657,6 +11702,13 @@ export namespace Prisma {
     hora?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
+    sintomas?: SortOrder
+    notas?: SortOrder
+    tipo?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
   export type CitaMinOrderByAggregateInput = {
@@ -9665,26 +11717,43 @@ export namespace Prisma {
     hora?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
+    sintomas?: SortOrder
+    notas?: SortOrder
+    tipo?: SortOrder
+    estado?: SortOrder
+    prioridad?: SortOrder
+    fechaCreacion?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
-  export type CitaSumOrderByAggregateInput = {
-    id?: SortOrder
-    pacienteId?: SortOrder
-    medicoId?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+  export type EnumTipoCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCita | EnumTipoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoCita[]
+    notIn?: $Enums.TipoCita[]
+    not?: NestedEnumTipoCitaWithAggregatesFilter<$PrismaModel> | $Enums.TipoCita
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
+    _min?: NestedEnumTipoCitaFilter<$PrismaModel>
+    _max?: NestedEnumTipoCitaFilter<$PrismaModel>
+  }
+
+  export type EnumEstadoCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCita | EnumEstadoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCita[]
+    notIn?: $Enums.EstadoCita[]
+    not?: NestedEnumEstadoCitaWithAggregatesFilter<$PrismaModel> | $Enums.EstadoCita
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEstadoCitaFilter<$PrismaModel>
+    _max?: NestedEnumEstadoCitaFilter<$PrismaModel>
+  }
+
+  export type EnumPrioridadCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PrioridadCita | EnumPrioridadCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.PrioridadCita[]
+    notIn?: $Enums.PrioridadCita[]
+    not?: NestedEnumPrioridadCitaWithAggregatesFilter<$PrismaModel> | $Enums.PrioridadCita
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPrioridadCitaFilter<$PrismaModel>
+    _max?: NestedEnumPrioridadCitaFilter<$PrismaModel>
   }
 
   export type HistoriaClinicaOrderByRelevanceInput = {
@@ -9698,13 +11767,16 @@ export namespace Prisma {
     pacienteId?: SortOrder
     medicoId?: SortOrder
     fecha?: SortOrder
-    descripcion?: SortOrder
-  }
-
-  export type HistoriaClinicaAvgOrderByAggregateInput = {
-    id?: SortOrder
-    pacienteId?: SortOrder
-    medicoId?: SortOrder
+    diagnostico?: SortOrder
+    sintomas?: SortOrder
+    tratamiento?: SortOrder
+    medicamentos?: SortOrder
+    alergias?: SortOrder
+    signosVitales?: SortOrder
+    observaciones?: SortOrder
+    proximaRevision?: SortOrder
+    estado?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
   export type HistoriaClinicaMaxOrderByAggregateInput = {
@@ -9712,7 +11784,16 @@ export namespace Prisma {
     pacienteId?: SortOrder
     medicoId?: SortOrder
     fecha?: SortOrder
-    descripcion?: SortOrder
+    diagnostico?: SortOrder
+    sintomas?: SortOrder
+    tratamiento?: SortOrder
+    medicamentos?: SortOrder
+    alergias?: SortOrder
+    signosVitales?: SortOrder
+    observaciones?: SortOrder
+    proximaRevision?: SortOrder
+    estado?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
   export type HistoriaClinicaMinOrderByAggregateInput = {
@@ -9720,13 +11801,57 @@ export namespace Prisma {
     pacienteId?: SortOrder
     medicoId?: SortOrder
     fecha?: SortOrder
-    descripcion?: SortOrder
+    diagnostico?: SortOrder
+    sintomas?: SortOrder
+    tratamiento?: SortOrder
+    medicamentos?: SortOrder
+    alergias?: SortOrder
+    signosVitales?: SortOrder
+    observaciones?: SortOrder
+    proximaRevision?: SortOrder
+    estado?: SortOrder
+    fechaActualizacion?: SortOrder
   }
 
-  export type HistoriaClinicaSumOrderByAggregateInput = {
+  export type ConversacionOrderByRelevanceInput = {
+    fields: ConversacionOrderByRelevanceFieldEnum | ConversacionOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type ConversacionCountOrderByAggregateInput = {
     id?: SortOrder
     pacienteId?: SortOrder
     medicoId?: SortOrder
+    asunto?: SortOrder
+    estado?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+  }
+
+  export type ConversacionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    pacienteId?: SortOrder
+    medicoId?: SortOrder
+    asunto?: SortOrder
+    estado?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+  }
+
+  export type ConversacionMinOrderByAggregateInput = {
+    id?: SortOrder
+    pacienteId?: SortOrder
+    medicoId?: SortOrder
+    asunto?: SortOrder
+    estado?: SortOrder
+    fechaCreacion?: SortOrder
+    ultimaActividad?: SortOrder
+  }
+
+  export type ConversacionScalarRelationFilter = {
+    is?: ConversacionWhereInput
+    isNot?: ConversacionWhereInput
   }
 
   export type MensajeOrderByRelevanceInput = {
@@ -9737,38 +11862,35 @@ export namespace Prisma {
 
   export type MensajeCountOrderByAggregateInput = {
     id?: SortOrder
+    conversacionId?: SortOrder
     remitenteId?: SortOrder
     destinatarioId?: SortOrder
+    contenido?: SortOrder
     fecha?: SortOrder
-    mensaje?: SortOrder
-  }
-
-  export type MensajeAvgOrderByAggregateInput = {
-    id?: SortOrder
-    remitenteId?: SortOrder
-    destinatarioId?: SortOrder
+    leido?: SortOrder
+    tipoRemitente?: SortOrder
   }
 
   export type MensajeMaxOrderByAggregateInput = {
     id?: SortOrder
+    conversacionId?: SortOrder
     remitenteId?: SortOrder
     destinatarioId?: SortOrder
+    contenido?: SortOrder
     fecha?: SortOrder
-    mensaje?: SortOrder
+    leido?: SortOrder
+    tipoRemitente?: SortOrder
   }
 
   export type MensajeMinOrderByAggregateInput = {
     id?: SortOrder
+    conversacionId?: SortOrder
     remitenteId?: SortOrder
     destinatarioId?: SortOrder
+    contenido?: SortOrder
     fecha?: SortOrder
-    mensaje?: SortOrder
-  }
-
-  export type MensajeSumOrderByAggregateInput = {
-    id?: SortOrder
-    remitenteId?: SortOrder
-    destinatarioId?: SortOrder
+    leido?: SortOrder
+    tipoRemitente?: SortOrder
   }
 
   export type AuditoriaOrderByRelevanceInput = {
@@ -9782,11 +11904,8 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fecha?: SortOrder
     accion?: SortOrder
-  }
-
-  export type AuditoriaAvgOrderByAggregateInput = {
-    id?: SortOrder
-    usuarioId?: SortOrder
+    detalles?: SortOrder
+    ip?: SortOrder
   }
 
   export type AuditoriaMaxOrderByAggregateInput = {
@@ -9794,6 +11913,8 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fecha?: SortOrder
     accion?: SortOrder
+    detalles?: SortOrder
+    ip?: SortOrder
   }
 
   export type AuditoriaMinOrderByAggregateInput = {
@@ -9801,11 +11922,8 @@ export namespace Prisma {
     usuarioId?: SortOrder
     fecha?: SortOrder
     accion?: SortOrder
-  }
-
-  export type AuditoriaSumOrderByAggregateInput = {
-    id?: SortOrder
-    usuarioId?: SortOrder
+    detalles?: SortOrder
+    ip?: SortOrder
   }
 
   export type MedicoCreateNestedOneWithoutUsuarioInput = {
@@ -9849,6 +11967,13 @@ export namespace Prisma {
     connect?: AuditoriaWhereUniqueInput | AuditoriaWhereUniqueInput[]
   }
 
+  export type ConversacionCreateNestedManyWithoutPacienteInput = {
+    create?: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput> | ConversacionCreateWithoutPacienteInput[] | ConversacionUncheckedCreateWithoutPacienteInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutPacienteInput | ConversacionCreateOrConnectWithoutPacienteInput[]
+    createMany?: ConversacionCreateManyPacienteInputEnvelope
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+  }
+
   export type MedicoUncheckedCreateNestedOneWithoutUsuarioInput = {
     create?: XOR<MedicoCreateWithoutUsuarioInput, MedicoUncheckedCreateWithoutUsuarioInput>
     connectOrCreate?: MedicoCreateOrConnectWithoutUsuarioInput
@@ -9890,8 +12015,31 @@ export namespace Prisma {
     connect?: AuditoriaWhereUniqueInput | AuditoriaWhereUniqueInput[]
   }
 
+  export type ConversacionUncheckedCreateNestedManyWithoutPacienteInput = {
+    create?: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput> | ConversacionCreateWithoutPacienteInput[] | ConversacionUncheckedCreateWithoutPacienteInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutPacienteInput | ConversacionCreateOrConnectWithoutPacienteInput[]
+    createMany?: ConversacionCreateManyPacienteInputEnvelope
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type MedicoUpdateOneWithoutUsuarioNestedInput = {
@@ -9974,12 +12122,18 @@ export namespace Prisma {
     deleteMany?: AuditoriaScalarWhereInput | AuditoriaScalarWhereInput[]
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
+  export type ConversacionUpdateManyWithoutPacienteNestedInput = {
+    create?: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput> | ConversacionCreateWithoutPacienteInput[] | ConversacionUncheckedCreateWithoutPacienteInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutPacienteInput | ConversacionCreateOrConnectWithoutPacienteInput[]
+    upsert?: ConversacionUpsertWithWhereUniqueWithoutPacienteInput | ConversacionUpsertWithWhereUniqueWithoutPacienteInput[]
+    createMany?: ConversacionCreateManyPacienteInputEnvelope
+    set?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    disconnect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    delete?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    update?: ConversacionUpdateWithWhereUniqueWithoutPacienteInput | ConversacionUpdateWithWhereUniqueWithoutPacienteInput[]
+    updateMany?: ConversacionUpdateManyWithWhereWithoutPacienteInput | ConversacionUpdateManyWithWhereWithoutPacienteInput[]
+    deleteMany?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
   }
 
   export type MedicoUncheckedUpdateOneWithoutUsuarioNestedInput = {
@@ -10062,6 +12216,20 @@ export namespace Prisma {
     deleteMany?: AuditoriaScalarWhereInput | AuditoriaScalarWhereInput[]
   }
 
+  export type ConversacionUncheckedUpdateManyWithoutPacienteNestedInput = {
+    create?: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput> | ConversacionCreateWithoutPacienteInput[] | ConversacionUncheckedCreateWithoutPacienteInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutPacienteInput | ConversacionCreateOrConnectWithoutPacienteInput[]
+    upsert?: ConversacionUpsertWithWhereUniqueWithoutPacienteInput | ConversacionUpsertWithWhereUniqueWithoutPacienteInput[]
+    createMany?: ConversacionCreateManyPacienteInputEnvelope
+    set?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    disconnect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    delete?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    update?: ConversacionUpdateWithWhereUniqueWithoutPacienteInput | ConversacionUpdateWithWhereUniqueWithoutPacienteInput[]
+    updateMany?: ConversacionUpdateManyWithWhereWithoutPacienteInput | ConversacionUpdateManyWithWhereWithoutPacienteInput[]
+    deleteMany?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
+  }
+
   export type MedicoCreateNestedManyWithoutEspecialidadInput = {
     create?: XOR<MedicoCreateWithoutEspecialidadInput, MedicoUncheckedCreateWithoutEspecialidadInput> | MedicoCreateWithoutEspecialidadInput[] | MedicoUncheckedCreateWithoutEspecialidadInput[]
     connectOrCreate?: MedicoCreateOrConnectWithoutEspecialidadInput | MedicoCreateOrConnectWithoutEspecialidadInput[]
@@ -10130,6 +12298,13 @@ export namespace Prisma {
     connect?: HistoriaClinicaWhereUniqueInput | HistoriaClinicaWhereUniqueInput[]
   }
 
+  export type ConversacionCreateNestedManyWithoutMedicoInput = {
+    create?: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput> | ConversacionCreateWithoutMedicoInput[] | ConversacionUncheckedCreateWithoutMedicoInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMedicoInput | ConversacionCreateOrConnectWithoutMedicoInput[]
+    createMany?: ConversacionCreateManyMedicoInputEnvelope
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+  }
+
   export type CitaUncheckedCreateNestedManyWithoutMedicoInput = {
     create?: XOR<CitaCreateWithoutMedicoInput, CitaUncheckedCreateWithoutMedicoInput> | CitaCreateWithoutMedicoInput[] | CitaUncheckedCreateWithoutMedicoInput[]
     connectOrCreate?: CitaCreateOrConnectWithoutMedicoInput | CitaCreateOrConnectWithoutMedicoInput[]
@@ -10142,6 +12317,13 @@ export namespace Prisma {
     connectOrCreate?: HistoriaClinicaCreateOrConnectWithoutMedicoInput | HistoriaClinicaCreateOrConnectWithoutMedicoInput[]
     createMany?: HistoriaClinicaCreateManyMedicoInputEnvelope
     connect?: HistoriaClinicaWhereUniqueInput | HistoriaClinicaWhereUniqueInput[]
+  }
+
+  export type ConversacionUncheckedCreateNestedManyWithoutMedicoInput = {
+    create?: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput> | ConversacionCreateWithoutMedicoInput[] | ConversacionUncheckedCreateWithoutMedicoInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMedicoInput | ConversacionCreateOrConnectWithoutMedicoInput[]
+    createMany?: ConversacionCreateManyMedicoInputEnvelope
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
   }
 
   export type UsuarioUpdateOneRequiredWithoutMedicoNestedInput = {
@@ -10188,6 +12370,20 @@ export namespace Prisma {
     deleteMany?: HistoriaClinicaScalarWhereInput | HistoriaClinicaScalarWhereInput[]
   }
 
+  export type ConversacionUpdateManyWithoutMedicoNestedInput = {
+    create?: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput> | ConversacionCreateWithoutMedicoInput[] | ConversacionUncheckedCreateWithoutMedicoInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMedicoInput | ConversacionCreateOrConnectWithoutMedicoInput[]
+    upsert?: ConversacionUpsertWithWhereUniqueWithoutMedicoInput | ConversacionUpsertWithWhereUniqueWithoutMedicoInput[]
+    createMany?: ConversacionCreateManyMedicoInputEnvelope
+    set?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    disconnect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    delete?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    update?: ConversacionUpdateWithWhereUniqueWithoutMedicoInput | ConversacionUpdateWithWhereUniqueWithoutMedicoInput[]
+    updateMany?: ConversacionUpdateManyWithWhereWithoutMedicoInput | ConversacionUpdateManyWithWhereWithoutMedicoInput[]
+    deleteMany?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
+  }
+
   export type CitaUncheckedUpdateManyWithoutMedicoNestedInput = {
     create?: XOR<CitaCreateWithoutMedicoInput, CitaUncheckedCreateWithoutMedicoInput> | CitaCreateWithoutMedicoInput[] | CitaUncheckedCreateWithoutMedicoInput[]
     connectOrCreate?: CitaCreateOrConnectWithoutMedicoInput | CitaCreateOrConnectWithoutMedicoInput[]
@@ -10216,6 +12412,20 @@ export namespace Prisma {
     deleteMany?: HistoriaClinicaScalarWhereInput | HistoriaClinicaScalarWhereInput[]
   }
 
+  export type ConversacionUncheckedUpdateManyWithoutMedicoNestedInput = {
+    create?: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput> | ConversacionCreateWithoutMedicoInput[] | ConversacionUncheckedCreateWithoutMedicoInput[]
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMedicoInput | ConversacionCreateOrConnectWithoutMedicoInput[]
+    upsert?: ConversacionUpsertWithWhereUniqueWithoutMedicoInput | ConversacionUpsertWithWhereUniqueWithoutMedicoInput[]
+    createMany?: ConversacionCreateManyMedicoInputEnvelope
+    set?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    disconnect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    delete?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    connect?: ConversacionWhereUniqueInput | ConversacionWhereUniqueInput[]
+    update?: ConversacionUpdateWithWhereUniqueWithoutMedicoInput | ConversacionUpdateWithWhereUniqueWithoutMedicoInput[]
+    updateMany?: ConversacionUpdateManyWithWhereWithoutMedicoInput | ConversacionUpdateManyWithWhereWithoutMedicoInput[]
+    deleteMany?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
+  }
+
   export type UsuarioCreateNestedOneWithoutCitasInput = {
     create?: XOR<UsuarioCreateWithoutCitasInput, UsuarioUncheckedCreateWithoutCitasInput>
     connectOrCreate?: UsuarioCreateOrConnectWithoutCitasInput
@@ -10228,8 +12438,16 @@ export namespace Prisma {
     connect?: MedicoWhereUniqueInput
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type EnumTipoCitaFieldUpdateOperationsInput = {
+    set?: $Enums.TipoCita
+  }
+
+  export type EnumEstadoCitaFieldUpdateOperationsInput = {
+    set?: $Enums.EstadoCita
+  }
+
+  export type EnumPrioridadCitaFieldUpdateOperationsInput = {
+    set?: $Enums.PrioridadCita
   }
 
   export type UsuarioUpdateOneRequiredWithoutCitasNestedInput = {
@@ -10276,6 +12494,82 @@ export namespace Prisma {
     update?: XOR<XOR<MedicoUpdateToOneWithWhereWithoutHistoriasInput, MedicoUpdateWithoutHistoriasInput>, MedicoUncheckedUpdateWithoutHistoriasInput>
   }
 
+  export type UsuarioCreateNestedOneWithoutConversacionesInput = {
+    create?: XOR<UsuarioCreateWithoutConversacionesInput, UsuarioUncheckedCreateWithoutConversacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutConversacionesInput
+    connect?: UsuarioWhereUniqueInput
+  }
+
+  export type MedicoCreateNestedOneWithoutConversacionesInput = {
+    create?: XOR<MedicoCreateWithoutConversacionesInput, MedicoUncheckedCreateWithoutConversacionesInput>
+    connectOrCreate?: MedicoCreateOrConnectWithoutConversacionesInput
+    connect?: MedicoWhereUniqueInput
+  }
+
+  export type MensajeCreateNestedManyWithoutConversacionInput = {
+    create?: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput> | MensajeCreateWithoutConversacionInput[] | MensajeUncheckedCreateWithoutConversacionInput[]
+    connectOrCreate?: MensajeCreateOrConnectWithoutConversacionInput | MensajeCreateOrConnectWithoutConversacionInput[]
+    createMany?: MensajeCreateManyConversacionInputEnvelope
+    connect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+  }
+
+  export type MensajeUncheckedCreateNestedManyWithoutConversacionInput = {
+    create?: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput> | MensajeCreateWithoutConversacionInput[] | MensajeUncheckedCreateWithoutConversacionInput[]
+    connectOrCreate?: MensajeCreateOrConnectWithoutConversacionInput | MensajeCreateOrConnectWithoutConversacionInput[]
+    createMany?: MensajeCreateManyConversacionInputEnvelope
+    connect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+  }
+
+  export type UsuarioUpdateOneRequiredWithoutConversacionesNestedInput = {
+    create?: XOR<UsuarioCreateWithoutConversacionesInput, UsuarioUncheckedCreateWithoutConversacionesInput>
+    connectOrCreate?: UsuarioCreateOrConnectWithoutConversacionesInput
+    upsert?: UsuarioUpsertWithoutConversacionesInput
+    connect?: UsuarioWhereUniqueInput
+    update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutConversacionesInput, UsuarioUpdateWithoutConversacionesInput>, UsuarioUncheckedUpdateWithoutConversacionesInput>
+  }
+
+  export type MedicoUpdateOneRequiredWithoutConversacionesNestedInput = {
+    create?: XOR<MedicoCreateWithoutConversacionesInput, MedicoUncheckedCreateWithoutConversacionesInput>
+    connectOrCreate?: MedicoCreateOrConnectWithoutConversacionesInput
+    upsert?: MedicoUpsertWithoutConversacionesInput
+    connect?: MedicoWhereUniqueInput
+    update?: XOR<XOR<MedicoUpdateToOneWithWhereWithoutConversacionesInput, MedicoUpdateWithoutConversacionesInput>, MedicoUncheckedUpdateWithoutConversacionesInput>
+  }
+
+  export type MensajeUpdateManyWithoutConversacionNestedInput = {
+    create?: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput> | MensajeCreateWithoutConversacionInput[] | MensajeUncheckedCreateWithoutConversacionInput[]
+    connectOrCreate?: MensajeCreateOrConnectWithoutConversacionInput | MensajeCreateOrConnectWithoutConversacionInput[]
+    upsert?: MensajeUpsertWithWhereUniqueWithoutConversacionInput | MensajeUpsertWithWhereUniqueWithoutConversacionInput[]
+    createMany?: MensajeCreateManyConversacionInputEnvelope
+    set?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    disconnect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    delete?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    connect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    update?: MensajeUpdateWithWhereUniqueWithoutConversacionInput | MensajeUpdateWithWhereUniqueWithoutConversacionInput[]
+    updateMany?: MensajeUpdateManyWithWhereWithoutConversacionInput | MensajeUpdateManyWithWhereWithoutConversacionInput[]
+    deleteMany?: MensajeScalarWhereInput | MensajeScalarWhereInput[]
+  }
+
+  export type MensajeUncheckedUpdateManyWithoutConversacionNestedInput = {
+    create?: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput> | MensajeCreateWithoutConversacionInput[] | MensajeUncheckedCreateWithoutConversacionInput[]
+    connectOrCreate?: MensajeCreateOrConnectWithoutConversacionInput | MensajeCreateOrConnectWithoutConversacionInput[]
+    upsert?: MensajeUpsertWithWhereUniqueWithoutConversacionInput | MensajeUpsertWithWhereUniqueWithoutConversacionInput[]
+    createMany?: MensajeCreateManyConversacionInputEnvelope
+    set?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    disconnect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    delete?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    connect?: MensajeWhereUniqueInput | MensajeWhereUniqueInput[]
+    update?: MensajeUpdateWithWhereUniqueWithoutConversacionInput | MensajeUpdateWithWhereUniqueWithoutConversacionInput[]
+    updateMany?: MensajeUpdateManyWithWhereWithoutConversacionInput | MensajeUpdateManyWithWhereWithoutConversacionInput[]
+    deleteMany?: MensajeScalarWhereInput | MensajeScalarWhereInput[]
+  }
+
+  export type ConversacionCreateNestedOneWithoutMensajesInput = {
+    create?: XOR<ConversacionCreateWithoutMensajesInput, ConversacionUncheckedCreateWithoutMensajesInput>
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMensajesInput
+    connect?: ConversacionWhereUniqueInput
+  }
+
   export type UsuarioCreateNestedOneWithoutMensajesEnviadosInput = {
     create?: XOR<UsuarioCreateWithoutMensajesEnviadosInput, UsuarioUncheckedCreateWithoutMensajesEnviadosInput>
     connectOrCreate?: UsuarioCreateOrConnectWithoutMensajesEnviadosInput
@@ -10286,6 +12580,14 @@ export namespace Prisma {
     create?: XOR<UsuarioCreateWithoutMensajesRecibidosInput, UsuarioUncheckedCreateWithoutMensajesRecibidosInput>
     connectOrCreate?: UsuarioCreateOrConnectWithoutMensajesRecibidosInput
     connect?: UsuarioWhereUniqueInput
+  }
+
+  export type ConversacionUpdateOneRequiredWithoutMensajesNestedInput = {
+    create?: XOR<ConversacionCreateWithoutMensajesInput, ConversacionUncheckedCreateWithoutMensajesInput>
+    connectOrCreate?: ConversacionCreateOrConnectWithoutMensajesInput
+    upsert?: ConversacionUpsertWithoutMensajesInput
+    connect?: ConversacionWhereUniqueInput
+    update?: XOR<XOR<ConversacionUpdateToOneWithWhereWithoutMensajesInput, ConversacionUpdateWithoutMensajesInput>, ConversacionUncheckedUpdateWithoutMensajesInput>
   }
 
   export type UsuarioUpdateOneRequiredWithoutMensajesEnviadosNestedInput = {
@@ -10318,17 +12620,6 @@ export namespace Prisma {
     update?: XOR<XOR<UsuarioUpdateToOneWithWhereWithoutAuditoriasInput, UsuarioUpdateWithoutAuditoriasInput>, UsuarioUncheckedUpdateWithoutAuditoriasInput>
   }
 
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -10344,31 +12635,46 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -10389,15 +12695,58 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[]
-    notIn?: Date[] | string[]
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | null
+    notIn?: Date[] | string[] | null
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -10414,17 +12763,85 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTipoCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCita | EnumTipoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoCita[]
+    notIn?: $Enums.TipoCita[]
+    not?: NestedEnumTipoCitaFilter<$PrismaModel> | $Enums.TipoCita
+  }
+
+  export type NestedEnumEstadoCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCita | EnumEstadoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCita[]
+    notIn?: $Enums.EstadoCita[]
+    not?: NestedEnumEstadoCitaFilter<$PrismaModel> | $Enums.EstadoCita
+  }
+
+  export type NestedEnumPrioridadCitaFilter<$PrismaModel = never> = {
+    equals?: $Enums.PrioridadCita | EnumPrioridadCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.PrioridadCita[]
+    notIn?: $Enums.PrioridadCita[]
+    not?: NestedEnumPrioridadCitaFilter<$PrismaModel> | $Enums.PrioridadCita
+  }
+
+  export type NestedEnumTipoCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TipoCita | EnumTipoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.TipoCita[]
+    notIn?: $Enums.TipoCita[]
+    not?: NestedEnumTipoCitaWithAggregatesFilter<$PrismaModel> | $Enums.TipoCita
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTipoCitaFilter<$PrismaModel>
+    _max?: NestedEnumTipoCitaFilter<$PrismaModel>
+  }
+
+  export type NestedEnumEstadoCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EstadoCita | EnumEstadoCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.EstadoCita[]
+    notIn?: $Enums.EstadoCita[]
+    not?: NestedEnumEstadoCitaWithAggregatesFilter<$PrismaModel> | $Enums.EstadoCita
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEstadoCitaFilter<$PrismaModel>
+    _max?: NestedEnumEstadoCitaFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPrioridadCitaWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PrioridadCita | EnumPrioridadCitaFieldRefInput<$PrismaModel>
+    in?: $Enums.PrioridadCita[]
+    notIn?: $Enums.PrioridadCita[]
+    not?: NestedEnumPrioridadCitaWithAggregatesFilter<$PrismaModel> | $Enums.PrioridadCita
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPrioridadCitaFilter<$PrismaModel>
+    _max?: NestedEnumPrioridadCitaFilter<$PrismaModel>
+  }
+
   export type MedicoCreateWithoutUsuarioInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     especialidad: EspecialidadCreateNestedOneWithoutMedicosInput
     citas?: CitaCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUncheckedCreateWithoutUsuarioInput = {
-    id?: number
-    especialidadId: number
+    id?: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     citas?: CitaUncheckedCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoCreateOrConnectWithoutUsuarioInput = {
@@ -10433,16 +12850,31 @@ export namespace Prisma {
   }
 
   export type CitaCreateWithoutPacienteInput = {
+    id?: string
     fecha: Date | string
     hora: Date | string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
     medico: MedicoCreateNestedOneWithoutCitasInput
   }
 
   export type CitaUncheckedCreateWithoutPacienteInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    medicoId: number
+    medicoId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type CitaCreateOrConnectWithoutPacienteInput = {
@@ -10456,16 +12888,35 @@ export namespace Prisma {
   }
 
   export type HistoriaClinicaCreateWithoutPacienteInput = {
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
     medico: MedicoCreateNestedOneWithoutHistoriasInput
   }
 
   export type HistoriaClinicaUncheckedCreateWithoutPacienteInput = {
-    id?: number
-    medicoId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    medicoId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaCreateOrConnectWithoutPacienteInput = {
@@ -10479,16 +12930,23 @@ export namespace Prisma {
   }
 
   export type MensajeCreateWithoutRemitenteInput = {
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+    conversacion: ConversacionCreateNestedOneWithoutMensajesInput
     destinatario: UsuarioCreateNestedOneWithoutMensajesRecibidosInput
   }
 
   export type MensajeUncheckedCreateWithoutRemitenteInput = {
-    id?: number
-    destinatarioId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type MensajeCreateOrConnectWithoutRemitenteInput = {
@@ -10502,16 +12960,23 @@ export namespace Prisma {
   }
 
   export type MensajeCreateWithoutDestinatarioInput = {
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+    conversacion: ConversacionCreateNestedOneWithoutMensajesInput
     remitente: UsuarioCreateNestedOneWithoutMensajesEnviadosInput
   }
 
   export type MensajeUncheckedCreateWithoutDestinatarioInput = {
-    id?: number
-    remitenteId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    remitenteId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type MensajeCreateOrConnectWithoutDestinatarioInput = {
@@ -10525,14 +12990,19 @@ export namespace Prisma {
   }
 
   export type AuditoriaCreateWithoutUsuarioInput = {
-    fecha: Date | string
+    id?: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
   }
 
   export type AuditoriaUncheckedCreateWithoutUsuarioInput = {
-    id?: number
-    fecha: Date | string
+    id?: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
   }
 
   export type AuditoriaCreateOrConnectWithoutUsuarioInput = {
@@ -10542,6 +13012,36 @@ export namespace Prisma {
 
   export type AuditoriaCreateManyUsuarioInputEnvelope = {
     data: AuditoriaCreateManyUsuarioInput | AuditoriaCreateManyUsuarioInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversacionCreateWithoutPacienteInput = {
+    id?: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    medico: MedicoCreateNestedOneWithoutConversacionesInput
+    mensajes?: MensajeCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionUncheckedCreateWithoutPacienteInput = {
+    id?: string
+    medicoId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    mensajes?: MensajeUncheckedCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionCreateOrConnectWithoutPacienteInput = {
+    where: ConversacionWhereUniqueInput
+    create: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput>
+  }
+
+  export type ConversacionCreateManyPacienteInputEnvelope = {
+    data: ConversacionCreateManyPacienteInput | ConversacionCreateManyPacienteInput[]
     skipDuplicates?: boolean
   }
 
@@ -10557,16 +13057,25 @@ export namespace Prisma {
   }
 
   export type MedicoUpdateWithoutUsuarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     especialidad?: EspecialidadUpdateOneRequiredWithoutMedicosNestedInput
     citas?: CitaUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    especialidadId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     citas?: CitaUncheckedUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutMedicoNestedInput
   }
 
   export type CitaUpsertWithWhereUniqueWithoutPacienteInput = {
@@ -10589,11 +13098,18 @@ export namespace Prisma {
     AND?: CitaScalarWhereInput | CitaScalarWhereInput[]
     OR?: CitaScalarWhereInput[]
     NOT?: CitaScalarWhereInput | CitaScalarWhereInput[]
-    id?: IntFilter<"Cita"> | number
+    id?: StringFilter<"Cita"> | string
     fecha?: DateTimeFilter<"Cita"> | Date | string
     hora?: DateTimeFilter<"Cita"> | Date | string
-    pacienteId?: IntFilter<"Cita"> | number
-    medicoId?: IntFilter<"Cita"> | number
+    pacienteId?: StringFilter<"Cita"> | string
+    medicoId?: StringFilter<"Cita"> | string
+    sintomas?: StringNullableFilter<"Cita"> | string | null
+    notas?: StringNullableFilter<"Cita"> | string | null
+    tipo?: EnumTipoCitaFilter<"Cita"> | $Enums.TipoCita
+    estado?: EnumEstadoCitaFilter<"Cita"> | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFilter<"Cita"> | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFilter<"Cita"> | Date | string
+    fechaActualizacion?: DateTimeFilter<"Cita"> | Date | string
   }
 
   export type HistoriaClinicaUpsertWithWhereUniqueWithoutPacienteInput = {
@@ -10616,11 +13132,20 @@ export namespace Prisma {
     AND?: HistoriaClinicaScalarWhereInput | HistoriaClinicaScalarWhereInput[]
     OR?: HistoriaClinicaScalarWhereInput[]
     NOT?: HistoriaClinicaScalarWhereInput | HistoriaClinicaScalarWhereInput[]
-    id?: IntFilter<"HistoriaClinica"> | number
-    pacienteId?: IntFilter<"HistoriaClinica"> | number
-    medicoId?: IntFilter<"HistoriaClinica"> | number
+    id?: StringFilter<"HistoriaClinica"> | string
+    pacienteId?: StringFilter<"HistoriaClinica"> | string
+    medicoId?: StringFilter<"HistoriaClinica"> | string
     fecha?: DateTimeFilter<"HistoriaClinica"> | Date | string
-    descripcion?: StringFilter<"HistoriaClinica"> | string
+    diagnostico?: StringFilter<"HistoriaClinica"> | string
+    sintomas?: StringNullableFilter<"HistoriaClinica"> | string | null
+    tratamiento?: StringNullableFilter<"HistoriaClinica"> | string | null
+    medicamentos?: StringNullableFilter<"HistoriaClinica"> | string | null
+    alergias?: StringNullableFilter<"HistoriaClinica"> | string | null
+    signosVitales?: StringNullableFilter<"HistoriaClinica"> | string | null
+    observaciones?: StringNullableFilter<"HistoriaClinica"> | string | null
+    proximaRevision?: DateTimeNullableFilter<"HistoriaClinica"> | Date | string | null
+    estado?: StringFilter<"HistoriaClinica"> | string
+    fechaActualizacion?: DateTimeFilter<"HistoriaClinica"> | Date | string
   }
 
   export type MensajeUpsertWithWhereUniqueWithoutRemitenteInput = {
@@ -10643,11 +13168,14 @@ export namespace Prisma {
     AND?: MensajeScalarWhereInput | MensajeScalarWhereInput[]
     OR?: MensajeScalarWhereInput[]
     NOT?: MensajeScalarWhereInput | MensajeScalarWhereInput[]
-    id?: IntFilter<"Mensaje"> | number
-    remitenteId?: IntFilter<"Mensaje"> | number
-    destinatarioId?: IntFilter<"Mensaje"> | number
+    id?: StringFilter<"Mensaje"> | string
+    conversacionId?: StringFilter<"Mensaje"> | string
+    remitenteId?: StringFilter<"Mensaje"> | string
+    destinatarioId?: StringFilter<"Mensaje"> | string
+    contenido?: StringFilter<"Mensaje"> | string
     fecha?: DateTimeFilter<"Mensaje"> | Date | string
-    mensaje?: StringFilter<"Mensaje"> | string
+    leido?: BoolFilter<"Mensaje"> | boolean
+    tipoRemitente?: StringFilter<"Mensaje"> | string
   }
 
   export type MensajeUpsertWithWhereUniqueWithoutDestinatarioInput = {
@@ -10686,23 +13214,63 @@ export namespace Prisma {
     AND?: AuditoriaScalarWhereInput | AuditoriaScalarWhereInput[]
     OR?: AuditoriaScalarWhereInput[]
     NOT?: AuditoriaScalarWhereInput | AuditoriaScalarWhereInput[]
-    id?: IntFilter<"Auditoria"> | number
-    usuarioId?: IntFilter<"Auditoria"> | number
+    id?: StringFilter<"Auditoria"> | string
+    usuarioId?: StringFilter<"Auditoria"> | string
     fecha?: DateTimeFilter<"Auditoria"> | Date | string
     accion?: StringFilter<"Auditoria"> | string
+    detalles?: StringNullableFilter<"Auditoria"> | string | null
+    ip?: StringNullableFilter<"Auditoria"> | string | null
+  }
+
+  export type ConversacionUpsertWithWhereUniqueWithoutPacienteInput = {
+    where: ConversacionWhereUniqueInput
+    update: XOR<ConversacionUpdateWithoutPacienteInput, ConversacionUncheckedUpdateWithoutPacienteInput>
+    create: XOR<ConversacionCreateWithoutPacienteInput, ConversacionUncheckedCreateWithoutPacienteInput>
+  }
+
+  export type ConversacionUpdateWithWhereUniqueWithoutPacienteInput = {
+    where: ConversacionWhereUniqueInput
+    data: XOR<ConversacionUpdateWithoutPacienteInput, ConversacionUncheckedUpdateWithoutPacienteInput>
+  }
+
+  export type ConversacionUpdateManyWithWhereWithoutPacienteInput = {
+    where: ConversacionScalarWhereInput
+    data: XOR<ConversacionUpdateManyMutationInput, ConversacionUncheckedUpdateManyWithoutPacienteInput>
+  }
+
+  export type ConversacionScalarWhereInput = {
+    AND?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
+    OR?: ConversacionScalarWhereInput[]
+    NOT?: ConversacionScalarWhereInput | ConversacionScalarWhereInput[]
+    id?: StringFilter<"Conversacion"> | string
+    pacienteId?: StringFilter<"Conversacion"> | string
+    medicoId?: StringFilter<"Conversacion"> | string
+    asunto?: StringNullableFilter<"Conversacion"> | string | null
+    estado?: StringFilter<"Conversacion"> | string
+    fechaCreacion?: DateTimeFilter<"Conversacion"> | Date | string
+    ultimaActividad?: DateTimeFilter<"Conversacion"> | Date | string
   }
 
   export type MedicoCreateWithoutEspecialidadInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     usuario: UsuarioCreateNestedOneWithoutMedicoInput
     citas?: CitaCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUncheckedCreateWithoutEspecialidadInput = {
-    id?: number
-    usuarioId: number
+    id?: string
+    usuarioId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     citas?: CitaUncheckedCreateNestedManyWithoutMedicoInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoCreateOrConnectWithoutEspecialidadInput = {
@@ -10735,34 +13303,50 @@ export namespace Prisma {
     AND?: MedicoScalarWhereInput | MedicoScalarWhereInput[]
     OR?: MedicoScalarWhereInput[]
     NOT?: MedicoScalarWhereInput | MedicoScalarWhereInput[]
-    id?: IntFilter<"Medico"> | number
-    usuarioId?: IntFilter<"Medico"> | number
-    especialidadId?: IntFilter<"Medico"> | number
+    id?: StringFilter<"Medico"> | string
+    usuarioId?: StringFilter<"Medico"> | string
+    especialidadId?: StringFilter<"Medico"> | string
+    licencia?: StringNullableFilter<"Medico"> | string | null
+    horarioInicio?: StringNullableFilter<"Medico"> | string | null
+    horarioFin?: StringNullableFilter<"Medico"> | string | null
   }
 
   export type UsuarioCreateWithoutMedicoInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     citas?: CitaCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutMedicoInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutMedicoInput = {
@@ -10771,12 +13355,15 @@ export namespace Prisma {
   }
 
   export type EspecialidadCreateWithoutMedicosInput = {
+    id?: string
     nombre: string
+    activa?: boolean
   }
 
   export type EspecialidadUncheckedCreateWithoutMedicosInput = {
-    id?: number
+    id?: string
     nombre: string
+    activa?: boolean
   }
 
   export type EspecialidadCreateOrConnectWithoutMedicosInput = {
@@ -10785,16 +13372,31 @@ export namespace Prisma {
   }
 
   export type CitaCreateWithoutMedicoInput = {
+    id?: string
     fecha: Date | string
     hora: Date | string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
     paciente: UsuarioCreateNestedOneWithoutCitasInput
   }
 
   export type CitaUncheckedCreateWithoutMedicoInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    pacienteId: number
+    pacienteId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type CitaCreateOrConnectWithoutMedicoInput = {
@@ -10808,16 +13410,35 @@ export namespace Prisma {
   }
 
   export type HistoriaClinicaCreateWithoutMedicoInput = {
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
     paciente: UsuarioCreateNestedOneWithoutHistoriasInput
   }
 
   export type HistoriaClinicaUncheckedCreateWithoutMedicoInput = {
-    id?: number
-    pacienteId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    pacienteId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaCreateOrConnectWithoutMedicoInput = {
@@ -10827,6 +13448,36 @@ export namespace Prisma {
 
   export type HistoriaClinicaCreateManyMedicoInputEnvelope = {
     data: HistoriaClinicaCreateManyMedicoInput | HistoriaClinicaCreateManyMedicoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversacionCreateWithoutMedicoInput = {
+    id?: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    paciente: UsuarioCreateNestedOneWithoutConversacionesInput
+    mensajes?: MensajeCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionUncheckedCreateWithoutMedicoInput = {
+    id?: string
+    pacienteId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    mensajes?: MensajeUncheckedCreateNestedManyWithoutConversacionInput
+  }
+
+  export type ConversacionCreateOrConnectWithoutMedicoInput = {
+    where: ConversacionWhereUniqueInput
+    create: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput>
+  }
+
+  export type ConversacionCreateManyMedicoInputEnvelope = {
+    data: ConversacionCreateManyMedicoInput | ConversacionCreateManyMedicoInput[]
     skipDuplicates?: boolean
   }
 
@@ -10842,28 +13493,41 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutMedicoInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type EspecialidadUpsertWithoutMedicosInput = {
@@ -10878,12 +13542,15 @@ export namespace Prisma {
   }
 
   export type EspecialidadUpdateWithoutMedicosInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type EspecialidadUncheckedUpdateWithoutMedicosInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
+    activa?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type CitaUpsertWithWhereUniqueWithoutMedicoInput = {
@@ -10918,29 +13585,58 @@ export namespace Prisma {
     data: XOR<HistoriaClinicaUpdateManyMutationInput, HistoriaClinicaUncheckedUpdateManyWithoutMedicoInput>
   }
 
+  export type ConversacionUpsertWithWhereUniqueWithoutMedicoInput = {
+    where: ConversacionWhereUniqueInput
+    update: XOR<ConversacionUpdateWithoutMedicoInput, ConversacionUncheckedUpdateWithoutMedicoInput>
+    create: XOR<ConversacionCreateWithoutMedicoInput, ConversacionUncheckedCreateWithoutMedicoInput>
+  }
+
+  export type ConversacionUpdateWithWhereUniqueWithoutMedicoInput = {
+    where: ConversacionWhereUniqueInput
+    data: XOR<ConversacionUpdateWithoutMedicoInput, ConversacionUncheckedUpdateWithoutMedicoInput>
+  }
+
+  export type ConversacionUpdateManyWithWhereWithoutMedicoInput = {
+    where: ConversacionScalarWhereInput
+    data: XOR<ConversacionUpdateManyMutationInput, ConversacionUncheckedUpdateManyWithoutMedicoInput>
+  }
+
   export type UsuarioCreateWithoutCitasInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutCitasInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutCitasInput = {
@@ -10949,16 +13645,25 @@ export namespace Prisma {
   }
 
   export type MedicoCreateWithoutCitasInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     usuario: UsuarioCreateNestedOneWithoutMedicoInput
     especialidad: EspecialidadCreateNestedOneWithoutMedicosInput
     historias?: HistoriaClinicaCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUncheckedCreateWithoutCitasInput = {
-    id?: number
-    usuarioId: number
-    especialidadId: number
+    id?: string
+    usuarioId: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoCreateOrConnectWithoutCitasInput = {
@@ -10978,28 +13683,41 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutCitasInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutCitasInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type MedicoUpsertWithoutCitasInput = {
@@ -11014,41 +13732,63 @@ export namespace Prisma {
   }
 
   export type MedicoUpdateWithoutCitasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutMedicoNestedInput
     especialidad?: EspecialidadUpdateOneRequiredWithoutMedicosNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateWithoutCitasInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    especialidadId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutMedicoNestedInput
   }
 
   export type UsuarioCreateWithoutHistoriasInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     citas?: CitaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutHistoriasInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutHistoriasInput = {
@@ -11057,16 +13797,25 @@ export namespace Prisma {
   }
 
   export type MedicoCreateWithoutHistoriasInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     usuario: UsuarioCreateNestedOneWithoutMedicoInput
     especialidad: EspecialidadCreateNestedOneWithoutMedicosInput
     citas?: CitaCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoUncheckedCreateWithoutHistoriasInput = {
-    id?: number
-    usuarioId: number
-    especialidadId: number
+    id?: string
+    usuarioId: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
     citas?: CitaUncheckedCreateNestedManyWithoutMedicoInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutMedicoInput
   }
 
   export type MedicoCreateOrConnectWithoutHistoriasInput = {
@@ -11086,28 +13835,41 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutHistoriasInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutHistoriasInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type MedicoUpsertWithoutHistoriasInput = {
@@ -11122,41 +13884,286 @@ export namespace Prisma {
   }
 
   export type MedicoUpdateWithoutHistoriasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutMedicoNestedInput
     especialidad?: EspecialidadUpdateOneRequiredWithoutMedicosNestedInput
     citas?: CitaUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateWithoutHistoriasInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
-    especialidadId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     citas?: CitaUncheckedUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutMedicoNestedInput
   }
 
-  export type UsuarioCreateWithoutMensajesEnviadosInput = {
+  export type UsuarioCreateWithoutConversacionesInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
+    medico?: MedicoCreateNestedOneWithoutUsuarioInput
+    citas?: CitaCreateNestedManyWithoutPacienteInput
+    historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
+    mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
+    mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
+    auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioUncheckedCreateWithoutConversacionesInput = {
+    id?: string
+    nombre: string
+    email: string
+    contraseña: string
+    rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
+    medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
+    citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
+    historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
+    mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
+    mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
+    auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+  }
+
+  export type UsuarioCreateOrConnectWithoutConversacionesInput = {
+    where: UsuarioWhereUniqueInput
+    create: XOR<UsuarioCreateWithoutConversacionesInput, UsuarioUncheckedCreateWithoutConversacionesInput>
+  }
+
+  export type MedicoCreateWithoutConversacionesInput = {
+    id?: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
+    usuario: UsuarioCreateNestedOneWithoutMedicoInput
+    especialidad: EspecialidadCreateNestedOneWithoutMedicosInput
+    citas?: CitaCreateNestedManyWithoutMedicoInput
+    historias?: HistoriaClinicaCreateNestedManyWithoutMedicoInput
+  }
+
+  export type MedicoUncheckedCreateWithoutConversacionesInput = {
+    id?: string
+    usuarioId: string
+    especialidadId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
+    citas?: CitaUncheckedCreateNestedManyWithoutMedicoInput
+    historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutMedicoInput
+  }
+
+  export type MedicoCreateOrConnectWithoutConversacionesInput = {
+    where: MedicoWhereUniqueInput
+    create: XOR<MedicoCreateWithoutConversacionesInput, MedicoUncheckedCreateWithoutConversacionesInput>
+  }
+
+  export type MensajeCreateWithoutConversacionInput = {
+    id?: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+    remitente: UsuarioCreateNestedOneWithoutMensajesEnviadosInput
+    destinatario: UsuarioCreateNestedOneWithoutMensajesRecibidosInput
+  }
+
+  export type MensajeUncheckedCreateWithoutConversacionInput = {
+    id?: string
+    remitenteId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+  }
+
+  export type MensajeCreateOrConnectWithoutConversacionInput = {
+    where: MensajeWhereUniqueInput
+    create: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput>
+  }
+
+  export type MensajeCreateManyConversacionInputEnvelope = {
+    data: MensajeCreateManyConversacionInput | MensajeCreateManyConversacionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UsuarioUpsertWithoutConversacionesInput = {
+    update: XOR<UsuarioUpdateWithoutConversacionesInput, UsuarioUncheckedUpdateWithoutConversacionesInput>
+    create: XOR<UsuarioCreateWithoutConversacionesInput, UsuarioUncheckedCreateWithoutConversacionesInput>
+    where?: UsuarioWhereInput
+  }
+
+  export type UsuarioUpdateToOneWithWhereWithoutConversacionesInput = {
+    where?: UsuarioWhereInput
+    data: XOR<UsuarioUpdateWithoutConversacionesInput, UsuarioUncheckedUpdateWithoutConversacionesInput>
+  }
+
+  export type UsuarioUpdateWithoutConversacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    contraseña?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    medico?: MedicoUpdateOneWithoutUsuarioNestedInput
+    citas?: CitaUpdateManyWithoutPacienteNestedInput
+    historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
+    mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
+    mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
+    auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type UsuarioUncheckedUpdateWithoutConversacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nombre?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    contraseña?: StringFieldUpdateOperationsInput | string
+    rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
+    medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
+    citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
+    historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
+    mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
+    mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
+    auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+  }
+
+  export type MedicoUpsertWithoutConversacionesInput = {
+    update: XOR<MedicoUpdateWithoutConversacionesInput, MedicoUncheckedUpdateWithoutConversacionesInput>
+    create: XOR<MedicoCreateWithoutConversacionesInput, MedicoUncheckedCreateWithoutConversacionesInput>
+    where?: MedicoWhereInput
+  }
+
+  export type MedicoUpdateToOneWithWhereWithoutConversacionesInput = {
+    where?: MedicoWhereInput
+    data: XOR<MedicoUpdateWithoutConversacionesInput, MedicoUncheckedUpdateWithoutConversacionesInput>
+  }
+
+  export type MedicoUpdateWithoutConversacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
+    usuario?: UsuarioUpdateOneRequiredWithoutMedicoNestedInput
+    especialidad?: EspecialidadUpdateOneRequiredWithoutMedicosNestedInput
+    citas?: CitaUpdateManyWithoutMedicoNestedInput
+    historias?: HistoriaClinicaUpdateManyWithoutMedicoNestedInput
+  }
+
+  export type MedicoUncheckedUpdateWithoutConversacionesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    especialidadId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
+    citas?: CitaUncheckedUpdateManyWithoutMedicoNestedInput
+    historias?: HistoriaClinicaUncheckedUpdateManyWithoutMedicoNestedInput
+  }
+
+  export type MensajeUpsertWithWhereUniqueWithoutConversacionInput = {
+    where: MensajeWhereUniqueInput
+    update: XOR<MensajeUpdateWithoutConversacionInput, MensajeUncheckedUpdateWithoutConversacionInput>
+    create: XOR<MensajeCreateWithoutConversacionInput, MensajeUncheckedCreateWithoutConversacionInput>
+  }
+
+  export type MensajeUpdateWithWhereUniqueWithoutConversacionInput = {
+    where: MensajeWhereUniqueInput
+    data: XOR<MensajeUpdateWithoutConversacionInput, MensajeUncheckedUpdateWithoutConversacionInput>
+  }
+
+  export type MensajeUpdateManyWithWhereWithoutConversacionInput = {
+    where: MensajeScalarWhereInput
+    data: XOR<MensajeUpdateManyMutationInput, MensajeUncheckedUpdateManyWithoutConversacionInput>
+  }
+
+  export type ConversacionCreateWithoutMensajesInput = {
+    id?: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+    paciente: UsuarioCreateNestedOneWithoutConversacionesInput
+    medico: MedicoCreateNestedOneWithoutConversacionesInput
+  }
+
+  export type ConversacionUncheckedCreateWithoutMensajesInput = {
+    id?: string
+    pacienteId: string
+    medicoId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
+  }
+
+  export type ConversacionCreateOrConnectWithoutMensajesInput = {
+    where: ConversacionWhereUniqueInput
+    create: XOR<ConversacionCreateWithoutMensajesInput, ConversacionUncheckedCreateWithoutMensajesInput>
+  }
+
+  export type UsuarioCreateWithoutMensajesEnviadosInput = {
+    id?: string
+    nombre: string
+    email: string
+    contraseña: string
+    rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     citas?: CitaCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutMensajesEnviadosInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutMensajesEnviadosInput = {
@@ -11165,33 +14172,77 @@ export namespace Prisma {
   }
 
   export type UsuarioCreateWithoutMensajesRecibidosInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     citas?: CitaCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     auditorias?: AuditoriaCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutMensajesRecibidosInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     auditorias?: AuditoriaUncheckedCreateNestedManyWithoutUsuarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutMensajesRecibidosInput = {
     where: UsuarioWhereUniqueInput
     create: XOR<UsuarioCreateWithoutMensajesRecibidosInput, UsuarioUncheckedCreateWithoutMensajesRecibidosInput>
+  }
+
+  export type ConversacionUpsertWithoutMensajesInput = {
+    update: XOR<ConversacionUpdateWithoutMensajesInput, ConversacionUncheckedUpdateWithoutMensajesInput>
+    create: XOR<ConversacionCreateWithoutMensajesInput, ConversacionUncheckedCreateWithoutMensajesInput>
+    where?: ConversacionWhereInput
+  }
+
+  export type ConversacionUpdateToOneWithWhereWithoutMensajesInput = {
+    where?: ConversacionWhereInput
+    data: XOR<ConversacionUpdateWithoutMensajesInput, ConversacionUncheckedUpdateWithoutMensajesInput>
+  }
+
+  export type ConversacionUpdateWithoutMensajesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    paciente?: UsuarioUpdateOneRequiredWithoutConversacionesNestedInput
+    medico?: MedicoUpdateOneRequiredWithoutConversacionesNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateWithoutMensajesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UsuarioUpsertWithoutMensajesEnviadosInput = {
@@ -11206,28 +14257,41 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutMensajesEnviadosInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutMensajesEnviadosInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUpsertWithoutMensajesRecibidosInput = {
@@ -11242,53 +14306,79 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutMensajesRecibidosInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     auditorias?: AuditoriaUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutMensajesRecibidosInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     auditorias?: AuditoriaUncheckedUpdateManyWithoutUsuarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioCreateWithoutAuditoriasInput = {
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoCreateNestedOneWithoutUsuarioInput
     citas?: CitaCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeCreateNestedManyWithoutDestinatarioInput
+    conversaciones?: ConversacionCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioUncheckedCreateWithoutAuditoriasInput = {
-    id?: number
+    id?: string
     nombre: string
     email: string
     contraseña: string
     rol: string
+    telefono?: string | null
+    fechaNacimiento?: Date | string | null
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string | null
+    activo?: boolean
     medico?: MedicoUncheckedCreateNestedOneWithoutUsuarioInput
     citas?: CitaUncheckedCreateNestedManyWithoutPacienteInput
     historias?: HistoriaClinicaUncheckedCreateNestedManyWithoutPacienteInput
     mensajesEnviados?: MensajeUncheckedCreateNestedManyWithoutRemitenteInput
     mensajesRecibidos?: MensajeUncheckedCreateNestedManyWithoutDestinatarioInput
+    conversaciones?: ConversacionUncheckedCreateNestedManyWithoutPacienteInput
   }
 
   export type UsuarioCreateOrConnectWithoutAuditoriasInput = {
@@ -11308,236 +14398,547 @@ export namespace Prisma {
   }
 
   export type UsuarioUpdateWithoutAuditoriasInput = {
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUpdateManyWithoutDestinatarioNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutPacienteNestedInput
   }
 
   export type UsuarioUncheckedUpdateWithoutAuditoriasInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     nombre?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     contraseña?: StringFieldUpdateOperationsInput | string
     rol?: StringFieldUpdateOperationsInput | string
+    telefono?: NullableStringFieldUpdateOperationsInput | string | null
+    fechaNacimiento?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    activo?: BoolFieldUpdateOperationsInput | boolean
     medico?: MedicoUncheckedUpdateOneWithoutUsuarioNestedInput
     citas?: CitaUncheckedUpdateManyWithoutPacienteNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutPacienteNestedInput
     mensajesEnviados?: MensajeUncheckedUpdateManyWithoutRemitenteNestedInput
     mensajesRecibidos?: MensajeUncheckedUpdateManyWithoutDestinatarioNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutPacienteNestedInput
   }
 
   export type CitaCreateManyPacienteInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    medicoId: number
+    medicoId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaCreateManyPacienteInput = {
-    id?: number
-    medicoId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    medicoId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
   }
 
   export type MensajeCreateManyRemitenteInput = {
-    id?: number
-    destinatarioId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type MensajeCreateManyDestinatarioInput = {
-    id?: number
-    remitenteId: number
-    fecha: Date | string
-    mensaje: string
+    id?: string
+    conversacionId: string
+    remitenteId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
   }
 
   export type AuditoriaCreateManyUsuarioInput = {
-    id?: number
-    fecha: Date | string
+    id?: string
+    fecha?: Date | string
     accion: string
+    detalles?: string | null
+    ip?: string | null
+  }
+
+  export type ConversacionCreateManyPacienteInput = {
+    id?: string
+    medicoId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
   }
 
   export type CitaUpdateWithoutPacienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     medico?: MedicoUpdateOneRequiredWithoutCitasNestedInput
   }
 
   export type CitaUncheckedUpdateWithoutPacienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    medicoId?: IntFieldUpdateOperationsInput | number
+    medicoId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CitaUncheckedUpdateManyWithoutPacienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    medicoId?: IntFieldUpdateOperationsInput | number
+    medicoId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaUpdateWithoutPacienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     medico?: MedicoUpdateOneRequiredWithoutHistoriasNestedInput
   }
 
   export type HistoriaClinicaUncheckedUpdateWithoutPacienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaUncheckedUpdateManyWithoutPacienteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    medicoId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MensajeUpdateWithoutRemitenteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
+    conversacion?: ConversacionUpdateOneRequiredWithoutMensajesNestedInput
     destinatario?: UsuarioUpdateOneRequiredWithoutMensajesRecibidosNestedInput
   }
 
   export type MensajeUncheckedUpdateWithoutRemitenteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    destinatarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateManyWithoutRemitenteInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    destinatarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUpdateWithoutDestinatarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
+    conversacion?: ConversacionUpdateOneRequiredWithoutMensajesNestedInput
     remitente?: UsuarioUpdateOneRequiredWithoutMensajesEnviadosNestedInput
   }
 
   export type MensajeUncheckedUpdateWithoutDestinatarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    remitenteId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type MensajeUncheckedUpdateManyWithoutDestinatarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    remitenteId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    conversacionId?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    mensaje?: StringFieldUpdateOperationsInput | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
   export type AuditoriaUpdateWithoutUsuarioInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuditoriaUncheckedUpdateWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AuditoriaUncheckedUpdateManyWithoutUsuarioInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     accion?: StringFieldUpdateOperationsInput | string
+    detalles?: NullableStringFieldUpdateOperationsInput | string | null
+    ip?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ConversacionUpdateWithoutPacienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    medico?: MedicoUpdateOneRequiredWithoutConversacionesNestedInput
+    mensajes?: MensajeUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateWithoutPacienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    mensajes?: MensajeUncheckedUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateManyWithoutPacienteInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    medicoId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MedicoCreateManyEspecialidadInput = {
-    id?: number
-    usuarioId: number
+    id?: string
+    usuarioId: string
+    licencia?: string | null
+    horarioInicio?: string | null
+    horarioFin?: string | null
   }
 
   export type MedicoUpdateWithoutEspecialidadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     usuario?: UsuarioUpdateOneRequiredWithoutMedicoNestedInput
     citas?: CitaUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateWithoutEspecialidadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
     citas?: CitaUncheckedUpdateManyWithoutMedicoNestedInput
     historias?: HistoriaClinicaUncheckedUpdateManyWithoutMedicoNestedInput
+    conversaciones?: ConversacionUncheckedUpdateManyWithoutMedicoNestedInput
   }
 
   export type MedicoUncheckedUpdateManyWithoutEspecialidadInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    usuarioId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    usuarioId?: StringFieldUpdateOperationsInput | string
+    licencia?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioInicio?: NullableStringFieldUpdateOperationsInput | string | null
+    horarioFin?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CitaCreateManyMedicoInput = {
-    id?: number
+    id?: string
     fecha: Date | string
     hora: Date | string
-    pacienteId: number
+    pacienteId: string
+    sintomas?: string | null
+    notas?: string | null
+    tipo?: $Enums.TipoCita
+    estado?: $Enums.EstadoCita
+    prioridad?: $Enums.PrioridadCita
+    fechaCreacion?: Date | string
+    fechaActualizacion?: Date | string
   }
 
   export type HistoriaClinicaCreateManyMedicoInput = {
-    id?: number
-    pacienteId: number
-    fecha: Date | string
-    descripcion: string
+    id?: string
+    pacienteId: string
+    fecha?: Date | string
+    diagnostico: string
+    sintomas?: string | null
+    tratamiento?: string | null
+    medicamentos?: string | null
+    alergias?: string | null
+    signosVitales?: string | null
+    observaciones?: string | null
+    proximaRevision?: Date | string | null
+    estado?: string
+    fechaActualizacion?: Date | string
+  }
+
+  export type ConversacionCreateManyMedicoInput = {
+    id?: string
+    pacienteId: string
+    asunto?: string | null
+    estado?: string
+    fechaCreacion?: Date | string
+    ultimaActividad?: Date | string
   }
 
   export type CitaUpdateWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     paciente?: UsuarioUpdateOneRequiredWithoutCitasNestedInput
   }
 
   export type CitaUncheckedUpdateWithoutMedicoInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    pacienteId?: IntFieldUpdateOperationsInput | number
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CitaUncheckedUpdateManyWithoutMedicoInput = {
-    id?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
     hora?: DateTimeFieldUpdateOperationsInput | Date | string
-    pacienteId?: IntFieldUpdateOperationsInput | number
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    notas?: NullableStringFieldUpdateOperationsInput | string | null
+    tipo?: EnumTipoCitaFieldUpdateOperationsInput | $Enums.TipoCita
+    estado?: EnumEstadoCitaFieldUpdateOperationsInput | $Enums.EstadoCita
+    prioridad?: EnumPrioridadCitaFieldUpdateOperationsInput | $Enums.PrioridadCita
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaUpdateWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
     paciente?: UsuarioUpdateOneRequiredWithoutHistoriasNestedInput
   }
 
   export type HistoriaClinicaUncheckedUpdateWithoutMedicoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    pacienteId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type HistoriaClinicaUncheckedUpdateManyWithoutMedicoInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    pacienteId?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
     fecha?: DateTimeFieldUpdateOperationsInput | Date | string
-    descripcion?: StringFieldUpdateOperationsInput | string
+    diagnostico?: StringFieldUpdateOperationsInput | string
+    sintomas?: NullableStringFieldUpdateOperationsInput | string | null
+    tratamiento?: NullableStringFieldUpdateOperationsInput | string | null
+    medicamentos?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    signosVitales?: NullableStringFieldUpdateOperationsInput | string | null
+    observaciones?: NullableStringFieldUpdateOperationsInput | string | null
+    proximaRevision?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaActualizacion?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversacionUpdateWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    paciente?: UsuarioUpdateOneRequiredWithoutConversacionesNestedInput
+    mensajes?: MensajeUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+    mensajes?: MensajeUncheckedUpdateManyWithoutConversacionNestedInput
+  }
+
+  export type ConversacionUncheckedUpdateManyWithoutMedicoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    pacienteId?: StringFieldUpdateOperationsInput | string
+    asunto?: NullableStringFieldUpdateOperationsInput | string | null
+    estado?: StringFieldUpdateOperationsInput | string
+    fechaCreacion?: DateTimeFieldUpdateOperationsInput | Date | string
+    ultimaActividad?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MensajeCreateManyConversacionInput = {
+    id?: string
+    remitenteId: string
+    destinatarioId: string
+    contenido: string
+    fecha?: Date | string
+    leido?: boolean
+    tipoRemitente: string
+  }
+
+  export type MensajeUpdateWithoutConversacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
+    remitente?: UsuarioUpdateOneRequiredWithoutMensajesEnviadosNestedInput
+    destinatario?: UsuarioUpdateOneRequiredWithoutMensajesRecibidosNestedInput
+  }
+
+  export type MensajeUncheckedUpdateWithoutConversacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MensajeUncheckedUpdateManyWithoutConversacionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    remitenteId?: StringFieldUpdateOperationsInput | string
+    destinatarioId?: StringFieldUpdateOperationsInput | string
+    contenido?: StringFieldUpdateOperationsInput | string
+    fecha?: DateTimeFieldUpdateOperationsInput | Date | string
+    leido?: BoolFieldUpdateOperationsInput | boolean
+    tipoRemitente?: StringFieldUpdateOperationsInput | string
   }
 
 

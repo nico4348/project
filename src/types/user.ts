@@ -6,19 +6,22 @@ export interface UserData {
 	email: string;
 	role: UserRole;
 	dateOfBirth?: string;
+	birthDate?: string; // Alternative field name for compatibility
 	phone?: string;
+	createdAt?: string;
+	specialty?: string; // For doctors
 }
 
 export interface RegisterUserData extends Omit<UserData, "id"> {
 	password: string;
-	especialidadId?: number; // For doctors
+	especialidadId?: string; // Changed to string for UUID
 }
 
 export interface Doctor extends UserData {
 	role: "doctor";
 	specialty: string;
-	education: string;
-	experience: number;
+	education?: string;
+	experience?: number;
 	availability?: string[];
 }
 

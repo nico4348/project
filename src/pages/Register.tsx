@@ -42,9 +42,9 @@ const Register = () => {
 
 		loadEspecialidades();
 	}, []);
-
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
+		console.log(`Field changed: ${name} = ${value}`);
 		setFormData({ ...formData, [name]: value });
 	};
 
@@ -80,6 +80,13 @@ const Register = () => {
 	const handleSubmit = async (e: FormEvent) => {
 		e.preventDefault();
 
+		// Debug: Log the current form data
+		console.log("=== FORM SUBMISSION DEBUG ===");
+		console.log("Current formData:", formData);
+		console.log("Specialty ID:", formData.especialidadId);
+		console.log("Role:", formData.role);
+		console.log("Available specialties:", especialidades);
+
 		// Validate doctor specialty selection
 		if (formData.role === "doctor" && !formData.especialidadId) {
 			setError("Los doctores deben seleccionar una especialidad");
@@ -89,7 +96,6 @@ const Register = () => {
 		try {
 			setError("");
 			setIsSubmitting(true);
-
 			const userData: RegisterUserData = {
 				name: formData.name,
 				email: formData.email,
@@ -97,9 +103,10 @@ const Register = () => {
 				role: formData.role as "patient" | "doctor" | "admin",
 				dateOfBirth: formData.dateOfBirth,
 				phone: formData.phone,
-				especialidadId:
-					formData.role === "doctor" ? parseInt(formData.especialidadId) : undefined,
+				especialidadId: formData.role === "doctor" ? formData.especialidadId : undefined,
 			};
+
+			console.log("Prepared userData:", userData);
 
 			const success = await register(userData);
 
