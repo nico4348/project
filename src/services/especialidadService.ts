@@ -1,5 +1,3 @@
-import { UserData } from "../types/user";
-
 const API_BASE_URL = "http://localhost:5000/api";
 
 export interface Especialidad {

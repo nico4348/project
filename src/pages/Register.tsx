@@ -333,9 +333,14 @@ const Register = () => {
 							value={formData.especialidadId}
 							onChange={handleChange}
 							required
+							disabled={loadingEspecialidades}
 							className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm"
 						>
-							<option value="">Selecciona una especialidad</option>
+							<option value="">
+								{loadingEspecialidades
+									? "Cargando especialidades..."
+									: "Selecciona una especialidad"}
+							</option>
 							{especialidades.map((esp) => (
 								<option key={esp.id} value={esp.id}>
 									{esp.nombre}
